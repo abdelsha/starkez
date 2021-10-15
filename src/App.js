@@ -5,6 +5,9 @@ import React from 'react';
 import Layout from './Layout/Layout';
 
 
+import Login from './Pages/Login/Login';
+
+
 
 
 function App() {
@@ -12,7 +15,7 @@ function App() {
     <Layout>
       <Switch>
         <Route path="/" exact={true}>
-          Login
+          <Login/>
         </Route>
         <Route path="/Home">HomePage</Route>
         <Route path="/Courses">CoursePage</Route>
@@ -21,7 +24,6 @@ function App() {
         <Route path="/Portfolio">Portfolio</Route>
         <Route path="/Deadlines">Deadlines</Route>
         <Route path="/Deadlines_specific">
-          {" "}
           {/* Use Redux store to pass which course the user is viewing and then create this link*/}
           Deadlines_specific
         </Route>

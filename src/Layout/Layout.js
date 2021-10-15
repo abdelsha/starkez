@@ -1,9 +1,14 @@
 import React from "react";
+import Navigation from "../Navigation/Navigation";
 
 
 function Layout(props) {
     return(
-        <div>{props.children}</div>
+        
+        <div>
+            <Navigation/>
+            {props.children}
+        </div>
     )
 }
 
