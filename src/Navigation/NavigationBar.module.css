@@ -38,14 +38,14 @@
     align-items: center;
     display: flex;
     padding: 0 10px;
-    margin: 0 10px;
-    color: rgba(0, 0, 0, 0.5);
+    margin: 5px 10px;
+    color: rgba(255, 255, 255, 0.2);
     justify-content: center;
 }
 @media (max-width:768px) {
     .NavMenue a{
-        margin: 0 3px;
-        padding: 0 3px;
+        margin: 5px 3px;
+        padding: 0 1px;
         font-size: 12px;
     }
 }
@@ -74,8 +74,8 @@
 
 @media (max-width:768px) {
     .User{
-        padding-left: 3px;
-        padding-right: 3px;
+        padding-left: 0px;
+        padding-right: 5px;
     }
 }
 
