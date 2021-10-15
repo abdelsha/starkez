@@ -1,0 +1,8 @@
+.card {
+    margin-top: 10px;
+    background-color: white;
+    cursor: pointer;
+}
+.card:hover{
+    transform: translate3d(0,-7px,0);
+}

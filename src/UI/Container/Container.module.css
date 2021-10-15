@@ -1,0 +1,6 @@
+.container {
+    margin-top: 10px;
+    background-color: rgb(209, 190, 207);
+    cursor: pointer;
+    border-radius: 24px;
+}
