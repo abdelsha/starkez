@@ -51,5 +51,10 @@ cursor: pointer;
 
 .SubmitButton{
     margin: 10px 0;
-    min-width: 150px
+    min-width: 150px;
+    display: flex;
+}
+.SubmitButton Button:nth-child(2){
+    margin-left: 10px;
+    border-radius: 5px;
 }
