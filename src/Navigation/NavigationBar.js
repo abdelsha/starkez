@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import classes from './NavigationBar.module.css'
+import classes from './NavigationBar.module.css';
+import { useSelector, useDispatch } from "react-redux";
 
 function NavigationBar() {
+  const userstat = useSelector((state) => {
+    return state.userState.user;
+  });
+  const courseStat = useSelector((state) => {
+    return state.courseState.course;
+  });
+
+  const dispatch = useDispatch();
+
   return (
     <div className={classes.NavBar}>
       <div className={classes.NavTab}>tab</div>
@@ -19,12 +29,17 @@ function NavigationBar() {
 
         <Link to="/Messages">Messages</Link>
 
-        <Link to="/Messages">Settings</Link>
+        <Link to="/Settings">Settings</Link>
       </nav>
       <div className={classes.User}>
-        <img src="/images/user1.svg" all="" />
+        {userstat && userstat.photoURL ? (
+          <img src={userstat.photoURL} all="" />
+          
+        ) : (
+          <img src="/images/user1.svg" all="" />
+        )}
       </div>
-                    {/*import * as React from 'react';
+      {/*import * as React from 'react';
               import Box from '@mui/material/Box';
               import Avatar from '@mui/material/Avatar';
               import Menu from '@mui/material/Menu';

@@ -4,6 +4,7 @@ import db from '../../Firebase/Firebase';
 //Action:
 const email= "amrshakour97@gmail.com";
 
+
 export const setUser = (user) => ({
     type: 'SET_USER',
     payload: user,
@@ -21,7 +22,7 @@ export function signInWithGoogleApi() {
             .get()
             .then( (doc) => {
                 if (doc.data()){
-                    console.log('data exists');
+                    console.log(payload.user);
                     dispatch(setUser(payload.user));
                 }
                 else{
@@ -98,7 +99,7 @@ export function createAccountWithhUserName ( email, password) {
             db.collection("User").doc(`${userCredential.user.uid}`).set ({
                 UID: userCredential.user.uid,
             })
-            
+            console.log(userCredential.user);
             dispatch(setUser(userCredential.user));
           }).catch((error) => {
             const errorCode = error.code;

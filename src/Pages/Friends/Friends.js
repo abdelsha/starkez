@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
 
-function CoursePage() {
+function FriendPage() {
     const userstat = useSelector((state)=>{
         return state.userState.user;
       });
@@ -12,9 +12,9 @@ function CoursePage() {
       const dispatch = useDispatch();
     return (
         <div>
-            Course
+            Friends
         </div>
     )
 }
 
-export default CoursePage;
+export default FriendPage;
