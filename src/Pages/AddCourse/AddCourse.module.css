@@ -33,6 +33,11 @@
     display: flex;
     
 }
+@media (max-width:768px) {
+    .CourseDesc{
+        display: block;
+    }
+}
 .Exams{
     display: flex;
     border-top: solid rgba(0,0,0,0.3);

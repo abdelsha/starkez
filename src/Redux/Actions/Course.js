@@ -9,12 +9,24 @@ export const setCourse = (course) => ({
 export function submitCourseInfo (payload) {
     return (dispatch) => {
         db.collection("User")
-          .doc(`${payload.user.uid}`)
-          .get()
-          .then((prevData) => {
-            const ids= prevData.docs.map((doc)=>doc.data());
-            console.log(ids);
-            console.log(payload.user.uid)
+          .doc(`${payload.user.uid}`).
+          collection("Course")
+          .doc(`${payload.courseName}`)
+          .set( {
+            course: {
+              date: payload.timestamp,
+              courseStart: payload.courseStart,
+              courseEnd: payload.courseEnd,
+              midtermone: payload.midtermone,
+              midtermtwo: payload.midtermtwo,
+              midtermthree: payload.midtermthree,
+              exam: payload.exam,
+              midtermoneText: payload.midtermoneText,
+              midtermtwoText: payload.midtermtwoText,
+              courseYear: payload.courseYear
+            },
+          }, {merge:true})
+          
             {/*db.collection("User")
               .doc(`${payload.user.uid}`)
               .set({
@@ -32,10 +44,8 @@ export function submitCourseInfo (payload) {
                   midtermthreeText: payload.midtermthreeText,
                 },
               });*/}
-          })
+          
 
-          .catch((err) => {
-            console.log(err);
-          });
+          
     }
 }
