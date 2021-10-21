@@ -12,13 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 
-import {
-    setAssignmentData,
-  setAssignmentNumber,
-  setMidtermNumber,
-} from "../../Redux/Actions/Course";
+import { setMidtermData, setMidtermNumber } from "../../Redux/Actions/Course";
 
-function Assignment() {
+function Midterm() {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -26,36 +22,34 @@ function Assignment() {
     return state.courseState.course;
   });
 
-  const assignmentNumber12 = useSelector((state) => {
-    return state.courseState.assignmentNumber;
+  const midtermNumber12 = useSelector((state) => {
+    return state.courseState.midtermNumber;
   });
 
-  const assignmentData12 = useSelector((state)=> {
-      return state.courseState.assignmentData;
+  const midtermData12 = useSelector((state) => {
+      return state.courseState.midtermData;
   })
 
   const dispatch = useDispatch();
 
-  const setExamNumberDispatch = (payload) => {
-    dispatch(setAssignmentNumber(payload));
+  const setMidtermNumberDispatch = (payload) => {
+    dispatch(setMidtermNumber(payload));
   };
 
-  const setAssisgnmentDataDispatch = (payload) => {
-      dispatch(setAssignmentData(payload));
+  const setMidtermDataDispatch = (payload) => {
+      dispatch(setMidtermData(payload));
   }
 
   const [courseStart, setCourseStart] = useState(
-    new Date("2023-01-11T21:11:54")
+    new Date("2014-08-18T21:11:54")
   );
 
-  const [assignmentone, setAssignmentone] = useState(
-    new Date("2023-01-11T21:11:54")
-  );
+  const [midtermone, setMidtermone] = useState(new Date("2023-01-11T21:11:54"));
 
-  let [assignmentoneText, setAssignmentoneText] = useState("");
+  let [midtermoneText, setMidtermoneText] = useState("");
 
-  const [assignmentNumbers, setAssignmentNumbers] = useState("");
-  const [assignmentNumbers1, setassignmentNumbers1] = useState([]);
+  const [midtermNumbers, setMidtermNumbers] = useState("");
+  const [midtermNumbers1, setMidtermNumbers1] = useState([]);
 
   const [itemss, setItemss] = useState([
     {
@@ -67,19 +61,19 @@ function Assignment() {
 
   useEffect(() => {
     newElements();
-  }, [assignmentNumber12]);
-
+  }, [midtermNumber12]);
   const newElements = () => {
-    let value = assignmentNumber12;
+    let value = midtermNumber12;
     let array = [];
     for (let i = 0; i < value; i++) {
       array.push(i);
     }
-    setassignmentNumbers1(array);
+    setMidtermNumbers1(array);
   };
 
-  const assignmentDatesHelper = (val) => {
+  const midtermDatesHelper = (val) => {
     let newArr = [...itemss];
+
     let index = itemss.findIndex((x) => x.id == val.id);
     if (index == -1) {
       //console.log("sdaas");
@@ -96,11 +90,11 @@ function Assignment() {
       //console.log(newArr);
       ////console.log(newArr[1]);
 
-      if (newArr.length > parseInt(assignmentNumbers, 10) + 1) {
+      if (newArr.length > parseInt(midtermNumbers, 10) + 1) {
         let finArr = [];
         //console.log("heresss");
         newArr.map((x, key) => {
-          if (key < parseInt(assignmentNumbers, 10) + 1) {
+          if (key < parseInt(midtermNumbers, 10) + 1) {
             finArr.push(x);
             //console.log(finArr);
           }
@@ -117,10 +111,10 @@ function Assignment() {
       }
       ////console.log(itemss[index].date)
     }
-    setAssisgnmentDataDispatch(itemss);
+    setMidtermDataDispatch(itemss);
   };
 
-  const assignmentTexts = (val) => {
+  const midtermTexts = (val) => {
     let text = val.desc;
     let newArr = [...itemss];
     let index = itemss.findIndex((x) => x.id == val.id);
@@ -136,12 +130,12 @@ function Assignment() {
     } else {
       let value = val.desc;
       newArr[index].desc = value;
-      if (newArr.length > parseInt(assignmentNumbers, 10) + 1) {
-        //console.log(assignmentNumbers);
+      if (newArr.length > parseInt(midtermNumbers, 10) + 1) {
+        //console.log(midtermNumbers);
         let finArr = [];
         //console.log("here");
         newArr.map((x, key) => {
-          if (key < parseInt(assignmentNumbers, 10) + 1) {
+          if (key < parseInt(midtermNumbers, 10) + 1) {
             finArr.push(x);
             //console.log(finArr);
           }
@@ -154,25 +148,24 @@ function Assignment() {
 
       //console.log(itemss);
     }
-    setAssisgnmentDataDispatch(itemss);
-
+    setMidtermDataDispatch(itemss);
   };
 
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
-        {assignmentNumber12 >= 1 ? <h2>Assignments</h2> : <div />}
+        {midtermNumber12 >= 1 ? <h2>Midterms</h2> : <div />}
       </div>
 
-      {assignmentNumbers1.map((val, key) => {
+      {midtermNumbers1.map((val, key) => {
         ////console.log(items);
-        let index = itemss.findIndex((x) => x.id == `assignment${key + 1}`);
+        let index = itemss.findIndex((x) => x.id == `midterm${key + 1}`);
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
           //console.log("true");
         } else {
-          newIndex = assignmentone;
+          newIndex = midtermone;
           //console.log("false");
         }
         //console.log(index);
@@ -180,13 +173,13 @@ function Assignment() {
           <div className={classes.ExamDates}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
-                id={`assignment${key + 1}Date`}
-                label={`assignment ${key + 1}`}
+                id={`midterm${key + 1}Date`}
+                label={`midterm ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : assignmentone}
+                value={index != -1 ? itemss[index].date : midtermone}
                 onChange={(e) => {
-                  assignmentDatesHelper({
-                    id: `assignment${key + 1}`,
+                  midtermDatesHelper({
+                    id: `midterm${key + 1}`,
                     date: e,
                     desc: "",
                   });
@@ -194,13 +187,13 @@ function Assignment() {
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
-                id={`assignment${key + 1}Description`}
-                label={`Assignment ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : assignmentoneText}
+                id={`midterm${key + 1}Description`}
+                label={`Midterm ${key + 1} Description`}
+                value={index != -1 ? itemss[index].desc : midtermoneText}
                 onChange={(e) => {
                   ////console.log(e.target.value)
-                  assignmentTexts({
-                    id: `assignment${key + 1}`,
+                  midtermTexts({
+                    id: `midterm${key + 1}`,
                     desc: e.target.value,
                   });
                 }}
@@ -213,4 +206,4 @@ function Assignment() {
   );
 }
 
-export default Assignment;
+export default Midterm;

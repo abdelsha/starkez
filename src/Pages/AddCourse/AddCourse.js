@@ -9,9 +9,26 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, listItemIconClasses } from "@mui/material";
+import { Alert, Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
-import { submitCourseInfo } from "../../Redux/Actions/Course";
+import {
+    setAssignmentData,
+  setAssignmentNumber,
+  setExamData,
+  setExamNumber,
+  setMidtermData,
+  setMidtermNumber,
+  setProjectData,
+  setProjectNumber,
+  setQuizData,
+  setQuizNumber,
+  submitCourseInfo,
+} from "../../Redux/Actions/Course";
+import Examination from "./Examination";
+import Assignment from "./Assignment";
+import Project from "./Projects";
+import Midterm from "./Midterms";
+import Quiz from "./Quizes";
 
 function AddCourse() {
   var list1 = [];
@@ -21,40 +38,93 @@ function AddCourse() {
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
+  const examNumber12 = useSelector((state) => {
+    return state.courseState.examNumber;
+  });
+  const midtermNumber12 = useSelector((state) => {
+    return state.courseState.midtermNumber;
+  });
 
+  const quizNumber12 = useSelector((state) => {
+    return state.courseState.quizNumber;
+  });
+
+  const assignmentNumber12 = useSelector((state) => {
+    return state.courseState.assignmentNumber;
+  });
+
+  const projectNumber12 = useSelector((state) => {
+    return state.courseState.projectNumber;
+  });
+
+  const midtermData12 = useSelector((state) => {
+    return state.courseState.midtermData;
+  });
+  const projectData12 = useSelector((state) => {
+    return state.courseState.projectData;
+  });
+  const assignmentData12 = useSelector((state) => {
+    return state.courseState.assignmentData;
+  });
+  const quizData12 = useSelector((state) => {
+    return state.courseState.quizData;
+  });
+  const examData12 = useSelector((state) => {
+    return state.courseState.examData;
+  });
   const dispatch = useDispatch();
 
   const [courseStart, setCourseStart] = useState(
-    new Date("2014-08-18T21:11:54")
+    new Date("2023-01-11T21:11:54")
   );
 
-  const [courseEnd, setCourseEnd] = useState(new Date("2014-08-18T21:11:54"));
-  const [midtermone, setMidtermone] = useState(new Date("2014-08-18T21:11:54"));
-  const [midtermtwo, setMidtermtwo] = useState(new Date("2014-08-18T21:11:54"));
-  const [midtermthree, setMidtermthree] = useState(
-    new Date("2014-08-18T21:11:54")
+  const setExamNumberDispatch = (payload) => {
+    dispatch(setExamNumber(payload));
+  };
+
+  const setMidtermNumberDispatch = (payload) => {
+    dispatch(setMidtermNumber(payload));
+  };
+
+  const setQuizNumberDispatch = (payload) => {
+    dispatch(setQuizNumber(payload));
+  };
+
+  const setAssignmentNumberDispatch = (payload) => {
+    dispatch(setAssignmentNumber(payload));
+  };
+  const setProjectNumberDispatch = (payload) => {
+    dispatch(setProjectNumber(payload));
+  };
+
+  const [courseEnd, setCourseEnd] = useState(new Date("2023-01-11T21:11:54"));
+  const [midtermone, setMidtermone] = useState(new Date("2023-01-11T21:11:54"));
+  const [midtermtwo, setMidtermtwo] = useState(new Date("2023-01-11T21:11:54"));
+  const [midtermthree, setMidtermthree] = useState(new Date("2023-01-11T21:11:54")
   );
-  const [exam, setExam] = useState(new Date("2014-08-18T21:11:54"));
+  const [exam, setExam] = useState(new Date("2023-01-11T21:11:54"));
   let [midtermoneText, setMidtermoneText] = useState("");
   let [midtermtwoText, setMidtermtwoText] = useState("");
   let [midtermthreeText, setMidtermthreeText] = useState("");
   const [courseName, setCourseName] = useState("");
   const [courseYear, setCourseYear] = useState("");
   const [examNumbers, setExamNumbers] = useState("");
-  const [examNumbers1, setExamNumbers1] = useState([]);
+
   const [midtermNumbers, setMidtermNumbers] = useState("");
-  const [midtermNumbers1, setMidtermNumbers1] = useState([]);
+
   const [quizNumbers, setQuizNumbers] = useState("");
-  const [quizNumbers1, setQuizNumbers1] = useState([]);
+
   const [assignmentNumbers, setAssignmentNumbers] = useState("");
-  const [assignmentNumbers1, setAssignmentNumbers1] = useState([]);
+
   const [projectNumbers, setProjectNumbers] = useState("");
-  const [projectNumbers1, setProjectNumbers1] = useState([]);
-  const [itemss, setItemss] = useState([{
-    id: "",
-    date: "",
-    desc:""
-  }]);
+
+  const [itemss, setItemss] = useState([
+    {
+      id: "",
+      date: "",
+      desc: "",
+    },
+  ]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -64,22 +134,19 @@ function AddCourse() {
   };
 
   const reset = (e) => {
-    setCourseStart("");
+    setCourseStart(new Date("2023-01-11T21:11:54"));
     setCourseEnd("");
-    setMidtermone("");
-    setMidtermtwo("");
-    setMidtermthree("");
-    setExam("");
-    setMidtermoneText("");
-    setMidtermtwoText("");
-    setMidtermthreeText("");
     setCourseName("");
-    setCourseYear("");
-    setExamNumbers("");
-    setMidtermNumbers("");
-    setQuizNumbers("");
-    setAssignmentNumbers("");
-    setProjectNumbers("");
+    dispatch(setExamNumber(""));
+    dispatch(setMidtermNumber(""));
+    dispatch(setQuizNumber(""));
+    dispatch(setAssignmentNumber(""));
+    dispatch(setProjectNumber(""));
+    dispatch(setExamData(""));
+    dispatch(setMidtermData(""));
+    dispatch(setQuizData(""));
+    dispatch(setAssignmentData(""));
+    dispatch(setProjectData(""));
     handleClick(e);
   };
 
@@ -90,7 +157,8 @@ function AddCourse() {
       return;
     }
     if (userstat) {
-      console.log("sentdata");
+        
+      console.log("sentdatas");
       const payload = {
         user: userstat,
         timestamp: firebase.firestore.Timestamp.now(),
@@ -120,96 +188,45 @@ function AddCourse() {
     setCourseEnd(newValue);
   };
 
-  const newElements = (value) => {
-    let i = 0;
-    setMidtermNumbers(value);
-    let array = [];
-    for (i = 0; i < value; i++) {
-      array.push(i);
+  function submitEverything (e) {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
     }
-    setMidtermNumbers1(array);
-  };
+   let examDataSub=examData12.filter(x=> x.id!='');
+   let midtermDataSub=midtermData12.filter(x=> x.id!= '');
+   let quizDataSub=quizData12.filter(x=> x.id!='');
+   let assignmentDataSub=assignmentData12.filter(x=> x.id!= '');
+   let projectDataSub=projectData12.filter(x=> x.id!= '');
 
-  const midtermDatesHelper = (val) => {
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-        console.log('sdaas')
-      setItemss([
-        ...itemss,
-        {
-          id: val.id,
-          date: val.date,
-          desc:""
-        },
-      ]);
-    } else {
-      let newArr = [...itemss];
-      
-      newArr[index].date = val.date;
-      console.log(newArr)
-      //console.log(newArr[1]);
-      
-      if (newArr.length > parseInt(midtermNumbers, 10)+1) {
-        let finArr = [];
-        console.log('heresss')
-        newArr.map((x, key) => {
-          if (key < parseInt(midtermNumbers, 10)+1) {
-            finArr.push(x);
-            console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        //console.log(newArr)
-        setItemss(newArr);
 
-        /*console.log("newArr:")
-        console.log(newArr)
-        console.log("items")
-        console.log(itemss)*/
-      }
-      //console.log(itemss[index].date)
+    const payloads = {
+        user: userstat,
+        timestamp: firebase.firestore.Timestamp.now(),
+        courseName: courseName,
+        courseYear: courseYear,
+        courseStart: courseStart,
+        courseEnd: courseEnd,
+        midterms : midtermDataSub,
+        exams: examDataSub,
+        quizes: quizDataSub, 
+        assignments: assignmentDataSub,
+        projects: projectDataSub,
     }
-  };
-
-  const midtermTexts = (val) => {
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-        setItemss([
-          ...itemss,
-          {
-            id: val.id,
-            date: "",
-            desc: val.desc,
-          },
-        ]);
-    }else{
-        
-        let value=val.desc;
-        newArr[index].desc=value;
-        if ((newArr.length) > parseInt(midtermNumbers, 10)+1) {
-            console.log(midtermNumbers)
-            let finArr = [];
-            console.log('here')
-            newArr.map((x, key) => {
-              if (key < parseInt(midtermNumbers, 10)+1) {
-                finArr.push(x);
-                console.log(finArr);
-              }
-            });
-            setItemss(finArr);
-          } else {
-            //console.log(newArr)
-            setItemss(newArr);
-          
+    //console.log(payloads);
+    if (userstat){
+        if (courseName!=""){
+            dispatch(submitCourseInfo(payloads));
+            //reset(e);
+        }else{
+            alert("Please Enter Course Name")
         }
         
-        console.log(itemss)
-    }
-    
-  };
+    } 
+    else{
+        console.log('user not logged in')
+    } 
+  }
 
   return (
     <div className={classes.CommonCard}>
@@ -274,9 +291,9 @@ function AddCourse() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={examNumbers}
+                value={examNumber12}
                 onChange={(e) => {
-                  setExamNumbers(e.target.value);
+                  setExamNumberDispatch(e.target.value);
                 }}
               />
               <TextField
@@ -286,9 +303,9 @@ function AddCourse() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={midtermNumbers}
+                value={midtermNumber12}
                 onChange={(e) => {
-                  newElements(e.target.value);
+                  setMidtermNumberDispatch(e.target.value);
                 }}
               />
             </div>
@@ -300,8 +317,8 @@ function AddCourse() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={quizNumbers}
-                onChange={(e) => setQuizNumbers(e.target.value)}
+                value={quizNumber12}
+                onChange={(e) => setQuizNumberDispatch(e.target.value)}
               />
               <TextField
                 id="outlined-number"
@@ -310,9 +327,9 @@ function AddCourse() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={assignmentNumbers}
+                value={assignmentNumber12}
                 onChange={(e) => {
-                  setAssignmentNumbers(e.target.value);
+                  setAssignmentNumberDispatch(e.target.value);
                 }}
               />
             </div>
@@ -324,8 +341,8 @@ function AddCourse() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={projectNumbers}
-                onChange={(e) => setProjectNumbers(e.target.value)}
+                value={projectNumber12}
+                onChange={(e) => setProjectNumberDispatch(e.target.value)}
               />
               <TextField
                 required
@@ -337,67 +354,17 @@ function AddCourse() {
             <div className={classes.CourseDesc}></div>
           </div>
         </div>
-
-        <div className={classes.Exams}>
-          <div className={classes.ExamHead}>
-            <h2>Midterms And Exams</h2>
-          </div>
-
-          {midtermNumbers1.map((val, key) => {
-            //console.log(items);
-            let index = itemss.findIndex((x) => x.id == `midterm${key + 1}`);
-            let newIndex = 0;
-            if (index != -1) {
-              newIndex = index;
-              console.log("true");
-            } else {
-              newIndex = midtermone;
-              console.log("false");
-            }
-            console.log(index);
-            return (
-              <div className={classes.ExamDates}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    id={`midterm${key + 1}Date`}
-                    label={`midterm ${key + 1}`}
-                    inputFormat="MM/dd/yyyy"
-                    value={index != -1 ? itemss[index].date : midtermone}
-                    onChange={(e) => {
-                      midtermDatesHelper({
-                        id: `midterm${key + 1}`,
-                        date: e,
-                        desc:"",
-                      });
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <TextField
-                    id={`midterm${key + 1}Description`}
-                    label={`Midterm ${key + 1} Description`}
-                    value={index != -1 ? itemss[index].desc : midtermoneText}
-                    onChange={(e) => {
-                        //console.log(e.target.value)
-                        midtermTexts({
-                            id: `midterm${key + 1}`,
-                            desc:e.target.value,
-                          });
-                        }}
-                  />
-                </LocalizationProvider>
-              </div>
-            );
-          })}
-
-          
-        </div>
-        
+        <Midterm />
+        <Examination />
+        <Quiz />
+        <Assignment />
+        <Project />
 
         <div className={classes.Button}>
           <Button
             variant="contained"
             onClick={(e) => {
-              submitCourseInfoHelper(e);
+              submitEverything(e);
             }}
           >
             submit
@@ -409,85 +376,3 @@ function AddCourse() {
 }
 
 export default AddCourse;
-
-
-
-
-{/* 
-          <div className={classes.ExamDates}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Midterm 1"
-                inputFormat="MM/dd/yyyy"
-                value={midtermone}
-                onChange={(e) => {
-                  setMidtermone(e);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-              <TextField
-                id="outlined"
-                label="Midterm 1 Description"
-                value={midtermoneText}
-                onChange={(e) => {
-                  setMidtermoneText(e.target.value);
-                }}
-              />
-            </LocalizationProvider>
-          </div>
-          <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Midterm 2"
-                inputFormat="MM/dd/yyyy"
-                value={midtermtwo}
-                onChange={(e) => {
-                  setMidtermtwo(e);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-              <TextField
-                id="outlined"
-                label="Midterm 2 Description"
-                value={midtermtwoText}
-                onChange={(e) => {
-                  setMidtermtwoText(e.target.value);
-                }}
-              />
-            </LocalizationProvider>
-          </div>
-          <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Midterm 3"
-                inputFormat="MM/dd/yyyy"
-                value={midtermthree}
-                onChange={(e) => {
-                  setMidtermthree(e);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-              <TextField
-                id="outlined"
-                label="Midterm 3 Description"
-                value={midtermthreeText}
-                onChange={(e) => {
-                  setMidtermthreeText(e.target.value);
-                }}
-              />
-            </LocalizationProvider>
-          </div>
-          <div className={classes.ExamDates}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Final Exam"
-                inputFormat="MM/dd/yyyy"
-                value={exam}
-                onChange={(e) => {
-                  setExam(e);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </div>
-          */}
