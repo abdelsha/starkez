@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import classes from './NavigationBar.module.css';
+import classes from "./NavigationBar.module.css";
 import { useSelector, useDispatch } from "react-redux";
 
 function NavigationBar() {
@@ -14,32 +14,33 @@ function NavigationBar() {
   const dispatch = useDispatch();
 
   return (
-    <div className={classes.NavBar}>
-      <div className={classes.NavTab}>tab</div>
-      <nav className={classes.NavMenue}>
-        <Link to="/Home">Home</Link>
+    <div className={classes.Layout}>
+    <div className={classes.MenuBar}>
+      <div className={classes.NavBar}>
+        
+        <nav className={classes.NavMenue}>
+          <Link to="/Home">Home</Link>
 
-        <Link to="/Courses">Courses</Link>
+          <Link to="/Courses">Courses</Link>
 
-        <Link to="/Deadlines">Deadlines</Link>
+          <Link to="/Deadlines">Deadlines</Link>
 
-        <Link to="/Study_History">Study_History</Link>
+          <Link to="/Study_History">Study_History</Link>
 
-        <Link to="/Friends">Friends</Link>
+          <Link to="/Friends">Friends</Link>
 
-        <Link to="/Messages">Messages</Link>
+          <Link to="/Messages">Messages</Link>
 
-        <Link to="/Settings">Settings</Link>
-      </nav>
-      <div className={classes.User}>
-        {userstat && userstat.photoURL ? (
-          <img src={userstat.photoURL} all="" />
-          
-        ) : (
-          <img src="/images/user1.svg" all="" />
-        )}
-      </div>
-      {/*import * as React from 'react';
+          <Link to="/Settings">Settings</Link>
+        </nav>
+        <div className={classes.User}>
+          {userstat && userstat.photoURL ? (
+            <img src={userstat.photoURL} all="" />
+          ) : (
+            <img src="/images/user1.svg" all="" />
+          )}
+        </div>
+        {/*import * as React from 'react';
               import Box from '@mui/material/Box';
               import Avatar from '@mui/material/Avatar';
               import Menu from '@mui/material/Menu';
@@ -137,8 +138,11 @@ function NavigationBar() {
                 );
               }
               */}
-    </div>
+      </div>
+      </div>
+      </div>
   );
+  
 }
 
 export default NavigationBar;

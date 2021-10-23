@@ -109,6 +109,7 @@ function AddCourse() {
   const [courseName, setCourseName] = useState("");
   const [courseYear, setCourseYear] = useState("");
   const [examNumbers, setExamNumbers] = useState("");
+  const [courseDesc, setCourseDesc] =useState("");
 
   const [midtermNumbers, setMidtermNumbers] = useState("");
 
@@ -118,13 +119,7 @@ function AddCourse() {
 
   const [projectNumbers, setProjectNumbers] = useState("");
 
-  const [itemss, setItemss] = useState([
-    {
-      id: "",
-      date: "",
-      desc: "",
-    },
-  ]);
+  const [itemss, setItemss] = useState([{id: "",date: "",desc: "",},]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -137,16 +132,17 @@ function AddCourse() {
     setCourseStart(new Date("2023-01-11T21:11:54"));
     setCourseEnd("");
     setCourseName("");
+    setCourseYear("");
     dispatch(setExamNumber(""));
     dispatch(setMidtermNumber(""));
     dispatch(setQuizNumber(""));
     dispatch(setAssignmentNumber(""));
     dispatch(setProjectNumber(""));
-    dispatch(setExamData(""));
-    dispatch(setMidtermData(""));
-    dispatch(setQuizData(""));
-    dispatch(setAssignmentData(""));
-    dispatch(setProjectData(""));
+    dispatch(setExamData([{id: "",date: "",desc: "",},]));
+    dispatch(setMidtermData([{id: "",date: "",desc: "",},]));
+    dispatch(setQuizData([{id: "",date: "",desc: "",},]));
+    dispatch(setAssignmentData([{id: "",date: "",desc: "",},]));
+    dispatch(setProjectData([{id: "",date: "",desc: "",},]));
     handleClick(e);
   };
 
@@ -193,6 +189,8 @@ function AddCourse() {
     if (e.target !== e.currentTarget) {
       return;
     }
+    //console.log(quizData12);
+    //console.log(projectData12);
    let examDataSub=examData12.filter(x=> x.id!='');
    let midtermDataSub=midtermData12.filter(x=> x.id!= '');
    let quizDataSub=quizData12.filter(x=> x.id!='');
@@ -217,7 +215,7 @@ function AddCourse() {
     if (userstat){
         if (courseName!=""){
             dispatch(submitCourseInfo(payloads));
-            //reset(e);
+            reset(e);
         }else{
             alert("Please Enter Course Name")
         }
@@ -257,6 +255,7 @@ function AddCourse() {
               <TextField
                 required
                 id="outlined-required"
+                type ="number"
                 label="Course Year"
                 placeholder="Ex. 4th Year"
                 value={courseYear}
@@ -349,6 +348,8 @@ function AddCourse() {
                 className={classes.CourseDesc}
                 id="outlined-required"
                 label="Course Description"
+                value={courseDesc}
+                onChange={(e) => setCourseDesc(e.target.value)}
               />
             </div>
             <div className={classes.CourseDesc}></div>

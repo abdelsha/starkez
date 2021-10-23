@@ -5,12 +5,12 @@ const INITIAL_STATE = {
   quizNumber: "",
   assignmentNumber: "",
   projectNumber: "",
-  courseData:"",
-  examData:"",
-  midtermData: "",
-  quizData: "",
-  assignmentData: "",
-  projectData: "",
+  courseData:[{id: "",date: "",desc: "",},],
+  examData:[{id: "",date: "",desc: "",},],
+  midtermData: [{id: "",date: "",desc: "",},],
+  quizData: [{id: "",date: "",desc: "",},],
+  assignmentData: [{id: "",date: "",desc: "",},],
+  projectData: [{id: "",date: "",desc: "",},],
 };
 
 const courseReducer = (state = INITIAL_STATE, action) => {
