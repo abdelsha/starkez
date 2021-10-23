@@ -1,0 +1,49 @@
+.CommonCard {
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 10px;
+    padding: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
+  .Layouts {
+    display: grid;
+  
+    grid-template-columns: minmax(0, 4fr) minmax(0, 4fr);
+    grid-template-rows: minmax(0, 4fr) minmax(0, 4fr);
+    grid-template-areas:
+      "top top"
+      "leftside rightside";
+    column-gap: 0px;
+    height: 100%;
+  }
+  @media (max-width: 768px) {
+    .Layouts {
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
+    }
+  }
+  
+  
+  
+  
+  
+  .Recommend {
+    grid-area: leftside;
+  }
+  .Status {
+      grid-area: rightside;
+  }
+  .History{
+      grid-area: top;
+  }
+  .main {
+    display: flex;
+  }
+  

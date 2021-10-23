@@ -12,10 +12,10 @@ import HomePage from "./Pages/Home/Home";
 import CoursePage from "./Pages/Course/Courses";
 import SettingPage from "./Pages/Settings/Setting";
 import PortfolioPage from "./Pages/Portfolio/Portfolio";
-import DeadlinePage from "./Pages/Deadlines/Deadlines";
-import FriendPage from "./Pages/Friends/Friends";
-import MessagePage from "./Pages/Messages/Message";
-import StudyHistoryPage from "./Pages/StudyHistory/StudyHistory";
+import DeadlinePage from "./Pages/Deadlines/DeadlinePage";
+import FriendPage from "./Pages/Friends/FriendsPage";
+import MessagePage from "./Pages/Messages/MessagePage";
+import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
 
 function App() {

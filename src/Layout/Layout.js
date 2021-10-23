@@ -39,13 +39,17 @@ function Layout(props) {
             </div>
             {console.log(menuBarStatus)}
             {menuBarStatus=="true"? (
+            <div>
             <NavigationBar>
+            {props.children}
+            </NavigationBar>
+            </div>
+            ):(
+                <div>
+                <NavigationTab>
                 {props.children}
-            </NavigationBar>)
-            :(
-            <NavigationTab>
-                {props.children}
-            </NavigationTab>)}
+                </NavigationTab>
+                </div>)}
             
             
             

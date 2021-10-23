@@ -1,18 +1,26 @@
 .Layout{
     display: grid;
-    grid-template-areas: "leftside main";
+    
     grid-template-columns: minmax(0, 4fr) minmax(0, 25fr);
+    grid-template-rows: minmax(35px,45px) minmax(0, 25fr);
+    grid-template-areas: 
+    "leftside main"
+    "leftside body";
     column-gap: 0px;
     row-gap: 0px;
-    grid-template-rows: auto;
+    
     height: 100vh;
     
     
 }
-
+@media(max-width:768px) {
+    .Layout{
+        grid-template-rows: minmax(35px,45px) minmax(0, 25fr);
+    }
+}
 .MenuBars{
    
-    grid-area: main;
+    grid-area: main ;
     min-height: 100%;
 }
 
@@ -168,4 +176,31 @@
     .User img{
         height: 25px;
     }
+}
+
+.ContentInfo{
+    grid-area: body;
+}
+
+.Signout{
+    position: fixed;
+  top: 45px;
+  right: 55px;
+  display: block;
+  justify-content: flex-end;
+  width: 30px;
+  opacity: 20%;
+}
+.User:hover ~ .Signout{
+    opacity: 100%;
+    
+}
+.Signout:hover{
+    opacity: 100%;
+}
+.User:hover > .Signout {
+    
+        opacity: 100%;
+    
+    
 }

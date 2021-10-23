@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import React from "react";
 import classes from "./NavigationTab.module.css";
 import { useSelector, useDispatch } from "react-redux";
+import { Button } from "@mui/material";
 
-function NavigationTab() {
+function NavigationTab(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -36,7 +37,12 @@ function NavigationTab() {
             </a>
           
         </nav>
+        
+        
       </div>
+      <div className={classes.ContentInfo}>
+            {props.children}
+        </div>
       <div className={classes.MenuBars}>
         <div className={classes.MenuBar}>
           <nav className={classes.NavMenue}>
@@ -54,8 +60,15 @@ function NavigationTab() {
             ) : (
               <img src="/images/user1.svg" all="" />
             )}
+            
           </div>
+          
         </div>
+        <div className={classes.Signout}> 
+              <Button
+              sx={{"background-color":"white"}}
+              >SignOut</Button>
+          </div>
       </div>
     </div>
   );

@@ -1,0 +1,43 @@
+.CommonCard {
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 10px;
+    padding: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
+  .Layouts {
+    display: grid;
+  
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "deadline deadline"
+      "status status";
+    column-gap: 0px;
+    row-gap: 5px;
+    height: 100%;
+  }
+  @media (max-width: 768px) {
+    .Layouts {
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
+    }
+  }
+  
+  
+  
+  
+  
+  .Deadlines {
+    grid-area: deadline;
+  }
+  .Status {
+      grid-area: status;
+  }

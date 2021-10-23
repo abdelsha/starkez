@@ -1,13 +1,26 @@
 .Layout{
     display: grid;
-    grid-template-areas: "main main";
+    
     grid-template-columns: minmax(0, 4fr) minmax(0, 25fr);
+    grid-template-rows: minmax(35px,45px) minmax(0, 25fr);
+    grid-template-areas: 
+    "main main"
+    "body body";
     column-gap: 0px;
     row-gap: 0px;
-    grid-template-rows: auto;
+
+    
     height: 100vh;
     
     
+}
+@media(max-width:768px) {
+    .Layout{
+        grid-template-rows: minmax(35px,45px) minmax(0, 25fr);
+    }
+}
+.Body{
+    grid-area: body;
 }
 .MenuBar{
     
@@ -105,4 +118,7 @@
     .User img{
         height: 25px;
     }
+}
+.Body{
+    grid-area: body;
 }

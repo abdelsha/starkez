@@ -17,29 +17,33 @@ function CoursePage() {
   const dispatch = useDispatch();
   return (
     <div className={classes.Layouts}>
-      <div className={classes.MenuTabs}>Course</div>
-
-      <div className={classes.MainArea}>
-          <div className={classes.MainContent}>
-          {/*<Deadlines/>
-          <Status/>
-          <StudyHistory/>*/}
-              
-              
-             
-
-          </div>
+      
+        <div className={classes.Deadlines}>
+          <Deadlines />
+          
+        </div>
+        <div className={classes.Status}>
+        <Status />
+          
+        </div>
+        <div className={classes.History}>
+        <StudyHistory />
+        </div>
         <div className={classes.Button}>
-          <Button variant="contained" href="/Add_Course" className={classes.buttons} sx={{
-              "border-radius":"50%",
-              "padding":"5px 5px",
-              "min-width":"auto",
-          }}>
-              <img src="./images/plus-icon.png" all=""/>
-            
+          <Button
+            variant="contained"
+            href="/Add_Course"
+            className={classes.buttons}
+            sx={{
+              "border-radius": "50%",
+              padding: "5px 5px",
+              "min-width": "auto",
+            }}
+          >
+            <img src="./images/plus-icon.png" all="" />
           </Button>
         </div>
-      </div>
+      
     </div>
   );
 }

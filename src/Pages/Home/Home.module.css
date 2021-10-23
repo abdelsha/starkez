@@ -1,0 +1,94 @@
+.CommonCard {
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 5px;
+    padding: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
+  .Layouts {
+    display: grid;
+  
+    grid-template-columns: repeat(3, 1fr) ;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+      "courses deadliness friends"
+      "course_detail course_detail message"
+      "course_detail course_detail video"
+      "study_history study_history study_session"
+      "study_history study_history encouraging"
+      ;
+      
+    column-gap: 5px;
+    row-gap: 5px;
+    height: 100%;
+  }
+  .Courses{
+      grid-area: courses;
+  }
+  .Deadlines{
+      grid-area: deadliness;
+  }
+  .Friends{
+      grid-area: friends;
+  }
+  .CourseDetail{
+      grid-area: course_detail;
+  }
+  .Messages{
+      grid-area: message;
+  }
+  .Videos{
+      grid-area: video;
+  }
+  .StudySession{
+      grid-area: study_session;
+  }
+  .StudyHistory{
+      grid-area: study_history;
+  }
+  .Encouraging{
+      grid-area: encouraging;
+  }
+  @media (max-width: 768px) {
+    .Layouts {
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
+    }
+  }
+  
+  
+  
+  
+  
+
+  
+  
+  .Button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    display: block;
+    justify-content: flex-end;
+    width: 30px;
+    opacity: 50%;
+  }
+  .Buttons {
+    border-radius: 25px;
+  }
+  .Button:hover {
+    opacity: 100%;
+  }
+  .Button img {
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+  
