@@ -14,7 +14,7 @@ import firebase from "firebase";
 
 import { setMidtermData, setMidtermNumber } from "../../Redux/Actions/Course";
 
-function Midterm() {
+function Midterm(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -36,9 +36,9 @@ function Midterm() {
     dispatch(setMidtermNumber(payload));
   };
 
-  const setMidtermDataDispatch = (payload) => {
+  /*const setMidtermDataDispatch = (payload) => {
       dispatch(setMidtermData(payload));
-  }
+  }*/
 
   const [courseStart, setCourseStart] = useState(
     new Date("2014-08-18T21:11:54")
@@ -50,6 +50,7 @@ function Midterm() {
 
   const [midtermNumbers, setMidtermNumbers] = useState("");
   const [midtermNumbers1, setMidtermNumbers1] = useState([]);
+
 
   const [itemss, setItemss] = useState([
     {
@@ -111,7 +112,8 @@ function Midterm() {
       }
       ////console.log(itemss[index].date)
     }
-    setMidtermDataDispatch(itemss);
+    props.data(itemss);
+    //setMidtermDataDispatch(itemss);
   };
 
   const midtermTexts = (val) => {
@@ -148,7 +150,8 @@ function Midterm() {
 
       //console.log(itemss);
     }
-    setMidtermDataDispatch(itemss);
+    props.data(itemss);
+    //setMidtermDataDispatch(itemss);
   };
 
   return (

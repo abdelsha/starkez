@@ -14,7 +14,7 @@ import firebase from "firebase";
 
 import { setProjectNumber, setProjectData, setMidtermNumber } from "../../Redux/Actions/Course";
 
-function Project() {
+function Project(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -36,9 +36,9 @@ function Project() {
     dispatch(setProjectNumber(payload));
   };
 
-  const setProjectDataDispatch = (payload) => {
+  /*const setProjectDataDispatch = (payload) => {
       dispatch(setProjectData(payload));
-  }
+  }*/
 
   const [courseStart, setCourseStart] = useState(
     new Date("2014-08-18T21:11:54")
@@ -112,7 +112,8 @@ function Project() {
       }
       ////console.log(itemss[index].date)
     }
-    setProjectDataDispatch(itemss);
+    props.data(itemss);
+    //setProjectDataDispatch(itemss);
   };
 
   const projectTexts = (val) => {
@@ -149,7 +150,8 @@ function Project() {
 
       //console.log(itemss);
     }
-    setProjectDataDispatch(itemss);
+    props.data(itemss);
+    //setProjectDataDispatch(itemss);
   };
 
   return (

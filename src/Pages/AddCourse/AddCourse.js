@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 import {
-    setAssignmentData,
+  setAssignmentData,
   setAssignmentNumber,
   setExamData,
   setExamNumber,
@@ -30,8 +30,9 @@ import Project from "./Projects";
 import Midterm from "./Midterms";
 import Quiz from "./Quizes";
 
-function AddCourse() {
+function AddCourse(props) {
   var list1 = [];
+
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -57,21 +58,6 @@ function AddCourse() {
     return state.courseState.projectNumber;
   });
 
-  const midtermData12 = useSelector((state) => {
-    return state.courseState.midtermData;
-  });
-  const projectData12 = useSelector((state) => {
-    return state.courseState.projectData;
-  });
-  const assignmentData12 = useSelector((state) => {
-    return state.courseState.assignmentData;
-  });
-  const quizData12 = useSelector((state) => {
-    return state.courseState.quizData;
-  });
-  const examData12 = useSelector((state) => {
-    return state.courseState.examData;
-  });
   const dispatch = useDispatch();
 
   const [courseStart, setCourseStart] = useState(
@@ -98,29 +84,49 @@ function AddCourse() {
   };
 
   const [courseEnd, setCourseEnd] = useState(new Date("2023-01-11T21:11:54"));
-  const [midtermone, setMidtermone] = useState(new Date("2023-01-11T21:11:54"));
-  const [midtermtwo, setMidtermtwo] = useState(new Date("2023-01-11T21:11:54"));
-  const [midtermthree, setMidtermthree] = useState(new Date("2023-01-11T21:11:54")
-  );
-  const [exam, setExam] = useState(new Date("2023-01-11T21:11:54"));
-  let [midtermoneText, setMidtermoneText] = useState("");
-  let [midtermtwoText, setMidtermtwoText] = useState("");
-  let [midtermthreeText, setMidtermthreeText] = useState("");
+
   const [courseName, setCourseName] = useState("");
   const [courseYear, setCourseYear] = useState("");
-  const [examNumbers, setExamNumbers] = useState("");
-  const [courseDesc, setCourseDesc] =useState("");
 
-  const [midtermNumbers, setMidtermNumbers] = useState("");
+  const [courseDesc, setCourseDesc] = useState("");
 
-  const [quizNumbers, setQuizNumbers] = useState("");
+  const [midtermData3, setMidtermData3] = useState([
+    { id: "", date: "", desc: "" },
+  ]);
+  const [examData3, setExamData3] = useState([{ id: "", date: "", desc: "" }]);
+  const [quizData3, setQuizData3] = useState([{ id: "", date: "", desc: "" }]);
+  const [assignmentData3, setAssignmentData3] = useState([
+    { id: "", date: "", desc: "" },
+  ]);
+  const [projectData3, setProjectData3] = useState([
+    { id: "", date: "", desc: "" },
+  ]);
 
-  const [assignmentNumbers, setAssignmentNumbers] = useState("");
 
-  const [projectNumbers, setProjectNumbers] = useState("");
+  const getMidtermDataHelper = (data) => {
+    setMidtermData3(data);
+    //console.log(midtermData3)
+  };
 
-  const [itemss, setItemss] = useState([{id: "",date: "",desc: "",},]);
+  const getExamDataHelper = (data) => {
+    setExamData3(data);
+    //console.log(midtermData3)
+  };
 
+  const getQuizDataHelper = (data) => {
+    setQuizData3(data);
+    //console.log(midtermData3)
+  };
+
+  const getAssignmentDataHelper = (data) => {
+    setAssignmentData3(data);
+    //console.log(midtermData3)
+  };
+
+  const getProjectDataHelper = (data) => {
+    setProjectData3(data);
+    //console.log(midtermData3)
+  };
   const handleClick = (e) => {
     e.preventDefault();
     if (e.target !== e.currentTarget) {
@@ -138,43 +144,13 @@ function AddCourse() {
     dispatch(setQuizNumber(""));
     dispatch(setAssignmentNumber(""));
     dispatch(setProjectNumber(""));
-    dispatch(setExamData([{id: "",date: "",desc: "",},]));
-    dispatch(setMidtermData([{id: "",date: "",desc: "",},]));
-    dispatch(setQuizData([{id: "",date: "",desc: "",},]));
-    dispatch(setAssignmentData([{id: "",date: "",desc: "",},]));
-    dispatch(setProjectData([{id: "",date: "",desc: "",},]));
+    setExamData3([{ id: "", date: "", desc: "" }]);
+    setMidtermData3([{ id: "", date: "", desc: "" }]);
+    setQuizData3([{ id: "", date: "", desc: "" }]);
+    setAssignmentData3([{ id: "", date: "", desc: "" }]);
+    setProjectData3([{ id: "", date: "", desc: "" }]);
     handleClick(e);
   };
-
-  function submitCourseInfoHelper(e) {
-    console.log("clicked");
-    e.preventDefault();
-    if (e.target !== e.currentTarget) {
-      return;
-    }
-    if (userstat) {
-        
-      console.log("sentdatas");
-      const payload = {
-        user: userstat,
-        timestamp: firebase.firestore.Timestamp.now(),
-        courseName: courseName,
-        courseYear: courseYear,
-        courseStart: courseStart,
-        courseEnd: courseEnd,
-        midtermone: midtermone,
-        midtermtwo: midtermtwo,
-        midtermthree: midtermthree,
-        exam: exam,
-        midtermoneText: midtermoneText,
-        midtermtwoText: midtermtwoText,
-        midtermthreeText: midtermthreeText,
-      };
-      dispatch(submitCourseInfo(payload));
-    } else {
-      console.log("user not logged in");
-    }
-  }
 
   const courseStartHelper = (newValue) => {
     setCourseStart(newValue);
@@ -184,46 +160,44 @@ function AddCourse() {
     setCourseEnd(newValue);
   };
 
-  function submitEverything (e) {
+  function submitEverything(e) {
     e.preventDefault();
     if (e.target !== e.currentTarget) {
       return;
     }
     //console.log(quizData12);
     //console.log(projectData12);
-   let examDataSub=examData12.filter(x=> x.id!='');
-   let midtermDataSub=midtermData12.filter(x=> x.id!= '');
-   let quizDataSub=quizData12.filter(x=> x.id!='');
-   let assignmentDataSub=assignmentData12.filter(x=> x.id!= '');
-   let projectDataSub=projectData12.filter(x=> x.id!= '');
-
+    let examDataSub = examData3.filter((x) => x.id != "");
+    let midtermDataSub = midtermData3.filter((x) => x.id != "");
+    let quizDataSub = quizData3.filter((x) => x.id != "");
+    let assignmentDataSub = assignmentData3.filter((x) => x.id != "");
+    let projectDataSub = projectData3.filter((x) => x.id != "");
 
     const payloads = {
-        user: userstat,
-        timestamp: firebase.firestore.Timestamp.now(),
-        courseName: courseName,
-        courseYear: courseYear,
-        courseStart: courseStart,
-        courseEnd: courseEnd,
-        midterms : midtermDataSub,
-        exams: examDataSub,
-        quizes: quizDataSub, 
-        assignments: assignmentDataSub,
-        projects: projectDataSub,
-    }
+      user: userstat,
+      timestamp: firebase.firestore.Timestamp.now(),
+      courseName: courseName,
+      courseYear: courseYear,
+      courseStart: courseStart,
+      courseEnd: courseEnd,
+      midterms: midtermDataSub,
+      exams: examDataSub,
+      quizes: quizDataSub,
+      assignments: assignmentDataSub,
+      projects: projectDataSub,
+    };
     //console.log(payloads);
-    if (userstat){
-        if (courseName!=""){
-            dispatch(submitCourseInfo(payloads));
-            reset(e);
-        }else{
-            alert("Please Enter Course Name")
-        }
-        
-    } 
-    else{
-        console.log('user not logged in')
-    } 
+    if (userstat) {
+      if (courseName != "") {
+        dispatch(submitCourseInfo(payloads));
+        reset(e);
+        //console.log("submitted");
+      } else {
+        alert("Please Enter Course Name");
+      }
+    } else {
+      console.log("user not logged in");
+    }
   }
 
   return (
@@ -255,7 +229,7 @@ function AddCourse() {
               <TextField
                 required
                 id="outlined-required"
-                type ="number"
+                type="number"
                 label="Course Year"
                 placeholder="Ex. 4th Year"
                 value={courseYear}
@@ -355,11 +329,12 @@ function AddCourse() {
             <div className={classes.CourseDesc}></div>
           </div>
         </div>
-        <Midterm />
-        <Examination />
-        <Quiz />
-        <Assignment />
-        <Project />
+        <Midterm data={getMidtermDataHelper} />
+
+        <Examination data={getExamDataHelper} />
+        <Quiz data={getQuizDataHelper} />
+        <Assignment data={getAssignmentDataHelper} />
+        <Project data={getProjectDataHelper} />
 
         <div className={classes.Button}>
           <Button

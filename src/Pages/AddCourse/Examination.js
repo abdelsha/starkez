@@ -14,7 +14,7 @@ import firebase from "firebase";
 
 import { setExamNumber, setExamData } from "../../Redux/Actions/Course";
 
-function Examination() {
+function Examination(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -36,9 +36,9 @@ function Examination() {
     dispatch(setExamNumber(payload));
   };
 
-  const setExamDataDispatch = (payload) => {
+  /*const setExamDataDispatch = (payload) => {
     dispatch(setExamData(payload));
-  };
+  };*/
 
   const [courseStart, setCourseStart] = useState(
     new Date("2023-01-11T21:11:54")
@@ -110,7 +110,8 @@ function Examination() {
       }
       //console.log(itemss[index].date)
     }
-    setExamDataDispatch(itemss);
+    props.data(itemss);
+    //setExamDataDispatch(itemss);
     //console.log(examData12);
   };
 
@@ -146,7 +147,8 @@ function Examination() {
         setItemss(newArr);
       }
     }
-    setExamDataDispatch(itemss);
+    props.data(itemss);
+    //setExamDataDispatch(itemss);
     //console.log(examData12);
   };
 

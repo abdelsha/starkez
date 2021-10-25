@@ -14,7 +14,7 @@ import firebase from "firebase";
 
 import { setQuizData, setQuizNumber } from "../../Redux/Actions/Course";
 
-function Quiz() {
+function Quiz(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -36,9 +36,9 @@ function Quiz() {
     dispatch(setQuizNumber(payload));
   };
 
-  const setQuizDataDispatch = (payload) => {
+  /*const setQuizDataDispatch = (payload) => {
       dispatch(setQuizData(payload))
-  }
+  }*/
 
   const [courseStart, setCourseStart] = useState(
     new Date("2023-01-11T21:11:54")
@@ -110,7 +110,8 @@ function Quiz() {
       }
       ////console.log(itemss[index].date)
     }
-    setQuizDataDispatch(itemss);
+    props.data(itemss);
+    //setQuizDataDispatch(itemss);
   };
 
   const quizTexts = (val) => {
@@ -147,7 +148,8 @@ function Quiz() {
 
       ////console.log(itemss);
     }
-    setQuizDataDispatch(itemss);
+    props.data(itemss);
+    //setQuizDataDispatch(itemss);
   };
 
   return (

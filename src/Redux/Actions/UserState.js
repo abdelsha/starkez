@@ -10,6 +10,8 @@ export const setUser = (user) => ({
     payload: user,
 });
 
+ 
+
 export function signInWithGoogleApi() {
     return (dispatch) => {
         auth.signInWithPopup(provider)
@@ -123,6 +125,20 @@ export async function sendPasswordResetEmail (email) {
     }catch(err){
         console.log(err);
         alert(err.message);
+    }
+}
+export function updateUserInfo (payload) {
+    return (dispatch)=> {
+        db.collection("User")
+          .doc(`${payload.user.uid}`).
+          collection("UserInfo").doc(`${payload.user.displayName}`).set({
+            user: payload.user.displayName,
+            time:payload.timestamp,
+            firstName:payload.firstName,
+            lastName:payload.lastName,
+            email: payload.email
+          }
+          )
     }
 }
 

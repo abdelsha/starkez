@@ -18,7 +18,7 @@ import {
   setMidtermNumber,
 } from "../../Redux/Actions/Course";
 
-function Assignment() {
+function Assignment(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -40,9 +40,9 @@ function Assignment() {
     dispatch(setAssignmentNumber(payload));
   };
 
-  const setAssisgnmentDataDispatch = (payload) => {
+  /*const setAssisgnmentDataDispatch = (payload) => {
       dispatch(setAssignmentData(payload));
-  }
+  }*/
 
   const [courseStart, setCourseStart] = useState(
     new Date("2023-01-11T21:11:54")
@@ -117,7 +117,8 @@ function Assignment() {
       }
       ////console.log(itemss[index].date)
     }
-    setAssisgnmentDataDispatch(itemss);
+    props.data(itemss);
+    //setAssisgnmentDataDispatch(itemss);
   };
 
   const assignmentTexts = (val) => {
@@ -154,7 +155,8 @@ function Assignment() {
 
       //console.log(itemss);
     }
-    setAssisgnmentDataDispatch(itemss);
+    props.data(itemss);
+    //setAssisgnmentDataDispatch(itemss);
 
   };
 

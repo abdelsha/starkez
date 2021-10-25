@@ -1,0 +1,81 @@
+.Header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 25px;
+}
+.colone{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+}
+.coltwo{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.rowone{
+    display: flex;
+    justify-content: center;
+    margin: 15px 5px;
+}
+.FirstName{
+    display: flex;
+    justify-content: center;
+    margin: 15px 5px;
+}
+.LastName{
+    display: flex;
+    justify-content: center;
+    margin: 15px 5px;
+}
+.Email{
+    display: flex;
+    justify-content: center;
+    margin: 15px 5px;
+}
+.Number{
+    display: flex;
+    justify-content: center;
+    margin: 15px 5px;
+}
+
+.User{
+    display: flex;
+    padding-right: 10px;
+    padding-left: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 0 10px 0;
+    
+}
+.User img{
+    border-radius: 50%;
+    height: 100px;
+}
+
+@media (max-width:768px) {
+    .User{
+        padding-left: 0px;
+        padding-right: 5px;
+    }
+}
+
+@media (max-width:768px) {
+    .User img{
+        height: 70px;
+    }
+}
+.Submit{
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+}
