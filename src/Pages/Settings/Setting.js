@@ -26,8 +26,9 @@ function SettingPage() {
   const [values, setValues]= useState({
       firstName:"",
       lastName:"",
-      email:"ss",
+      email:"",
       contactNumber:"",
+      image:""
   })
   const setValuesHelper =(prop,event)=> {
     
@@ -42,14 +43,16 @@ function SettingPage() {
     setValues({
         firstName:"",
         lastName:"",
-        email:"ss",
+        email:"",
         contactNumber:"",
+        image:""
     })
   }
   const dispatch = useDispatch();
 
   const submitEverything=(e) =>{
     let obj={};
+    let objPayload={};
     
     for (const prop in values){
         //console.log(`values.${prop} = ${values[prop]}`)
@@ -59,11 +62,17 @@ function SettingPage() {
         }
     
     let payload=obj;
-    payload["user"]=userstat;
+    if( values.image!=""){
+        //console.log(values.image)
+        payload["image"]="";
+    }
+    console.log(values.image)
+    objPayload["user"]=userstat;
+    objPayload['image']=values.image;
     payload["timestamp"]= firebase.firestore.Timestamp.now()
-    console.log(payload)
-    dispatch(updateUserInfo(payload));
-    //reset(e);
+    console.log(objPayload)
+    dispatch(updateUserInfo(payload,objPayload));
+    reset(e);
     //console.log(object)
     //console.log(Object.assign({},finArr))
   }
@@ -72,75 +81,104 @@ function SettingPage() {
       <header className={classes.Header}>
         <h1>Settings</h1>
         <div className={classes.User}>
-            {userstat && userstat.photoURL ? (
-              <img src={userstat.photoURL} all="" />
-            ) : (
-              <img src="/images/user1.svg" all="" />
-            )}
-          </div>
+          {userstat && userstat.photoURL ? (
+            <img src={userstat.photoURL} all="" />
+          ) : (
+            <img src="/images/user1.svg" all="" />
+          )}
+          <input
+            type="file"
+            accept="image/gif, image/jpeg, image/png"
+            name="image"
+            id="file"
+            style={{ display: "none" }}
+            onChange={(e) => {
+                if (e.target.files[0] === "" || e.target.files[0] === undefined){
+                    alert("This is not An Image")
+                }else{
+                    console.log(e.target.files[0])
+                setValuesHelper("image", e.target.files[0])}}}
+          ></input>
+          <span>
+            <Button 
+
+            sx={{"padding":"6px 6px", "margin-top":"10px"}}
+            variant="contained">
+                <label 
+                
+                for="file">Select an image to share</label>
+            </Button>
+            
+          </span>
+        </div>
       </header>
       <main className={classes.Container}>
-          
         <div className={classes.colone}>
           <div className={classes.FirstName}>
-          <TextField
-              
+            <TextField
               id="demo-helper-text-aligned-no-helper"
               label="Fist Name"
-              sx={{"flex-grow":"1"}}
+              sx={{ "flex-grow": "1" }}
               value={values.firstName}
-              onChange={(e)=>setValuesHelper("firstName",e.target.value)}
+              onChange={(e) => setValuesHelper("firstName", e.target.value)}
             />
           </div>
-          <div className={classes.Email}><TextField
-              
+          <div className={classes.Email}>
+            <TextField
               id="demo-helper-text-aligned-no-helper"
               label="Email"
-              sx={{"flex-grow":"1"}}
+              sx={{ "flex-grow": "1" }}
               value={values.email}
-              onChange={(e)=>setValuesHelper('email',e.target.value)}
-            /></div>
-            <div className={classes.rowone}><TextField
+              onChange={(e) => setValuesHelper("email", e.target.value)}
+            />
+          </div>
+          <div className={classes.rowone}>
+            <TextField
               helperText="Please enter your name"
               id="demo-helper-text-aligned-no-helper"
               label="Name"
-              sx={{"flex-grow":"1"}}
-            /></div>
+              sx={{ "flex-grow": "1" }}
+            />
+          </div>
         </div>
         <div className={classes.coltwo}>
-          <div className={classes.LastName}><TextField
-              
+          <div className={classes.LastName}>
+            <TextField
               id="demo-helper-text-aligned-no-helper"
               label="Last Name"
-              sx={{"flex-grow":"1"}}
+              sx={{ "flex-grow": "1" }}
               value={values.lastName}
-              onChange={(e)=>setValuesHelper("lastName",e.target.value)}
-            /></div>
-          <div className={classes.Number}><TextField
-              
+              onChange={(e) => setValuesHelper("lastName", e.target.value)}
+            />
+          </div>
+          <div className={classes.Number}>
+            <TextField
               id="demo-helper-text-aligned-no-helper"
               label="Contact Number"
-              sx={{"flex-grow":"1"}}
+              sx={{ "flex-grow": "1" }}
               value={values.contactNumber}
-              onChange={(e)=>setValuesHelper("contactNumber",e.target.value)}
-            /></div>
-          <div className={classes.rowone}><TextField
+              onChange={(e) => setValuesHelper("contactNumber", e.target.value)}
+            />
+          </div>
+          <div className={classes.rowone}>
+            <TextField
               helperText="Please enter your name"
               id="demo-helper-text-aligned-no-helper"
               label="Name"
-              sx={{"flex-grow":"1"}}
-            /></div>
+              sx={{ "flex-grow": "1" }}
+            />
+          </div>
         </div>
       </main>
       <div className={classes.Submit}>
-      <Button
-            variant="contained"
-            onClick={(e) => {
-              submitEverything(e);
-            }}
-          >
-            submit
-          </Button>
+        <Button
+          variant="contained"
+          onClick={(e) => {
+            submitEverything(e);
+          }}
+        >
+          submit
+        </Button>
       </div>
     </div>
   );

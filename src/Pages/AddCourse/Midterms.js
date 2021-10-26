@@ -57,6 +57,7 @@ function Midterm(props) {
       id: "",
       date: "",
       desc: "",
+      complete:"",
     },
   ]);
 
@@ -84,6 +85,7 @@ function Midterm(props) {
           id: val.id,
           date: val.date,
           desc: "",
+          complete:"",
         },
       ]);
     } else {
@@ -127,6 +129,7 @@ function Midterm(props) {
           id: val.id,
           date: "",
           desc: val.desc,
+          complete:"",
         },
       ]);
     } else {

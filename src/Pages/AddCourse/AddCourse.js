@@ -91,15 +91,15 @@ function AddCourse(props) {
   const [courseDesc, setCourseDesc] = useState("");
 
   const [midtermData3, setMidtermData3] = useState([
-    { id: "", date: "", desc: "" },
+    { id: "", date: "", desc: "",complete:"", },
   ]);
-  const [examData3, setExamData3] = useState([{ id: "", date: "", desc: "" }]);
-  const [quizData3, setQuizData3] = useState([{ id: "", date: "", desc: "" }]);
+  const [examData3, setExamData3] = useState([{ id: "", date: "", desc: "",complete:"",}]);
+  const [quizData3, setQuizData3] = useState([{ id: "", date: "", desc: "",complete:"", }]);
   const [assignmentData3, setAssignmentData3] = useState([
-    { id: "", date: "", desc: "" },
+    { id: "", date: "", desc: "",complete:"", },
   ]);
   const [projectData3, setProjectData3] = useState([
-    { id: "", date: "", desc: "" },
+    { id: "", date: "", desc: "",complete:"", },
   ]);
 
 
@@ -144,11 +144,11 @@ function AddCourse(props) {
     dispatch(setQuizNumber(""));
     dispatch(setAssignmentNumber(""));
     dispatch(setProjectNumber(""));
-    setExamData3([{ id: "", date: "", desc: "" }]);
-    setMidtermData3([{ id: "", date: "", desc: "" }]);
-    setQuizData3([{ id: "", date: "", desc: "" }]);
-    setAssignmentData3([{ id: "", date: "", desc: "" }]);
-    setProjectData3([{ id: "", date: "", desc: "" }]);
+    setExamData3([{ id: "", date: "", desc: "",complete:"", }]);
+    setMidtermData3([{ id: "", date: "", desc: "",complete:"", }]);
+    setQuizData3([{ id: "", date: "", desc: "",complete:"", }]);
+    setAssignmentData3([{ id: "", date: "", desc: "",complete:"", }]);
+    setProjectData3([{ id: "", date: "", desc: "",complete:"", }]);
     handleClick(e);
   };
 
@@ -335,7 +335,7 @@ function AddCourse(props) {
         <Quiz data={getQuizDataHelper} />
         <Assignment data={getAssignmentDataHelper} />
         <Project data={getProjectDataHelper} />
-
+        
         <div className={classes.Button}>
           <Button
             variant="contained"

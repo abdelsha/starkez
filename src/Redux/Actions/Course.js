@@ -103,3 +103,28 @@ export function submitCourseInfo (payload) {
           
     }
 }
+
+export function getCoursesAPI(user) {
+  return (dispatch) => {
+      let payload;
+      
+      db.collection("User")
+          .doc(`${user.uid}`).
+          collection("Course")
+      .onSnapshot((snapshot) => {
+          payload= snapshot.docs.map((doc) => doc.data());
+          
+          dispatch(setCourse(payload));
+      });
+      
+      
+  };
+}
+export function updateCourseInfo(payload){
+  return (dispatch) =>{
+    payload.map((courses)=> {
+      //console.log(courses.course)
+      console.log(courses.course.assignments.length);
+    })
+  }
+}

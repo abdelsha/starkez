@@ -1,12 +1,15 @@
 import React from "react";
+import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
 import classes from "./Course.module.css";
 import Deadlines from "./Deadlines";
 import Status from "./Status";
 import StudyHistory from "./StudyHistory";
+import { getCoursesAPI, updateCourseInfo } from "../../Redux/Actions/Course";
 
 function CoursePage() {
+  
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -15,6 +18,10 @@ function CoursePage() {
   });
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCoursesAPI(userstat));
+    dispatch(updateCourseInfo(courseStat));
+  }, []);
   return (
     <div className={classes.Layouts}>
       

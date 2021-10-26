@@ -56,6 +56,7 @@ function Quiz(props) {
       id: "",
       date: "",
       desc: "",
+      complete:"",
     },
   ]);
 
@@ -82,6 +83,7 @@ function Quiz(props) {
           id: val.id,
           date: val.date,
           desc: "",
+          complete:"",
         },
       ]);
     } else {
@@ -110,6 +112,7 @@ function Quiz(props) {
       }
       ////console.log(itemss[index].date)
     }
+    
     props.data(itemss);
     //setQuizDataDispatch(itemss);
   };
@@ -125,6 +128,7 @@ function Quiz(props) {
           id: val.id,
           date: "",
           desc: val.desc,
+          complete:"",
         },
       ]);
     } else {
