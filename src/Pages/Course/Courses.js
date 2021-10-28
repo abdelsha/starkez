@@ -6,27 +6,50 @@ import classes from "./Course.module.css";
 import Deadlines from "./Deadlines";
 import Status from "./Status";
 import StudyHistory from "./StudyHistory";
-import { getCoursesAPI, updateCourseInfo } from "../../Redux/Actions/Course";
+import { getCoursesAPI, UpdateCourseInfo } from "../../Redux/Actions/Course";
+import { getUserAuth } from "../../Redux/Actions/UserState";
+import Project from "../AddCourse/Projects";
 
 function CoursePage() {
   
   const userstat = useSelector((state) => {
+    
     return state.userState.user;
   });
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
+  const examData = useSelector((state)=>{
+    return state.courseState.examData;
+  })
+  const midtermData = useSelector((state)=>{
+    return state.courseState.midtermData;
+  })
+  const projectData = useSelector((state)=>{
+    return state.courseState.projectData;
+  })
+  const quizData= useSelector((state)=>{
+    return state.courseState.quizData;
+  })
+  const assignmentData= useSelector((state)=>{
+    return state.courseState.assignmentData;
+  })
+  const courseData= useSelector((state)=>{
+    return state.courseState.courseData;
+  })
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getUserAuth())
     dispatch(getCoursesAPI(userstat));
-    dispatch(updateCourseInfo(courseStat));
-  }, []);
+    dispatch(UpdateCourseInfo(courseStat));
+  },[]);
   return (
     <div className={classes.Layouts}>
       
         <div className={classes.Deadlines}>
           <Deadlines />
+      
           
         </div>
         <div className={classes.Status}>

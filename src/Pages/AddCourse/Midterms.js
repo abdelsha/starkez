@@ -22,9 +22,7 @@ function Midterm(props) {
     return state.courseState.course;
   });
 
-  const midtermNumber12 = useSelector((state) => {
-    return state.courseState.midtermNumber;
-  });
+  const midtermNumber12 = props.midtermNum;
 
   const midtermData12 = useSelector((state) => {
       return state.courseState.midtermData;
@@ -50,14 +48,18 @@ function Midterm(props) {
 
   const [midtermNumbers, setMidtermNumbers] = useState("");
   const [midtermNumbers1, setMidtermNumbers1] = useState([]);
-
-
+  const [courseName, setCourseName] = useState("");
+  
+  useEffect(()=>{
+    setCourseName(props.courseName())
+  })
   const [itemss, setItemss] = useState([
     {
+      courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:"",
+      complete:""
     },
   ]);
 
@@ -82,6 +84,7 @@ function Midterm(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: val.date,
           desc: "",
@@ -126,6 +129,7 @@ function Midterm(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: "",
           desc: val.desc,

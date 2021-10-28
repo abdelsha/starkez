@@ -22,13 +22,7 @@ function Project(props) {
     return state.courseState.course;
   });
 
-  const projectNumber12 = useSelector((state) => {
-    return state.courseState.projectNumber;
-  });
-
-  const projectData12 = useSelector ((state)=> {
-      return state.courseState.projectData;
-  })
+  const projectNumber12 = props.projectNum;
 
   const dispatch = useDispatch();
 
@@ -50,13 +44,18 @@ function Project(props) {
 
   const [projectNumbers, setProjectNumbers] = useState("");
   const [projectNumbers1, setprojectNumbers1] = useState([]);
-
+  const [courseName, setCourseName] = useState("");
+  
+  useEffect(()=>{
+    setCourseName(props.courseName())
+  })
   const [itemss, setItemss] = useState([
     {
+      courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:"",
+      complete:""
     },
   ]);
 
@@ -82,6 +81,7 @@ function Project(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: val.date,
           desc: "",
@@ -126,6 +126,7 @@ function Project(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: "",
           desc: val.desc,

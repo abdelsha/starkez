@@ -22,13 +22,7 @@ function Quiz(props) {
     return state.courseState.course;
   });
 
-  const quizNumber12 = useSelector((state) => {
-    return state.courseState.quizNumber;
-  });
-
-  const quizData12 = useSelector ((state) => {
-      return state.courseState.quizData;
-  })
+  const quizNumber12 = props.quizNum;
 
   const dispatch = useDispatch();
 
@@ -50,13 +44,18 @@ function Quiz(props) {
 
   const [quizNumbers, setQuizNumbers] = useState("");
   const [quizNumbers1, setQuizNumbers1] = useState([]);
-
+  const [courseName, setCourseName] = useState("");
+  
+  useEffect(()=>{
+    setCourseName(props.courseName())
+  })
   const [itemss, setItemss] = useState([
     {
+      courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:"",
+      complete:""
     },
   ]);
 
@@ -80,6 +79,7 @@ function Quiz(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: val.date,
           desc: "",
@@ -125,6 +125,7 @@ function Quiz(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: "",
           desc: val.desc,

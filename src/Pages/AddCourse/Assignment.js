@@ -36,9 +36,7 @@ function Assignment(props) {
 
   const dispatch = useDispatch();
 
-  const setExamNumberDispatch = (payload) => {
-    dispatch(setAssignmentNumber(payload));
-  };
+  
 
   /*const setAssisgnmentDataDispatch = (payload) => {
       dispatch(setAssignmentData(payload));
@@ -53,12 +51,18 @@ function Assignment(props) {
   );
 
   let [assignmentoneText, setAssignmentoneText] = useState("");
-
+  
   const [assignmentNumbers, setAssignmentNumbers] = useState("");
   const [assignmentNumbers1, setassignmentNumbers1] = useState([]);
-
+  const [courseName, setCourseName] = useState("");
+  
+  useEffect(()=>{
+    setCourseName(props.courseName())
+    
+  })
   const [itemss, setItemss] = useState([
     {
+      courseName: courseName,
       id: "",
       date: "",
       desc: "",
@@ -68,10 +72,10 @@ function Assignment(props) {
 
   useEffect(() => {
     newElements();
-  }, [assignmentNumber12]);
-
+  }, [props.assignmentNum]);
+  
   const newElements = () => {
-    let value = assignmentNumber12;
+    let value = props.assignmentNum;
     let array = [];
     for (let i = 0; i < value; i++) {
       array.push(i);
@@ -87,6 +91,7 @@ function Assignment(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: val.date,
           desc: "",
@@ -118,6 +123,8 @@ function Assignment(props) {
         //console.log(itemss)*/
       }
       ////console.log(itemss[index].date)
+      console.log(itemss);
+      console.log(courseName);
     }
     props.data(itemss);
     //setAssisgnmentDataDispatch(itemss);
@@ -131,6 +138,7 @@ function Assignment(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: "",
           desc: val.desc,
@@ -156,7 +164,8 @@ function Assignment(props) {
         setItemss(newArr);
       }
 
-      //console.log(itemss);
+      console.log(itemss);
+      console.log(courseName)
     }
     props.data(itemss);
     //setAssisgnmentDataDispatch(itemss);
@@ -166,7 +175,7 @@ function Assignment(props) {
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
-        {assignmentNumber12 >= 1 ? <h2>Assignments</h2> : <div />}
+        {props.assignmentNum >= 1 ? <h2>Assignments</h2> : <div />}
       </div>
 
       {assignmentNumbers1.map((val, key) => {

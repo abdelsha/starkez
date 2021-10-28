@@ -39,49 +39,14 @@ function AddCourse(props) {
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
-  const examNumber12 = useSelector((state) => {
-    return state.courseState.examNumber;
-  });
-  const midtermNumber12 = useSelector((state) => {
-    return state.courseState.midtermNumber;
-  });
-
-  const quizNumber12 = useSelector((state) => {
-    return state.courseState.quizNumber;
-  });
-
-  const assignmentNumber12 = useSelector((state) => {
-    return state.courseState.assignmentNumber;
-  });
-
-  const projectNumber12 = useSelector((state) => {
-    return state.courseState.projectNumber;
-  });
-
+ 
   const dispatch = useDispatch();
 
   const [courseStart, setCourseStart] = useState(
     new Date("2023-01-11T21:11:54")
   );
 
-  const setExamNumberDispatch = (payload) => {
-    dispatch(setExamNumber(payload));
-  };
-
-  const setMidtermNumberDispatch = (payload) => {
-    dispatch(setMidtermNumber(payload));
-  };
-
-  const setQuizNumberDispatch = (payload) => {
-    dispatch(setQuizNumber(payload));
-  };
-
-  const setAssignmentNumberDispatch = (payload) => {
-    dispatch(setAssignmentNumber(payload));
-  };
-  const setProjectNumberDispatch = (payload) => {
-    dispatch(setProjectNumber(payload));
-  };
+ 
 
   const [courseEnd, setCourseEnd] = useState(new Date("2023-01-11T21:11:54"));
 
@@ -91,17 +56,29 @@ function AddCourse(props) {
   const [courseDesc, setCourseDesc] = useState("");
 
   const [midtermData3, setMidtermData3] = useState([
-    { id: "", date: "", desc: "",complete:"", },
+    { id: "", date: "", desc: "", complete: "" },
   ]);
-  const [examData3, setExamData3] = useState([{ id: "", date: "", desc: "",complete:"",}]);
-  const [quizData3, setQuizData3] = useState([{ id: "", date: "", desc: "",complete:"", }]);
+  const [examData3, setExamData3] = useState([
+    { id: "", date: "", desc: "", complete: "" },
+  ]);
+  const [quizData3, setQuizData3] = useState([
+    { id: "", date: "", desc: "", complete: "" },
+  ]);
   const [assignmentData3, setAssignmentData3] = useState([
-    { id: "", date: "", desc: "",complete:"", },
+    { id: "", date: "", desc: "", complete: "" },
   ]);
   const [projectData3, setProjectData3] = useState([
-    { id: "", date: "", desc: "",complete:"", },
+    { id: "", date: "", desc: "", complete: "" },
   ]);
+  const [examNumber, setExamNumber] = useState("");
+  const [midtermNumber, setMidtermNumber]= useState("");
+  const [quizNumber, setQuizNumber] = useState("");
+  const [projectNumber, setProjectNumber] = useState("");
+  const [assignmentNumber, setAssignmentNumber] = useState("");
 
+  const getCourseNameHelper = () => {
+    return courseName;
+  };
 
   const getMidtermDataHelper = (data) => {
     setMidtermData3(data);
@@ -139,6 +116,8 @@ function AddCourse(props) {
     setCourseEnd("");
     setCourseName("");
     setCourseYear("");
+    setCourseName("");
+    setCourseDesc("");
     dispatch(setExamNumber(""));
     dispatch(setMidtermNumber(""));
     dispatch(setQuizNumber(""));
@@ -177,6 +156,7 @@ function AddCourse(props) {
       user: userstat,
       timestamp: firebase.firestore.Timestamp.now(),
       courseName: courseName,
+      courseDesc: courseDesc,
       courseYear: courseYear,
       courseStart: courseStart,
       courseEnd: courseEnd,
@@ -186,11 +166,11 @@ function AddCourse(props) {
       assignments: assignmentDataSub,
       projects: projectDataSub,
     };
-    //console.log(payloads);
+    console.log(payloads);
     if (userstat) {
       if (courseName != "") {
         dispatch(submitCourseInfo(payloads));
-        reset(e);
+        //reset(e);
         //console.log("submitted");
       } else {
         alert("Please Enter Course Name");
@@ -264,9 +244,9 @@ function AddCourse(props) {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={examNumber12}
+                value={examNumber}
                 onChange={(e) => {
-                  setExamNumberDispatch(e.target.value);
+                  setExamNumber(e.target.value);
                 }}
               />
               <TextField
@@ -276,9 +256,9 @@ function AddCourse(props) {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={midtermNumber12}
+                value={midtermNumber}
                 onChange={(e) => {
-                  setMidtermNumberDispatch(e.target.value);
+                  setMidtermNumber(e.target.value);
                 }}
               />
             </div>
@@ -290,8 +270,8 @@ function AddCourse(props) {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={quizNumber12}
-                onChange={(e) => setQuizNumberDispatch(e.target.value)}
+                value={quizNumber}
+                onChange={(e) => setQuizNumber(e.target.value)}
               />
               <TextField
                 id="outlined-number"
@@ -300,9 +280,9 @@ function AddCourse(props) {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={assignmentNumber12}
+                value={assignmentNumber}
                 onChange={(e) => {
-                  setAssignmentNumberDispatch(e.target.value);
+                  setAssignmentNumber(e.target.value);
                 }}
               />
             </div>
@@ -314,8 +294,8 @@ function AddCourse(props) {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={projectNumber12}
-                onChange={(e) => setProjectNumberDispatch(e.target.value)}
+                value={projectNumber}
+                onChange={(e) => setProjectNumber(e.target.value)}
               />
               <TextField
                 required
@@ -329,12 +309,12 @@ function AddCourse(props) {
             <div className={classes.CourseDesc}></div>
           </div>
         </div>
-        <Midterm data={getMidtermDataHelper} />
+        <Midterm data={getMidtermDataHelper} courseName={getCourseNameHelper} midtermNum={midtermNumber}/>
 
-        <Examination data={getExamDataHelper} />
-        <Quiz data={getQuizDataHelper} />
-        <Assignment data={getAssignmentDataHelper} />
-        <Project data={getProjectDataHelper} />
+        <Examination data={getExamDataHelper} courseName={getCourseNameHelper} examNum={examNumber} />
+        <Quiz data={getQuizDataHelper} courseName={getCourseNameHelper} quizNum={quizNumber} />
+        <Assignment data={getAssignmentDataHelper} courseName={getCourseNameHelper} assignmentNum={assignmentNumber} />
+        <Project data={getProjectDataHelper} courseName={getCourseNameHelper} projectNum={projectNumber} />
         
         <div className={classes.Button}>
           <Button

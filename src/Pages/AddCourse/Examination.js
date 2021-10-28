@@ -22,16 +22,8 @@ function Examination(props) {
     return state.courseState.course;
   });
 
-  const examNumber12 = useSelector((state) => {
-    return state.courseState.examNumber;
-  });
-
-  const examData12 = useSelector((state) => {
-    return state.courseState.examData;
-  });
-
   const dispatch = useDispatch();
-
+  const examNumber12=props.examNum;
   const setExamNumberDispatch = (payload) => {
     dispatch(setExamNumber(payload));
   };
@@ -50,13 +42,18 @@ function Examination(props) {
 
   const [examNumbers, setExamNumbers] = useState("");
   const [examNumbers1, setExamNumbers1] = useState([]);
-
+  const [courseName, setCourseName] = useState("");
+  
+  useEffect(()=>{
+    setCourseName(props.courseName())
+  })
   const [itemss, setItemss] = useState([
     {
+      courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:"",
+      complete:""
     },
   ]);
 
@@ -80,9 +77,11 @@ function Examination(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: val.date,
           desc: "",
+          complete: "",
         },
       ]);
     } else {
@@ -124,6 +123,7 @@ function Examination(props) {
       setItemss([
         ...itemss,
         {
+          courseName: courseName,
           id: val.id,
           date: "",
           desc: val.desc,

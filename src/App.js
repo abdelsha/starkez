@@ -17,6 +17,7 @@ import FriendPage from "./Pages/Friends/FriendsPage";
 import MessagePage from "./Pages/Messages/MessagePage";
 import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
+import { getCoursesAPI } from "./Redux/Actions/Course";
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserAuth());
+    
   }, []);
 
   
