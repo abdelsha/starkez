@@ -41,14 +41,23 @@ function AddCourse(props) {
   });
  
   const dispatch = useDispatch();
+  const currentDate=()=>{
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return todays = yyyy+ '-'+ mm + '-' + dd  ;
+    
 
+  }
   const [courseStart, setCourseStart] = useState(
-    new Date("2023-01-11T21:11:54")
+    currentDate
   );
 
  
 
-  const [courseEnd, setCourseEnd] = useState(new Date("2023-01-11T21:11:54"));
+  const [courseEnd, setCourseEnd] = useState(currentDate);
 
   const [courseName, setCourseName] = useState("");
   const [courseYear, setCourseYear] = useState("");
@@ -87,7 +96,7 @@ function AddCourse(props) {
 
   const getExamDataHelper = (data) => {
     setExamData3(data);
-    //console.log(midtermData3)
+    //console.log(courseName)
   };
 
   const getQuizDataHelper = (data) => {
@@ -113,7 +122,7 @@ function AddCourse(props) {
 
   const reset = (e) => {
     setCourseStart(new Date("2023-01-11T21:11:54"));
-    setCourseEnd("");
+    setCourseEnd(new Date("2023-01-11T21:11:54"));
     setCourseName("");
     setCourseYear("");
     setCourseName("");
@@ -168,12 +177,12 @@ function AddCourse(props) {
     };
     console.log(payloads);
     if (userstat) {
-      if (courseName != "") {
+      if (courseName != "" && courseDesc != "" && courseYear != ""&& courseStart != ""&& courseEnd != "") {
         dispatch(submitCourseInfo(payloads));
         //reset(e);
         //console.log("submitted");
       } else {
-        alert("Please Enter Course Name");
+        alert("Please complete required fields");
       }
     } else {
       console.log("user not logged in");
@@ -309,12 +318,12 @@ function AddCourse(props) {
             <div className={classes.CourseDesc}></div>
           </div>
         </div>
-        <Midterm data={getMidtermDataHelper} courseName={getCourseNameHelper} midtermNum={midtermNumber}/>
+        <Midterm data={getMidtermDataHelper} courseName={courseName} midtermNum={midtermNumber}/>
 
-        <Examination data={getExamDataHelper} courseName={getCourseNameHelper} examNum={examNumber} />
-        <Quiz data={getQuizDataHelper} courseName={getCourseNameHelper} quizNum={quizNumber} />
-        <Assignment data={getAssignmentDataHelper} courseName={getCourseNameHelper} assignmentNum={assignmentNumber} />
-        <Project data={getProjectDataHelper} courseName={getCourseNameHelper} projectNum={projectNumber} />
+        <Examination data={getExamDataHelper} courseName={courseName} examNum={examNumber} />
+        <Quiz data={getQuizDataHelper} courseName={courseName} quizNum={quizNumber} />
+        <Assignment data={getAssignmentDataHelper} courseName={courseName} assignmentNum={assignmentNumber} />
+        <Project data={getProjectDataHelper} courseName={courseName} projectNum={projectNumber} />
         
         <div className={classes.Button}>
           <Button

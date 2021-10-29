@@ -25,13 +25,21 @@ function Midterm(props) {
   const midtermNumber12 = props.midtermNum;
 
   const midtermData12 = useSelector((state) => {
-      return state.courseState.midtermData;
-  })
+    return state.courseState.midtermData;
+  });
 
   const dispatch = useDispatch();
 
   const setMidtermNumberDispatch = (payload) => {
     dispatch(setMidtermNumber(payload));
+  };
+  const currentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return (todays = yyyy + "-" + mm + "-" + dd);
   };
 
   /*const setMidtermDataDispatch = (payload) => {
@@ -42,24 +50,24 @@ function Midterm(props) {
     new Date("2014-08-18T21:11:54")
   );
 
-  const [midtermone, setMidtermone] = useState(new Date("2023-01-11T21:11:54"));
+  const [midtermone, setMidtermone] = useState(currentDate);
 
   let [midtermoneText, setMidtermoneText] = useState("");
 
   const [midtermNumbers, setMidtermNumbers] = useState("");
   const [midtermNumbers1, setMidtermNumbers1] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  
-  useEffect(()=>{
-    setCourseName(props.courseName())
-  })
+  const [courseName, setCourseNames] = useState("");
+
+  useEffect(() => {
+    setCourseNames(props.courseName);
+  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:""
+      complete: "",
     },
   ]);
 
@@ -88,11 +96,12 @@ function Midterm(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       newArr[index].date = val.date;
+      newArr[index].courseName = courseName;
       //console.log(newArr);
       ////console.log(newArr[1]);
 
@@ -133,12 +142,13 @@ function Midterm(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       let value = val.desc;
       newArr[index].desc = value;
+      newArr[index].courseName = courseName;
       if (newArr.length > parseInt(midtermNumbers, 10) + 1) {
         //console.log(midtermNumbers);
         let finArr = [];

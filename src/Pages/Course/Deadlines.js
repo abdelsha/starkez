@@ -33,13 +33,15 @@ function Deadlines() {
     <div className={classes.itema}>
       <div className={classes.Commoncard}>
         Deadlines
-
-        {examData.map((data) => {
-            console.log(examData[0])
-         
-         return(
+        {/*console.log(assignmentData)*/}
+        
+        {assignmentData.map((data) => {
+          console.log(data)
+          //console.log(data)
+          
+         /*return(
             <li>{Object.entries(data)[0][0]}</li>
-         )
+         )*/
           //console.log(data.courseStart.toDate());
         })}
       </div>

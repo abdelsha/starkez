@@ -15,6 +15,7 @@ import firebase from "firebase";
 import { setExamNumber, setExamData } from "../../Redux/Actions/Course";
 
 function Examination(props) {
+  let courseNames;
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -23,7 +24,7 @@ function Examination(props) {
   });
 
   const dispatch = useDispatch();
-  const examNumber12=props.examNum;
+  const examNumber12 = props.examNum;
   const setExamNumberDispatch = (payload) => {
     dispatch(setExamNumber(payload));
   };
@@ -31,29 +32,38 @@ function Examination(props) {
   /*const setExamDataDispatch = (payload) => {
     dispatch(setExamData(payload));
   };*/
-
+  const currentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return (todays = yyyy + "-" + mm + "-" + dd);
+  };
   const [courseStart, setCourseStart] = useState(
     new Date("2023-01-11T21:11:54")
   );
 
-  const [examone, setExamone] = useState(new Date("2023-01-11T21:11:54"));
+  const [examone, setExamone] = useState(currentDate);
 
   let [examoneText, setExamoneText] = useState("");
 
   const [examNumbers, setExamNumbers] = useState("");
   const [examNumbers1, setExamNumbers1] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  
-  useEffect(()=>{
-    setCourseName(props.courseName())
-  })
+
+  const setCourseName = (name) => {
+    courseNames = name;
+  };
+  useEffect(() => {
+    setCourseName(props.courseName);
+  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
-      courseName: courseName,
+      courseName: courseNames,
       id: "",
       date: "",
       desc: "",
-      complete:""
+      complete: "",
     },
   ]);
 
@@ -77,7 +87,7 @@ function Examination(props) {
       setItemss([
         ...itemss,
         {
-          courseName: courseName,
+          courseName: courseNames,
           id: val.id,
           date: val.date,
           desc: "",
@@ -86,6 +96,7 @@ function Examination(props) {
       ]);
     } else {
       newArr[index].date = val.date;
+      newArr[index].courseName = courseNames;
       //console.log(newArr);
       //console.log(newArr[1]);
 
@@ -110,12 +121,14 @@ function Examination(props) {
       }
       //console.log(itemss[index].date)
     }
+    //console.log(itemss)
     props.data(itemss);
     //setExamDataDispatch(itemss);
     //console.log(examData12);
   };
 
   const examTexts = (val) => {
+    console.log(courseNames);
     let text = val.desc;
     let newArr = [...itemss];
     let index = itemss.findIndex((x) => x.id == val.id);
@@ -123,16 +136,17 @@ function Examination(props) {
       setItemss([
         ...itemss,
         {
-          courseName: courseName,
+          courseName: courseNames,
           id: val.id,
           date: "",
           desc: val.desc,
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       let value = val.desc;
       newArr[index].desc = value;
+      newArr[index].courseName = courseNames;
       if (newArr.length > parseInt(examNumbers, 10) + 1) {
         //console.log(examNumbers);
         let finArr = [];
@@ -149,6 +163,7 @@ function Examination(props) {
         setItemss(newArr);
       }
     }
+    //console.log(itemss)
     props.data(itemss);
     //setExamDataDispatch(itemss);
     //console.log(examData12);
@@ -185,7 +200,7 @@ function Examination(props) {
                     id: `exam${key + 1}`,
                     date: e,
                     desc: "",
-                    complete:"",
+                    complete: "",
                   });
                 }}
                 renderInput={(params) => <TextField {...params} />}

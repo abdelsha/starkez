@@ -13,7 +13,7 @@ import { Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 
 import {
-    setAssignmentData,
+  setAssignmentData,
   setAssignmentNumber,
   setMidtermNumber,
 } from "../../Redux/Actions/Course";
@@ -30,50 +30,52 @@ function Assignment(props) {
     return state.courseState.assignmentNumber;
   });
 
-  const assignmentData12 = useSelector((state)=> {
-      return state.courseState.assignmentData;
-  })
+  const assignmentData12 = useSelector((state) => {
+    return state.courseState.assignmentData;
+  });
 
   const dispatch = useDispatch();
 
-  
+  const currentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return (todays = yyyy + "-" + mm + "-" + dd);
+  };
 
   /*const setAssisgnmentDataDispatch = (payload) => {
       dispatch(setAssignmentData(payload));
   }*/
 
-  const [courseStart, setCourseStart] = useState(
-    new Date("2023-01-11T21:11:54")
-  );
+  const [courseStart, setCourseStart] = useState(new Date(currentDate));
 
-  const [assignmentone, setAssignmentone] = useState(
-    new Date("2023-01-11T21:11:54")
-  );
+  const [assignmentone, setAssignmentone] = useState(currentDate);
 
   let [assignmentoneText, setAssignmentoneText] = useState("");
-  
+
   const [assignmentNumbers, setAssignmentNumbers] = useState("");
   const [assignmentNumbers1, setassignmentNumbers1] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  
-  useEffect(()=>{
-    setCourseName(props.courseName())
-    
-  })
+  const [courseName, setCourseNames] = useState("");
+
+  useEffect(() => {
+    setCourseNames(props.courseName);
+  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:""
+      complete: "",
     },
   ]);
 
   useEffect(() => {
     newElements();
   }, [props.assignmentNum]);
-  
+
   const newElements = () => {
     let value = props.assignmentNum;
     let array = [];
@@ -95,11 +97,12 @@ function Assignment(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete:""
+          complete: "",
         },
       ]);
     } else {
       newArr[index].date = val.date;
+      newArr[index].courseName = courseName;
       //console.log(newArr);
       ////console.log(newArr[1]);
 
@@ -142,12 +145,13 @@ function Assignment(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       let value = val.desc;
       newArr[index].desc = value;
+      newArr[index].courseName = courseName;
       if (newArr.length > parseInt(assignmentNumbers, 10) + 1) {
         //console.log(assignmentNumbers);
         let finArr = [];
@@ -165,11 +169,11 @@ function Assignment(props) {
       }
 
       console.log(itemss);
-      console.log(courseName)
+      console.log(courseName);
     }
+    //console.log(itemss)
     props.data(itemss);
     //setAssisgnmentDataDispatch(itemss);
-
   };
 
   return (

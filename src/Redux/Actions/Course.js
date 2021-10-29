@@ -110,7 +110,7 @@ export function getCoursesAPI(user) {
   return (dispatch) => {
     let payload;
 
-    console.log(user);
+    //console.log(user);
     db.collection("User")
       .doc(`${user.uid}`)
       .collection("Course")
@@ -143,33 +143,45 @@ export function UpdateCourseInfo(payload) {
       totProjNum = totProjNum + courses.course.projects.length;
       totQuizNum = totQuizNum + courses.course.quizes.length;
       courseData = [...courseData, courses.course]
-      examData = [...examData, {
-        [courses.course.courseName]: {
-          exams: courses.course.exams,
-        },
-      }];
-      midtermData = [...midtermData, {
-        [courses.course.courseName]: {
-          midterms: courses.course.midterms,
-        },
-      }];
-      assignmentData = [...assignmentData, {
-        [courses.course.courseName]: {
-          assignments: courses.course.assignments,
-        },
-      }];
-      projectData = [...projectData, {
-        [courses.course.courseName]: {
-          project: courses.course.projects,
-        },
-      }];
-      quizData = [...quizData, {
-        [courses.course.courseName]: {
-          quiz: courses.course.quizes,
-        },
-      }];
+      courses.course.exams.map((exam)=>{
+        examData = [...examData, 
+        
+          courses.course.exam,
+        
+      ];
+      })
+      courses.course.midterms.map((midterm)=>{
+        midtermData = [...midtermData, 
+        
+          midterm,
+         
+        ];
+      })
       
-      /*console.log(examData[0]);
+      courses.course.assignments.map((assignment)=>{
+        assignmentData = [...assignmentData, 
+        
+          assignment,
+       
+     ];
+      })
+     courses.course.projects.map((project)=>{
+      projectData = [...projectData, 
+        
+        project,
+     
+   ];
+     })
+      courses.course.quizes.map((quiz)=>{
+        quizData = [...quizData,
+        
+          quiz,
+       
+      ];
+      })
+      
+      /*
+      console.log(examData[0]);
       console.log(midtermData);
       console.log(quizData);
       console.log(projectData);

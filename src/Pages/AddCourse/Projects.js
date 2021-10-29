@@ -12,7 +12,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 
-import { setProjectNumber, setProjectData, setMidtermNumber } from "../../Redux/Actions/Course";
+import {
+  setProjectNumber,
+  setProjectData,
+  setMidtermNumber,
+} from "../../Redux/Actions/Course";
 
 function Project(props) {
   const userstat = useSelector((state) => {
@@ -29,7 +33,14 @@ function Project(props) {
   const setExamNumberDispatch = (payload) => {
     dispatch(setProjectNumber(payload));
   };
-
+  const currentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return (todays = yyyy + "-" + mm + "-" + dd);
+  };
   /*const setProjectDataDispatch = (payload) => {
       dispatch(setProjectData(payload));
   }*/
@@ -38,24 +49,24 @@ function Project(props) {
     new Date("2014-08-18T21:11:54")
   );
 
-  const [projectone, setProjectone] = useState(new Date("2023-01-11T21:11:54"));
+  const [projectone, setProjectone] = useState(currentDate);
 
   let [projectoneText, setProjectoneText] = useState("");
 
   const [projectNumbers, setProjectNumbers] = useState("");
   const [projectNumbers1, setprojectNumbers1] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  
-  useEffect(()=>{
-    setCourseName(props.courseName())
-  })
+  const [courseName, setCourseNames] = useState("");
+
+  useEffect(() => {
+    setCourseNames(props.courseName);
+  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:""
+      complete: "",
     },
   ]);
 
@@ -85,11 +96,12 @@ function Project(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       newArr[index].date = val.date;
+      newArr[index].courseName = courseName;
       //console.log(newArr);
       ////console.log(newArr[1]);
 
@@ -130,12 +142,13 @@ function Project(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       let value = val.desc;
       newArr[index].desc = value;
+      newArr[index].courseName = courseName;
       if (newArr.length > parseInt(projectNumbers, 10) + 1) {
         //console.log(projectNumbers);
         let finArr = [];

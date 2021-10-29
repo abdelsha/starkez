@@ -41,8 +41,10 @@ function CoursePage() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserAuth())
-    dispatch(getCoursesAPI(userstat));
-    dispatch(UpdateCourseInfo(courseStat));
+    if (userstat){
+      dispatch(getCoursesAPI(userstat));
+      dispatch(UpdateCourseInfo(courseStat));
+    }
   },[]);
   return (
     <div className={classes.Layouts}>

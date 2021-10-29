@@ -29,7 +29,14 @@ function Quiz(props) {
   const setQuizNumberDispatch = (payload) => {
     dispatch(setQuizNumber(payload));
   };
-
+  const currentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let todays;
+    return (todays = yyyy + "-" + mm + "-" + dd);
+  };
   /*const setQuizDataDispatch = (payload) => {
       dispatch(setQuizData(payload))
   }*/
@@ -38,24 +45,24 @@ function Quiz(props) {
     new Date("2023-01-11T21:11:54")
   );
 
-  const [quizone, setQuizone] = useState(new Date("2023-01-11T21:11:54"));
+  const [quizone, setQuizone] = useState(currentDate);
 
   let [quizoneText, setQuizoneText] = useState("");
 
   const [quizNumbers, setQuizNumbers] = useState("");
   const [quizNumbers1, setQuizNumbers1] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  
-  useEffect(()=>{
-    setCourseName(props.courseName())
-  })
+  const [courseName, setCourseNames] = useState("");
+
+  useEffect(() => {
+    setCourseNames(props.courseName);
+  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
       id: "",
       date: "",
       desc: "",
-      complete:""
+      complete: "",
     },
   ]);
 
@@ -83,11 +90,12 @@ function Quiz(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       newArr[index].date = val.date;
+      newArr[index].courseName = courseName;
       //console.log(newArr);
       ////console.log(newArr[1]);
 
@@ -112,7 +120,7 @@ function Quiz(props) {
       }
       ////console.log(itemss[index].date)
     }
-    
+
     props.data(itemss);
     //setQuizDataDispatch(itemss);
   };
@@ -129,11 +137,12 @@ function Quiz(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete:"",
+          complete: "",
         },
       ]);
     } else {
       let value = val.desc;
+      newArr[index].courseName = courseName;
       newArr[index].desc = value;
       if (newArr.length > parseInt(quizNumbers, 10) + 1) {
         //console.log(quizNumbers);

@@ -27,7 +27,7 @@ function Layout(props) {
       
 
       const triggerMenu = () =>{
-        console.log(menuBarStatus)
+        //console.log(menuBarStatus)
       }
     return(
         
@@ -37,7 +37,7 @@ function Layout(props) {
                 <img src="./images/menu.png" all="" onClick={(e)=>{setMenuBarDispatch(menuBarStatus)}}/>
                 
             </div>
-            {console.log(menuBarStatus)}
+           
             {menuBarStatus=="true"? (
             <div>
             <NavigationBar>
