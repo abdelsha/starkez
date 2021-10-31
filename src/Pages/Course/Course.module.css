@@ -14,8 +14,8 @@
 .Layouts {
   display: grid;
 
-  grid-template-columns: minmax(0, 4fr) minmax(0, 4fr);
-  grid-template-rows: minmax(0, 4fr) minmax(0, 4fr);
+  grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+  grid-template-rows: minmax(0, 50%) minmax(0, 50%);
   grid-template-areas:
     "leftside right"
     "bottom bottom";
@@ -27,6 +27,7 @@
     display: flex;
     flex-direction: column;
     margin: 0 25px;
+    max-height: 300px;
   }
 }
 
@@ -34,13 +35,21 @@
 
 
 
-.Deadlines {
+.Deadline{
+  
   grid-area: leftside;
+  
 }
 .Status {
     grid-area: right;
 }
+@media (max-width: 768px) {
+  .Status {
+    margin-top: 15px;
+  }
+}
 .History{
+  margin-top: 7px;
     grid-area: bottom
 }
 .main {

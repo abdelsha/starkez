@@ -1,17 +1,81 @@
+
+.Layouts {
+    display: grid;
+  
+    grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+    grid-template-rows: minmax(0, 50%) minmax(0, 50%);
+    grid-template-areas:
+      "all all"
+      "all all";
+    column-gap: 0px;
+    max-height: 100%;
+  }
+  @media (max-width: 768px) {
+    .Layouts {
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
+      max-height: 300px;
+    }
+  }
+
 .Commoncard{
     text-align: center;
-    overflow: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    margin: 5px 5px;
-    padding: 10px 0;
+    margin-top: 5px;
+    margin-bottom: -10px;
+    margin-left: 10px;
+    margin-right:5px ;
+    
     background-color: #fff;
     border-radius: 5px;
     position: relative;
     border: none;
+    max-height: 100%;
     box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb( 0 0 0/ 20%);
 }
 
-.itema{
-    grid-area:  Deadlines;
+  .Deadline{
+    
+    grid-area: all;
+    
+  }
+  @media(max-width:768px){
+    .Deadline{
+      display: flex;
+      max-height: 300px;
+    }
+  }
+.DataDisplays{
+    
+    display: flex;
+    flex-direction: column;
+    
+}
+.Commoncards{
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right:5px ;
+    
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+   
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb( 0 0 0/ 20%);
+}
+
+.DeadLineText{
+  display: flex;
+  justify-content: space-around;
+}
+.DeadLineText span{
+  font-size: 12px;
 }

@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  course: [],
+  courses: [],
   examNumber: "",
   midtermNumber: "",
   quizNumber: "",
@@ -18,7 +18,7 @@ const courseReducer = (state = INITIAL_STATE, action) => {
     case "SET_COURSE":
       return {
         ...state,
-        course: action.payload,
+        courses: action.payload,
       };
     case "SET_EXAMNUMBER":
       return {
