@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 
 function Deadlines(props) {
-  
+  let totarr=[];
   let arr=[];
   let arr2=[];
   const [ordarr, setOrdarr] = useState([]);
@@ -34,12 +34,28 @@ function Deadlines(props) {
   });
   const dispatch = useDispatch();
   useEffect(()=>{
+    assignmentData.map((data)=>{
+      totarr=[...totarr,data]
+    })
+    projectData.map((data)=>{
+      totarr=[...totarr,data]
+    })
+    quizData.map((data)=>{
+      totarr=[...totarr,data]
+    })
+    examData.map((data)=>{
+      totarr=[...totarr,data]
+    })
+    midtermData.map((data)=>{
+      totarr=[...totarr,data]
+    })
+    console.log(totarr)
     dateArry()
   },[assignmentData])
   
   const dateArry=() =>{
     let temparr=[];
-    props.assignments.map((data,key)=>{
+    totarr.map((data,key)=>{
       //console.log(data.date)
       //arr[key]=data.date.toDate();
       let today = new Date()
@@ -130,10 +146,6 @@ function Deadlines(props) {
                     <span>Due Date: {dateMaker(data.date.toDate()).toString()}</span>
                   </div>
                   {/*data.toDateString()*/}
-                </div>
-                <div className={classes.Commoncards}>
-                  
-                  
                 </div>
               </div>
             );

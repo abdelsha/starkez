@@ -146,7 +146,7 @@ export function UpdateCourseInfo(payload) {
       courses.course.exams.map((exam)=>{
         examData = [...examData, 
         
-          courses.course.exam,
+          exam,
         
       ];
       })

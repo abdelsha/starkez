@@ -60,9 +60,11 @@ function CoursePage() {
     
   },[courseStat])
   useEffect(()=>{
-    //console.log(assignmentData)
+    console.log(courseStat)
     if(assignmentData.length>1){
       setLoaded("true");
+      
+      
     }
     
   },[assignmentData])
@@ -72,7 +74,12 @@ function CoursePage() {
       <div className={classes.Deadline}>
         
         {loaded == "true" ? (
-          <Deadlines assignments={assignmentData} />
+          <Deadlines 
+          assignments={assignmentData} 
+          exams={examData}
+          midterms={midtermData} 
+          quizes={quizData} 
+          projects={projectData} />
         ) : (
           <div />
         )}
