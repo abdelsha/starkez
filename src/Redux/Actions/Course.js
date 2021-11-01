@@ -2,6 +2,10 @@ import { auth, provider, storage } from "../../Firebase/Firebase";
 import db from "../../Firebase/Firebase";
 import { getUserAuth } from "./UserState";
 
+let totarr = [];
+let arr = [];
+let arr2 = [];
+
 export const setCourse = (course) => ({
   type: "SET_COURSE",
   payload: course,
@@ -59,7 +63,14 @@ export const setProjectData = (projectData) => ({
   type: "SET_PROJECTDATA",
   payload: projectData,
 });
-
+export const setDeadlines = (deadlines) => ({
+  type: "SET_DEADLINE",
+  payload: deadlines,
+});
+export const setOrderedCourse = (course) => ({
+  type: "SET_ORDEREDCOURSE",
+  payload: course,
+});
 export function submitCourseInfo(payload) {
   return (dispatch) => {
     db.collection("User")
@@ -128,13 +139,14 @@ export function UpdateCourseInfo(payload) {
     let totExamNum = 0;
     let totProjNum = 0;
     let totQuizNum = 0;
-    let courseData=[];
+    let courseData = [];
     let quizData = [];
     let midtermData = [];
     let examData = [];
     let projectData = [];
     let assignmentData = [];
-
+    totarr = [];
+    //console.log(payload)
     payload.map((courses) => {
       //console.log(courses.course)
       totAssignmentNum = totAssignmentNum + courses.course.assignments.length;
@@ -142,44 +154,29 @@ export function UpdateCourseInfo(payload) {
       totExamNum = totExamNum + courses.course.exams.length;
       totProjNum = totProjNum + courses.course.projects.length;
       totQuizNum = totQuizNum + courses.course.quizes.length;
-      courseData = [...courseData, courses.course]
-      courses.course.exams.map((exam)=>{
-        examData = [...examData, 
-        
-          exam,
-        
-      ];
-      })
-      courses.course.midterms.map((midterm)=>{
-        midtermData = [...midtermData, 
-        
-          midterm,
-         
-        ];
-      })
-      
-      courses.course.assignments.map((assignment)=>{
-        assignmentData = [...assignmentData, 
-        
-          assignment,
-       
-     ];
-      })
-     courses.course.projects.map((project)=>{
-      projectData = [...projectData, 
-        
-        project,
-     
-   ];
-     })
-      courses.course.quizes.map((quiz)=>{
-        quizData = [...quizData,
-        
-          quiz,
-       
-      ];
-      })
-      
+      courseData = [...courseData, courses.course];
+      courses.course.exams.map((exam) => {
+        examData = [...examData, exam];
+        totarr = [...totarr, exam];
+      });
+      courses.course.midterms.map((midterm) => {
+        midtermData = [...midtermData, midterm];
+        totarr = [...totarr, midterm];
+      });
+
+      courses.course.assignments.map((assignment) => {
+        assignmentData = [...assignmentData, assignment];
+        totarr = [...totarr, assignment];
+      });
+      courses.course.projects.map((project) => {
+        projectData = [...projectData, project];
+        totarr = [...totarr, project];
+      });
+      courses.course.quizes.map((quiz) => {
+        quizData = [...quizData, quiz];
+        totarr = [...totarr, quiz];
+      });
+
       /*
       console.log(examData[0]);
       console.log(midtermData);
@@ -188,13 +185,149 @@ export function UpdateCourseInfo(payload) {
       console.log(assignmentData);*/
       //console.log(courseData);
     });
+
+    //console.log(totarr);
     dispatch(setCourseData(courseData));
     dispatch(setExamData(examData));
     dispatch(setMidtermData(midtermData));
     dispatch(setQuizData(quizData));
     dispatch(setProjectData(projectData));
     dispatch(setAssignmentData(assignmentData));
+    dispatch(dateArry('date'));
     //console.log(examData)
-    
   };
 }
+
+ const dateArry = (value) => {
+  let temparr = [];
+  let values=value;
+  totarr.map((data, key) => {
+    //console.log(data.date)
+    //arr[key]=data.date.toDate();
+    let today = new Date();
+    arr[key] = data;
+    //console.log(data)
+    if (data.date.toDate() >= today) {
+      temparr[key] = data;
+      //console.log(arr)
+    }
+
+    //console.log(data.date.toDate())
+  });
+  //console.log(value)
+  let filtered = temparr.filter(function (el) {
+    return el != null;
+  });
+  arr2 = filtered;
+  return (dispatch) => {
+    //console.log(values)
+    let sortArrFilt = quickSortHelper(arr2, 0, arr2.length - 1,values);
+    let sortArr = quickSortHelper(arr, 0, arr.length - 1,values);
+    //console.log(sortArr)
+    dispatch(setDeadlines(sortArrFilt));
+    dispatch(setOrderedCourse(sortArr));
+  };
+
+  //console.log(ordarr)
+};
+
+const quickSortHelper = (array, startIdx, endIdx,value) => {
+  //console.log(array[startIdx].date.toDate())
+  if (startIdx >= endIdx) {
+    return;
+  }
+  let pivotIdx = startIdx;
+  let left = startIdx + 1;
+  let right = endIdx;
+  
+  let cus=array[left];
+  
+  //console.log(array[left] > array[pivotIdx] && array[right]<array[pivotIdx])
+
+  while (right >= left) {
+    if (
+      array[left][value].toDate() > array[pivotIdx][value].toDate() &&
+      array[right][value].toDate() < array[pivotIdx][value].toDate()
+    ) {
+      [array[left], array[right]] = [array[right], array[left]];
+      //console.log("if1")
+      //console.log(array);
+    }
+    if (array[left][value].toDate() <= array[pivotIdx][value].toDate()) {
+      left += 1;
+      //console.log("if2")
+      //console.log(array);
+    }
+    if (array[right][value].toDate() >= array[pivotIdx][value].toDate()) {
+      right -= 1;
+      //console.log("if3")
+      //console.log(array);
+    }
+
+    //console.log(array);
+  }
+  [array[pivotIdx], array[right]] = [array[right], array[pivotIdx]];
+
+  let leftSubArraySmaller = right - 1 - startIdx < endIdx - (right + 1);
+  if (leftSubArraySmaller) {
+    quickSortHelper(array, startIdx, right - 1,value);
+    quickSortHelper(array, right + 1, endIdx,value);
+  } else {
+    quickSortHelper(array, right + 1, endIdx,value);
+    quickSortHelper(array, startIdx, right - 1,value);
+  }
+  return array;
+};
+
+export const quickSort = (array,value) =>{
+  let sortedArr = quickSortHelper2(array, 0, array.length - 1,value);
+  return sortedArr;
+};
+
+const quickSortHelper2 = (array, startIdx, endIdx,value)=>{
+  //console.log(array[startIdx].date.toDate())
+  if (startIdx >= endIdx) {
+    return;
+  }
+  let pivotIdx = startIdx;
+  let left = startIdx + 1;
+  let right = endIdx;
+  
+  
+  
+  //console.log(array[left] > array[pivotIdx] && array[right]<array[pivotIdx])
+
+  while (right >= left) {
+    if (
+      array[left][value] > array[pivotIdx][value] &&
+      array[right][value] < array[pivotIdx][value]
+    ) {
+      [array[left], array[right]] = [array[right], array[left]];
+      //console.log("if1")
+      //console.log(array);
+    }
+    if (array[left][value] <= array[pivotIdx][value]) {
+      left += 1;
+      //console.log("if2")
+      //console.log(array);
+    }
+    if (array[right][value] >= array[pivotIdx][value]) {
+      right -= 1;
+      //console.log("if3")
+      //console.log(array);
+    }
+
+    //console.log(array);
+  }
+  [array[pivotIdx], array[right]] = [array[right], array[pivotIdx]];
+
+  let leftSubArraySmaller = right - 1 - startIdx < endIdx - (right + 1);
+  if (leftSubArraySmaller) {
+    quickSortHelper2(array, startIdx, right - 1,value);
+    quickSortHelper2(array, right + 1, endIdx,value);
+  } else {
+    quickSortHelper2(array, right + 1, endIdx,value);
+    quickSortHelper2(array, startIdx, right - 1,value);
+  }
+  return array;
+};

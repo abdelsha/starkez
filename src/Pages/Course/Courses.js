@@ -40,31 +40,27 @@ function CoursePage() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(getUserAuth());
     if (userstat) {
       //console.log("here")
       dispatch(getCoursesAPI(userstat));
-      
 
-        
-        
-      
     }
   }, [userstat]);
 
   useEffect(()=>{
     //console.log("upadated")
-   // console.log(courseStat)
+    //console.log(courseStat)
     dispatch(UpdateCourseInfo(courseStat));
     
   },[courseStat])
+*/
+
   useEffect(()=>{
-    console.log(courseStat)
+    //console.log(courseStat)
     if(assignmentData.length>1){
       setLoaded("true");
-      
-      
     }
     
   },[assignmentData])

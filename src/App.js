@@ -17,26 +17,52 @@ import FriendPage from "./Pages/Friends/FriendsPage";
 import MessagePage from "./Pages/Messages/MessagePage";
 import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
-import { getCoursesAPI } from "./Redux/Actions/Course";
+import { getCoursesAPI,UpdateCourseInfo } from "./Redux/Actions/Course";
 
 function App() {
-  
+  const [loaded, setLoaded] = useState("false");
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
   const courseStat = useSelector((state) => {
-    return state.courseState.course;
+    return state.courseState.courses;
+  });
+  const courseData = useSelector((state) => {
+    return state.courseState.courseData;
   });
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserAuth());
+    if (userstat) {
+      //console.log("here")
+      dispatch(getCoursesAPI(userstat));
+
+    }
+  },[userstat]);
+
+  useEffect(()=>{
     
-  }, []);
+    
+    if (courseStat){
+      dispatch(UpdateCourseInfo(courseStat));
+    }
+  },[courseStat])
+
+  useEffect(()=>{
+    
+    
+    if (courseData){
+      //console.log("upadated")
+      setLoaded("true");
+    }
+  },[courseData])
 
   
   return (
+    
     <Layout>
+      
       <Switch>
         <Route path="/" exact={true}>
           <Login />

@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
   courses: [],
+  deadlines:[{id: "",date: "",desc: "",},],
+  orderdCourse:[{id: "",date: "",desc: "",},],
   examNumber: "",
   midtermNumber: "",
   quizNumber: "",
@@ -19,6 +21,16 @@ const courseReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         courses: action.payload,
+      };
+    case "SET_DEADLINE":
+      return {
+        ...state,
+        deadlines: action.payload,
+      };
+    case "SET_ORDEREDCOURSE":
+      return {
+        ...state,
+        orderdCourse: action.payload,
       };
     case "SET_EXAMNUMBER":
       return {
