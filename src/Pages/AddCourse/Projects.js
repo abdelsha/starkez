@@ -33,23 +33,8 @@ function Project(props) {
   const setExamNumberDispatch = (payload) => {
     dispatch(setProjectNumber(payload));
   };
-  const currentDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return (todays = yyyy + "-" + mm + "-" + dd);
-  };
-  /*const setProjectDataDispatch = (payload) => {
-      dispatch(setProjectData(payload));
-  }*/
 
-  const [courseStart, setCourseStart] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
-
-  const [projectone, setProjectone] = useState(currentDate);
+  const [projectone, setProjectone] = useState(new Date());
 
   let [projectoneText, setProjectoneText] = useState("");
 

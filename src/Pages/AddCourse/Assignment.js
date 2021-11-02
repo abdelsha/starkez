@@ -36,22 +36,14 @@ function Assignment(props) {
 
   const dispatch = useDispatch();
 
-  const currentDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return (todays = yyyy + "-" + mm + "-" + dd);
-  };
 
   /*const setAssisgnmentDataDispatch = (payload) => {
       dispatch(setAssignmentData(payload));
   }*/
 
-  const [courseStart, setCourseStart] = useState(new Date(currentDate));
+  const [courseStart, setCourseStart] = useState(new Date());
 
-  const [assignmentone, setAssignmentone] = useState(currentDate);
+  const [assignmentone, setAssignmentone] = useState(new Date());
 
   let [assignmentoneText, setAssignmentoneText] = useState("");
 

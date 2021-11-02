@@ -33,24 +33,9 @@ function Midterm(props) {
   const setMidtermNumberDispatch = (payload) => {
     dispatch(setMidtermNumber(payload));
   };
-  const currentDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return (todays = yyyy + "-" + mm + "-" + dd);
-  };
+  
 
-  /*const setMidtermDataDispatch = (payload) => {
-      dispatch(setMidtermData(payload));
-  }*/
-
-  const [courseStart, setCourseStart] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
-
-  const [midtermone, setMidtermone] = useState(currentDate);
+  const [midtermone, setMidtermone] = useState(new Date());
 
   let [midtermoneText, setMidtermoneText] = useState("");
 

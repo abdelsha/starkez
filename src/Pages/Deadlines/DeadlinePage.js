@@ -7,6 +7,7 @@ import {
   getCoursesAPI,
   UpdateCourseInfo,
   quickSort,
+  updateCoursesAPI,
 } from "../../Redux/Actions/Course";
 import { getUserAuth } from "../../Redux/Actions/UserState";
 import { PieChart } from "react-minimal-pie-chart";
@@ -42,9 +43,9 @@ function DeadlinePage() {
     //console.log(quickSort(array,value));
   };
   useEffect(() => {
-    console.log(retdeadlines);
+    //console.log(orderdCourse);
     if (assignmentData.length > 1) {
-      console.log("loaded");
+      //console.log("loaded");
       setLoaded("true");
     }
   }, [[], retdeadlines]);
@@ -57,9 +58,22 @@ function DeadlinePage() {
   };
 
   const setComplete=(value,index) =>{
-      let cusArr=orderdCourse;
-      console.log([value,index])
+      let coursename=value.courseName;
+      let values="";
+      //dispatch(updateCoursesAPI())
+      if (value.complete == "") {
+        values=1;
+        console.log([coursename,value,index])
+        updateCoursesAPI(userstat,coursename,value,values)
+      }
+      else{
+          values="";
+          console.log([coursename,value,index])
+         updateCoursesAPI(userstat,coursename,value,values)
+      }
       
+      
+
   }
   return (
     <div className={classes.Layouts}>
@@ -76,7 +90,7 @@ function DeadlinePage() {
                     <span>
                       Due Date: {dateMaker(data.date.toDate()).toString()}
                     </span>
-                    <FormControlLabel control={<Checkbox onClick={(e)=>{setComplete(e,key)}}/>} label="Completed" />
+                    <FormControlLabel control={<Checkbox onClick={(e)=>{setComplete(data,key)}}/>} label="Completed" />
                   </div>
                 );
               })}

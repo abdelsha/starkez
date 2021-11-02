@@ -71,26 +71,22 @@ export const setOrderedCourse = (course) => ({
   type: "SET_ORDEREDCOURSE",
   payload: course,
 });
-export function submitCourseInfo(payload) {
+export function submitCourseInfo(payload,user) {
   return (dispatch) => {
+    console.log(user.uid)
     db.collection("User")
-      .doc(`${payload.user.uid}`)
+      .doc(`${user.uid}`)
       .collection("Course")
       .doc(`${payload.courseName}`)
       .set(
         {
-          course: {
-            courseName: payload.courseName,
-            courseYear: payload.courseYear,
-            dateAdded: payload.timestamp,
-            courseStart: payload.courseStart,
-            courseEnd: payload.courseEnd,
-            midterms: payload.midterms,
-            exams: payload.exams,
-            quizes: payload.quizes,
-            assignments: payload.assignments,
-            projects: payload.projects,
-          },
+          timestamp: payload.timestamp,
+          courseName: payload.courseName,
+          courseDesc: payload.courseDesc,
+          courseYear: payload.courseYear,
+          courseStart: payload.courseStart,
+          courseEnd: payload.courseEnd,
+          status:payload.status
         },
         { merge: true }
       );
@@ -147,44 +143,47 @@ export function UpdateCourseInfo(payload) {
     let assignmentData = [];
     totarr = [];
     //console.log(payload)
-    payload.map((courses) => {
-      //console.log(courses.course)
-      totAssignmentNum = totAssignmentNum + courses.course.assignments.length;
-      totMidtermNum = totMidtermNum + courses.course.midterms.length;
-      totExamNum = totExamNum + courses.course.exams.length;
-      totProjNum = totProjNum + courses.course.projects.length;
-      totQuizNum = totQuizNum + courses.course.quizes.length;
-      courseData = [...courseData, courses.course];
-      courses.course.exams.map((exam) => {
-        examData = [...examData, exam];
-        totarr = [...totarr, exam];
-      });
-      courses.course.midterms.map((midterm) => {
-        midtermData = [...midtermData, midterm];
-        totarr = [...totarr, midterm];
-      });
-
-      courses.course.assignments.map((assignment) => {
-        assignmentData = [...assignmentData, assignment];
-        totarr = [...totarr, assignment];
-      });
-      courses.course.projects.map((project) => {
-        projectData = [...projectData, project];
-        totarr = [...totarr, project];
-      });
-      courses.course.quizes.map((quiz) => {
-        quizData = [...quizData, quiz];
-        totarr = [...totarr, quiz];
-      });
-
-      /*
-      console.log(examData[0]);
-      console.log(midtermData);
-      console.log(quizData);
-      console.log(projectData);
-      console.log(assignmentData);*/
-      //console.log(courseData);
-    });
+    
+    try{
+      payload.map((courses) => {
+        courses.status.map((value)=>{
+          if (value.id.includes("midterm")){
+            midtermData = [...midtermData, value];
+            totarr = [...totarr, value];
+            //console.log(value.id)
+          }
+          if (value.id.includes("exam")){
+            examData = [...examData, value];
+            totarr = [...totarr, value];
+          }
+          if (value.id.includes("quiz")){
+            quizData = [...quizData, value];
+            totarr = [...totarr, value];
+          }
+          if (value.id.includes("project")){
+            projectData = [...projectData, value];
+            totarr = [...totarr, value];
+          }
+          if (value.id.includes("assignment")){
+            assignmentData = [...assignmentData, value];
+            totarr = [...totarr, value];
+          }
+          courseData = [...courseData, value];
+        })
+        //console.log(midtermData)
+      })
+        /*
+        console.log(examData[0]);
+        console.log(midtermData);
+        console.log(quizData);
+        console.log(projectData);
+        console.log(assignmentData);*/
+        //console.log(courseData);
+      
+    }catch (error){
+      console.log(error)
+    }
+    
 
     //console.log(totarr);
     dispatch(setCourseData(courseData));
@@ -331,3 +330,49 @@ const quickSortHelper2 = (array, startIdx, endIdx,value)=>{
   }
   return array;
 };
+
+export async function updateCoursesAPI(user, courseName, stat, val) {
+  let lists = [];
+  
+    console.log(courseName);
+    //console.log(stat);
+    //console.log(user);
+    await db.collection("User")
+      .doc(`${user.uid}`)
+      .collection("Course")
+      .doc(courseName)
+      .get()
+      .then((snapshot) => {
+        //payload = snapshot.docs.map((doc) => doc.data());
+        
+        snapshot.data().status.map((values, key) => {
+          //console.log(stat.id)
+          if (values.id == stat.id) {
+            values.complete = val;
+            lists = [...lists, values];
+            //console.log(lists)
+          } else {
+            lists = [...lists, values];
+          }
+        })
+        //console.log(lists)
+      })
+      
+      
+      await db.collection("User")
+          .doc(`${user.uid}`)
+          .collection("Course")
+          .doc(`${courseName}`)
+          .update({
+            
+              status: lists,
+            
+          }).then((doc)=>{
+            
+          })
+        //console.log(lists)
+          
+        
+        
+      
+  };

@@ -32,19 +32,9 @@ function Examination(props) {
   /*const setExamDataDispatch = (payload) => {
     dispatch(setExamData(payload));
   };*/
-  const currentDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return (todays = yyyy + "-" + mm + "-" + dd);
-  };
-  const [courseStart, setCourseStart] = useState(
-    new Date("2023-01-11T21:11:54")
-  );
 
-  const [examone, setExamone] = useState(currentDate);
+
+  const [examone, setExamone] = useState(new Date());
 
   let [examoneText, setExamoneText] = useState("");
 

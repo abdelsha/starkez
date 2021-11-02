@@ -29,23 +29,9 @@ function Quiz(props) {
   const setQuizNumberDispatch = (payload) => {
     dispatch(setQuizNumber(payload));
   };
-  const currentDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return (todays = yyyy + "-" + mm + "-" + dd);
-  };
-  /*const setQuizDataDispatch = (payload) => {
-      dispatch(setQuizData(payload))
-  }*/
 
-  const [courseStart, setCourseStart] = useState(
-    new Date("2023-01-11T21:11:54")
-  );
 
-  const [quizone, setQuizone] = useState(currentDate);
+  const [quizone, setQuizone] = useState(new Date());
 
   let [quizoneText, setQuizoneText] = useState("");
 

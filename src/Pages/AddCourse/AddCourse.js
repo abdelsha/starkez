@@ -41,23 +41,14 @@ function AddCourse(props) {
   });
  
   const dispatch = useDispatch();
-  const currentDate=()=>{
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
-    let todays;
-    return todays = yyyy+ '-'+ mm + '-' + dd  ;
-    
-
-  }
+  
   const [courseStart, setCourseStart] = useState(
-    currentDate
+    new Date()
   );
 
  
 
-  const [courseEnd, setCourseEnd] = useState(currentDate);
+  const [courseEnd, setCourseEnd] = useState(new Date());
 
   const [courseName, setCourseName] = useState("");
   const [courseYear, setCourseYear] = useState("");
@@ -121,8 +112,8 @@ function AddCourse(props) {
   };
 
   const reset = (e) => {
-    setCourseStart(new Date("2023-01-11T21:11:54"));
-    setCourseEnd(new Date("2023-01-11T21:11:54"));
+    setCourseStart(new Date());
+    setCourseEnd(new Date());
     setCourseName("");
     setCourseYear("");
     setCourseName("");
@@ -149,6 +140,7 @@ function AddCourse(props) {
   };
 
   function submitEverything(e) {
+    let everyarr=[];
     e.preventDefault();
     if (e.target !== e.currentTarget) {
       return;
@@ -161,6 +153,21 @@ function AddCourse(props) {
     let assignmentDataSub = assignmentData3.filter((x) => x.id != "");
     let projectDataSub = projectData3.filter((x) => x.id != "");
 
+    examDataSub.map((data)=>{
+      everyarr=[...everyarr,data];
+    })
+    midtermDataSub.map((data)=>{
+      everyarr=[...everyarr,data];
+    })
+    quizDataSub.map((data)=>{
+      everyarr=[...everyarr,data];
+    })
+    assignmentDataSub.map((data)=>{
+      everyarr=[...everyarr,data];
+    })
+    projectDataSub.map((data)=>{
+      everyarr=[...everyarr,data];
+    })
     const payloads = {
       user: userstat,
       timestamp: firebase.firestore.Timestamp.now(),
@@ -175,10 +182,20 @@ function AddCourse(props) {
       assignments: assignmentDataSub,
       projects: projectDataSub,
     };
-    console.log(payloads);
+    const payloadss={
+      timestamp: firebase.firestore.Timestamp.now(),
+      courseName: courseName,
+      courseDesc: courseDesc,
+      courseYear: courseYear,
+      courseStart: courseStart,
+      courseEnd: courseEnd,
+      status:everyarr,
+    }
+    
+    console.log(payloadss);
     if (userstat) {
       if (courseName != "" && courseDesc != "" && courseYear != ""&& courseStart != ""&& courseEnd != "") {
-        dispatch(submitCourseInfo(payloads));
+        dispatch(submitCourseInfo(payloadss,userstat));
         //reset(e);
         //console.log("submitted");
       } else {
