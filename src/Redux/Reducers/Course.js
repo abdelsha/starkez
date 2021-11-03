@@ -1,18 +1,25 @@
 const INITIAL_STATE = {
   courses: [],
-  deadlines:[{id: "",date: "",desc: "",},],
-  orderdCourse:[{id: "",date: "",desc: "",},],
-  examNumber: "",
-  midtermNumber: "",
-  quizNumber: "",
-  assignmentNumber: "",
-  projectNumber: "",
-  courseData:[{id: "",date: "",desc: "",},],
-  examData:[{id: "",date: "",desc: "",},],
-  midtermData: [{id: "",date: "",desc: "",},],
-  quizData: [{id: "",date: "",desc: "",},],
-  assignmentData: [{id: "",date: "",desc: "",},],
-  projectData: [{id: "",date: "",desc: "",},],
+  deadlines: [{ id: "", date: "", desc: "" }],
+  orderdCourse: [{ id: "", date: "", desc: "" }],
+  courseNumer: 0,
+  compCourseNumber: 0,
+  examNumber: 0,
+  compExamNumber: 0,
+  midtermNumber:0,
+  compMidtermNumber: 0,
+  quizNumber: 0,
+  compQuizNumber: 0,
+  assignmentNumber: 0,
+  compAssignmentNumber: 0,
+  projectNumber: 0,
+  compProjectNumber: 0,
+  courseData: [{ id: "", date: "", desc: "" }],
+  examData: [{ id: "", date: "", desc: "" }],
+  midtermData: [{ id: "", date: "", desc: "" }],
+  quizData: [{ id: "", date: "", desc: "" }],
+  assignmentData: [{ id: "", date: "", desc: "" }],
+  projectData: [{ id: "", date: "", desc: "" }],
 };
 
 const courseReducer = (state = INITIAL_STATE, action) => {
@@ -57,12 +64,48 @@ const courseReducer = (state = INITIAL_STATE, action) => {
         ...state,
         projectNumber: action.payload,
       };
-      case "SET_COURSEDATA":
+    case "SET_COURSENUMBER":
+      return {
+        ...state,
+        courseNumber: action.payload,
+      };
+    case "SET_COMPCOURSENUMBER":
+      return {
+        ...state,
+        compCxamNumber: action.payload,
+      };
+    case "SET_COMPEXAMNUMBER":
+      return {
+        ...state,
+        compExamNumber: action.payload,
+      };
+    case "SET_COMPMIDTERMNUMBER":
+      return {
+        ...state,
+        compMidtermNumber: action.payload,
+      };
+
+    case "SET_COMPQUIZNUMBER":
+      return {
+        ...state,
+        compQuizNumber: action.payload,
+      };
+    case "SET_COMPASSIGNMENTNUMBER":
+      return {
+        ...state,
+        compAssignmentNumber: action.payload,
+      };
+    case "SET_COMPPROJECTNUMBER":
+      return {
+        ...state,
+        compProjectNumber: action.payload,
+      };
+    case "SET_COURSEDATA":
       return {
         ...state,
         courseData: action.payload,
       };
-      case "SET_EXAMDATA":
+    case "SET_EXAMDATA":
       return {
         ...state,
         examData: action.payload,

@@ -51,7 +51,7 @@ function Project(props) {
       id: "",
       date: "",
       desc: "",
-      complete: "",
+      complete: false,
     },
   ]);
 
@@ -81,7 +81,7 @@ function Project(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete: "",
+          complete: false,
         },
       ]);
     } else {
@@ -127,7 +127,7 @@ function Project(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete: "",
+          complete: false,
         },
       ]);
     } else {

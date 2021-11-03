@@ -48,7 +48,7 @@ function Quiz(props) {
       id: "",
       date: "",
       desc: "",
-      complete: "",
+      complete: false,
     },
   ]);
 
@@ -76,7 +76,7 @@ function Quiz(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete: "",
+          complete: false,
         },
       ]);
     } else {
@@ -123,7 +123,7 @@ function Quiz(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete: "",
+          complete: false,
         },
       ]);
     } else {

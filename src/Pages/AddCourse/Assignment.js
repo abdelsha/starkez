@@ -60,7 +60,7 @@ function Assignment(props) {
       id: "",
       date: "",
       desc: "",
-      complete: "",
+      complete: false,
     },
   ]);
 
@@ -89,7 +89,7 @@ function Assignment(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete: "",
+          complete: false,
         },
       ]);
     } else {
@@ -137,7 +137,7 @@ function Assignment(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete: "",
+          complete: false,
         },
       ]);
     } else {

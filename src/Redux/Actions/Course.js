@@ -35,6 +35,48 @@ export const setProjectNumber = (projectNumber) => ({
   payload: projectNumber,
 });
 
+export const setCourseNumber = (courseNumber) => ({
+  type: "SET_COURSENUMBER",
+  payload: courseNumber,
+});
+
+
+//This is the completed numbers for the pie chart and data
+
+export const setCompExamNumber = (examNumber) => ({
+  type: "SET_COMPEXAMNUMBER",
+  payload: examNumber,
+});
+
+export const setCompMidtermNumber = (midtermNumber) => ({
+  type: "SET_COMPMIDTERMNUMBER",
+  payload: midtermNumber,
+});
+
+export const setCompQuizNumber = (quizNumber) => ({
+  type: "SET_COMPQUIZNUMBER",
+  payload: quizNumber,
+});
+
+export const setCompAssignmentNumber = (assignmentNumber) => ({
+  type: "SET_COMPASSIGNMENTNUMBER",
+  payload: assignmentNumber,
+});
+
+export const setCompProjectNumber = (projectNumber) => ({
+  type: "SET_COMPPROJECTNUMBER",
+  payload: projectNumber,
+});
+
+export const setCompCourseNumber = (courseNumber) => ({
+  type: "SET_COMPCOURSENUMBER",
+  payload: courseNumber,
+});
+
+
+//This is the course data
+
+
 export const setCourseData = (course) => ({
   type: "SET_COURSEDATA",
   payload: course,
@@ -129,12 +171,19 @@ export function getCoursesAPI(user) {
   };
 }
 export function UpdateCourseInfo(payload) {
-  return (dispatch) => {
+  return async (dispatch) => {
+    let totCourseNum=0;
+    let totCompCourseNum=0;
     let totAssignmentNum = 0;
+    let totComAssignmentNum=0;
     let totMidtermNum = 0;
+    let totCompMidtermNum=0;
     let totExamNum = 0;
+    let totCompExamNum = 0;
     let totProjNum = 0;
+    let totCompProjNum = 0;
     let totQuizNum = 0;
+    let totCompQuizNum = 0;
     let courseData = [];
     let quizData = [];
     let midtermData = [];
@@ -150,25 +199,49 @@ export function UpdateCourseInfo(payload) {
           if (value.id.includes("midterm")){
             midtermData = [...midtermData, value];
             totarr = [...totarr, value];
+            totMidtermNum+=1;
+            if (value.complete){
+              totCompMidtermNum+=1;
+            }
             //console.log(value.id)
           }
           if (value.id.includes("exam")){
             examData = [...examData, value];
             totarr = [...totarr, value];
+            totExamNum+=1;
+            if (value.complete){
+              totCompExamNum+=1;
+            }
           }
           if (value.id.includes("quiz")){
             quizData = [...quizData, value];
             totarr = [...totarr, value];
+            totQuizNum+=1;
+            if (value.complete){
+              totCompQuizNum+=1;
+            }
           }
           if (value.id.includes("project")){
             projectData = [...projectData, value];
             totarr = [...totarr, value];
+            totProjNum+=1;
+            if (value.complete){
+              totCompProjNum+=1;
+            }
           }
           if (value.id.includes("assignment")){
             assignmentData = [...assignmentData, value];
             totarr = [...totarr, value];
+            totAssignmentNum+=1;
+            if (value.complete){
+              totComAssignmentNum+=1;
+            }
           }
           courseData = [...courseData, value];
+          totCourseNum+=1;
+          if (value.complete){
+            totCompCourseNum+=1;
+          }
         })
         //console.log(midtermData)
       })
@@ -186,6 +259,7 @@ export function UpdateCourseInfo(payload) {
     
 
     //console.log(totarr);
+    
     dispatch(setCourseData(courseData));
     dispatch(setExamData(examData));
     dispatch(setMidtermData(midtermData));
@@ -193,6 +267,18 @@ export function UpdateCourseInfo(payload) {
     dispatch(setProjectData(projectData));
     dispatch(setAssignmentData(assignmentData));
     dispatch(dateArry('date'));
+    dispatch(setExamNumber(totExamNum));
+    dispatch(setCompExamNumber(totCompExamNum));
+    dispatch(setMidtermNumber(totMidtermNum));
+    dispatch(setCompMidtermNumber(totCompMidtermNum));
+    dispatch(setQuizNumber(totQuizNum));
+    dispatch(setCompQuizNumber(totCompQuizNum));
+    dispatch(setAssignmentNumber(totAssignmentNum));
+    dispatch(setCompAssignmentNumber(totComAssignmentNum));
+    dispatch(setProjectNumber(totProjNum));
+    dispatch(setCompProjectNumber(totCompProjNum));
+    dispatch(setCourseNumber(totCourseNum));
+    dispatch(setCompCourseNumber(totCompCourseNum));
     //console.log(examData)
   };
 }

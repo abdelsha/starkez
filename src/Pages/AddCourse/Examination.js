@@ -53,7 +53,7 @@ function Examination(props) {
       id: "",
       date: "",
       desc: "",
-      complete: "",
+      complete: false,
     },
   ]);
 
@@ -81,7 +81,7 @@ function Examination(props) {
           id: val.id,
           date: val.date,
           desc: "",
-          complete: "",
+          complete: false,
         },
       ]);
     } else {
@@ -130,7 +130,7 @@ function Examination(props) {
           id: val.id,
           date: "",
           desc: val.desc,
-          complete: "",
+          complete: false,
         },
       ]);
     } else {
@@ -190,7 +190,7 @@ function Examination(props) {
                     id: `exam${key + 1}`,
                     date: e,
                     desc: "",
-                    complete: "",
+                    complete: false,
                   });
                 }}
                 renderInput={(params) => <TextField {...params} />}
