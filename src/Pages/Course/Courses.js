@@ -66,6 +66,7 @@ function CoursePage() {
   },[assignmentData])
 
   return (
+    <div className={classes.CommonCards}>
     <div className={classes.Layouts}>
       <div className={classes.Deadline}>
         
@@ -110,6 +111,7 @@ function CoursePage() {
           <img src="./images/plus-icon.png" all="" />
         </Button>
       </div>
+    </div>
     </div>
   );
 }

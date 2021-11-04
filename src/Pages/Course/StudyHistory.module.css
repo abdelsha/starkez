@@ -1,17 +1,19 @@
-.Commoncard{
+
+.Commoncard {
     text-align: center;
-    overflow: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    margin: 5px 5px;
-    padding: 10px 0;
+    margin: 0px 10px;
+    margin-bottom: -10px;
+    background-color: rgba(0 0 0 15%);
     background-color: #fff;
     border-radius: 5px;
     position: relative;
     border: none;
-    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb( 0 0 0/ 20%);
-}
-
+    max-height: 100%;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
 .itemc{
     grid-area:Study;
 }

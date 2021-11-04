@@ -11,6 +11,17 @@
   border: none;
   box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
 }
+.CommonCards {
+  text-align: center;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
+  border: none;
+  max-height: 100%;
+  
+}
 .Layouts {
   display: grid;
 
@@ -20,14 +31,14 @@
     "leftside right"
     "bottom bottom";
   column-gap: 0px;
-  height: 100%;
+  height: 100vh;
 }
 @media (max-width: 768px) {
   .Layouts {
     display: flex;
     flex-direction: column;
-    margin: 0 25px;
-    max-height: 300px;
+    margin: 0 5px;
+    max-height: 100vh;
   }
 }
 
@@ -38,10 +49,14 @@
 .Deadline{
   
   grid-area: leftside;
+  display: flex;
+    max-height: 100%;
   
 }
 .Status {
     grid-area: right;
+    display: flex;
+    max-height: 100%;
 }
 @media (max-width: 768px) {
   .Status {
@@ -49,8 +64,16 @@
   }
 }
 .History{
-  margin-top: 7px;
-    grid-area: bottom
+    margin-top: 7px;
+    grid-area: bottom;
+    
+    
+    
+}
+@media (max-width: 768px) {
+  .History {
+    margin-top: 15px;
+  }
 }
 .main {
   display: flex;

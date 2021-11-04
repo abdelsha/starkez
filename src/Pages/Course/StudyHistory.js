@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import classes from "./Course.module.css";
+import classes from "./StudyHistory.module.css";
 
 
 function StudyHistory (){

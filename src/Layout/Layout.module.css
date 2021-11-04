@@ -1,5 +1,6 @@
 .Layout{
     margin-top: -5px;
+    min-height: 100vh;
 }
 .NavButton{
     position: absolute;
