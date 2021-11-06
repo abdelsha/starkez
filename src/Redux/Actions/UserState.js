@@ -9,6 +9,37 @@ export const setUser = (user) => ({
   payload: user,
 });
 
+export const setUserOnline = (onlineUser)=>({
+  type: "SET_ONLINE_USER",
+  payload: onlineUser,
+})
+
+export function getOnlineUsers(){
+
+  return async (dispatch)=>{
+    let onlineuser=[];
+    let authen=auth.currentUser.uid;
+
+    db.collection("User")
+    .onSnapshot((querySnapshot)=>{
+      
+      const users=[];
+      querySnapshot.forEach(function(doc){
+        
+        if(doc.data().uid != authen){
+          users.push(doc.data());
+        }
+      });
+      
+      dispatch(setUserOnline(users));
+    })
+    
+    
+  }
+    
+  
+}
+
 export function signInWithGoogleApi() {
   return (dispatch) => {
     auth
@@ -27,6 +58,7 @@ export function signInWithGoogleApi() {
               console.log("data doesnt exist");
               db.collection("User").doc(`${payload.user.uid}`).set({
                 UID: payload.user.uid,
+                isOnline:true,
               });
               dispatch(setUser(payload.user));
             }
@@ -43,9 +75,16 @@ export function getUserAuth() {
   return (dispatch) => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        //console.log(user);
+        db.collection("User").doc(`${user.uid}`).set({
+          UID: user.uid,
+          isOnline:true,
+        });
         dispatch(setUser(user));
       } else {
+        db.collection("User").doc(`${user.uid}`).set({
+          UID: user.uid,
+          isOnline:false,
+        });
         dispatch(setUser(null));
       }
     });
@@ -70,7 +109,7 @@ export function signInWithUsername(email, password) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
-        console.log(userCredential);
+        //console.log(userCredential);
         dispatch(setUser(userCredential.user));
       })
       .catch((error) => {
@@ -84,23 +123,33 @@ export function signInWithUsername(email, password) {
   };
 }
 
-export function createAccountWithhUserName(email, password) {
+export function createAccountWithhUserName(email, password,payload) {
   return (dispatch) => {
     try {
       auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (userCredential) => {
+          const currentUser = auth.currentUser;
+          const name= payload.displayName;
+          currentUser.updateProfile({
+          displayName:name
+        })
+        .then(()=>{
           db.collection("User").doc(`${userCredential.user.uid}`).set({
             UID: userCredential.user.uid,
+            isOnline:true,
           });
-          console.log(userCredential.user);
+          //console.log(userCredential.user);
           dispatch(setUser(userCredential.user));
+        })
+          
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           dispatch(setUser(null));
-          alert(`${errorMessage} `);
+          console.log(`${errorMessage} `);
+          console.log(errorCode)
         });
     } catch (err) {
       console.log(err);
@@ -120,6 +169,7 @@ export async function sendPasswordResetEmail(email) {
 }
 export function updateUserInfo(payload, objPayload) {
   return (dispatch) => {
+    const name= `${payload.firstName} ${payload.lastName}`;
     console.log(objPayload.image);
     if (objPayload.image != "") {
       const upload = storage
@@ -140,8 +190,12 @@ export function updateUserInfo(payload, objPayload) {
         (error) => console.log(error.code),
         async () => {
           const downloadURL = await upload.snapshot.ref.getDownloadURL();
-
-          console.log(downloadURL);
+          const currUser= auth.currentUser;
+          currUser.updateProfile({
+            photoURL:downloadURL,
+          })
+          .then(()=>{
+            console.log(downloadURL);
           db.collection("User")
             .doc(`${objPayload.user.uid}`)
             .collection("UserInfo")
@@ -150,11 +204,14 @@ export function updateUserInfo(payload, objPayload) {
               {
                 user: objPayload.user.displayName,
                 info: payload,
-                downloadURL: downloadURL,
+                
+                sharedImg: downloadURL,
               },
 
               { merge: true }
             );
+          })
+          
         }
       );
     } else {
@@ -170,3 +227,4 @@ export function updateUserInfo(payload, objPayload) {
     }
   };
 }
+

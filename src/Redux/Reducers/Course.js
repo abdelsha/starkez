@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   quizData: [{ id: "", date: "", desc: "" }],
   assignmentData: [{ id: "", date: "", desc: "" }],
   projectData: [{ id: "", date: "", desc: "" }],
+  course_loaded:false,
 };
 
 const courseReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,7 @@ const courseReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         courses: action.payload,
+        
       };
     case "SET_DEADLINE":
       return {
@@ -104,6 +106,7 @@ const courseReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         courseData: action.payload,
+        course_loaded:true,
       };
     case "SET_EXAMDATA":
       return {

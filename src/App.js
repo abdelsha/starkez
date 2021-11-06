@@ -18,14 +18,21 @@ import MessagePage from "./Pages/Messages/MessagePage";
 import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
 import { getCoursesAPI,UpdateCourseInfo } from "./Redux/Actions/Course";
+import CreateAccount from "./Pages/Login/CreateAccount";
 
 function App() {
   const [loaded, setLoaded] = useState("false");
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
+  const isloaded = useSelector((state) => {
+    return state.userState.user_loaded;
+  });
   const courseStat = useSelector((state) => {
     return state.courseState.courses;
+  });
+  const courseIsLoaded = useSelector((state) => {
+    return state.courseState.course_loaded;
   });
   const courseData = useSelector((state) => {
     return state.courseState.courseData;
@@ -66,6 +73,9 @@ function App() {
       <Switch>
         <Route path="/" exact={true}>
           <Login />
+        </Route>
+        <Route path="/Create_Account">
+          <CreateAccount />
         </Route>
         <Route path="/Home">
           <HomePage />

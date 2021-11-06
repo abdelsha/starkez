@@ -19,6 +19,9 @@ function CoursePage() {
   const courseStat = useSelector((state) => {
     return state.courseState.courses;
   });
+  const courseIsLoaded = useSelector((state) => {
+    return state.courseState.course_loaded;
+  });
   const examData = useSelector((state) => {
     return state.courseState.examData;
   });

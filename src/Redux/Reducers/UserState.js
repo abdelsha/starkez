@@ -2,7 +2,10 @@
 import { combineReducers } from "redux";
 
 const INITIAL_STATE ={
-    user:null
+    user:null,
+    user_loaded:false,
+    online_users:[]
+    
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,6 +14,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: action.payload,
+        user_loaded:true,
+      };
+    case 'SET_ONLINE_USER':
+      return {
+        ...state,
+        online_users: action.payload,
       };
     default:
       return state;

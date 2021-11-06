@@ -42,29 +42,35 @@ function Deadlines(props) {
       <div className={classes.Deadline}>
         <div className={classes.Commoncard}>
           <h2>Deadlines</h2>
-          
-          {retdeadlines.map((data, key) => {
-            //console.log(data.date.toDate())
-            return (
-              <div className={classes.DataDisplays}>
-                <div className={classes.Commoncards}>
-                  <div className={classes.DeadLineText}>
-                    <span>Course Name: {data.courseName}</span>
-                    <span>Description: {data.desc}</span>
-                    <span>
-                      Due Date: {dateMaker(data.date.toDate()).toString()}
-                    </span>
+          {retdeadlines.length>1?(
+            <div>
+            {retdeadlines.map((data, key) => {
+              //console.log(data.date.toDate())
+              return (
+                <div className={classes.DataDisplays}>
+                  <div className={classes.Commoncards}>
+                    <div className={classes.DeadLineText}>
+                      <span>Course Name: {data.courseName}</span>
+                      <span>Description: {data.desc}</span>
+                      <span>
+                        Due Date: {dateMaker(data.date.toDate()).toString()}
+                      </span>
+                    </div>
+                    {/*data.toDateString()*/}
                   </div>
-                  {/*data.toDateString()*/}
                 </div>
-              </div>
-            );
-
-            /*return(
-            <li>{Object.entries(data)[0][0]}</li>
-         )*/
-            //console.log(data.courseStart.toDate());
-          })}
+              );
+  
+              /*return(
+              <li>{Object.entries(data)[0][0]}</li>
+           )*/
+              //console.log(data.courseStart.toDate());
+            })}
+            </div>
+          ):(
+            <div/>
+          )}
+          
           {/*
           <div>
             <button onClick={()=>{dateArry()}}>sort</button>

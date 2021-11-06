@@ -14,44 +14,51 @@ import {
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import FilledInput from "@mui/material/FilledInput";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
 import { setProjectData } from "../../Redux/Actions/Course";
 
-function Login(props) {
+function CreateAccount(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
+  const [firstName, setFirstName]= useState("");
+  const [lastName,setLastName]= useState("");
   const [password, setPassword] = useState({
-    password:"",
-    showPassword:false,
+    password: "",
+    showPassword: false,
   });
 
   const submitHelper = (e) => {
     dispatch(signInWithUsername(userName, password));
     //console.log(e);
   };
-  const setPasswordHelper =(e)=>{
+  const setPasswordHelper = (e) => {
     setPassword({
       ...password,
-      password:e,
-    })
-  }
+      password: e,
+    });
+  };
   const handleClickShowPassword = (e) => {
     setPassword({
       ...password,
       showPassword: !password.showPassword,
-    })
-  }
+    });
+  };
   const createAccountHelper = (e) => {
-    <Redirect to="/Create_Account"/>
+      let payload={
+          firstName:firstName,
+          lastName:lastName,
+          displayName:`${firstName}${lastName}`,
+      };
+    dispatch(createAccountWithhUserName(userName, password.password,payload));
   };
 
   const signInWithGoogleHelper = (e) => {
@@ -93,7 +100,7 @@ function Login(props) {
               id="outlined-adornment-password"
               type={password.showPassword ? "text" : "password"}
               value={password.password}
-              onChange={(e)=>setPasswordHelper(e.target.value)}
+              onChange={(e) => setPasswordHelper(e.target.value)}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -109,7 +116,26 @@ function Login(props) {
               label="Password"
             />
           </FormControl>
-          
+          <TextField
+              required
+              id="outlined-required"
+              label="First Name"
+              placeholder="Enter First Name"
+              value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Last Name"
+              placeholder="Enter Last Name"
+              value={lastName}
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
+            />
           <div className={classes.SubmitButton}>
             <Button
               variant="contained"
@@ -119,7 +145,7 @@ function Login(props) {
             </Button>
             <Button
               variant="contained"
-              href="/Create_Account"
+              onClick={(event) => createAccountHelper(event)}
             >
               <h7>Create Account</h7>
             </Button>
@@ -140,4 +166,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default CreateAccount;
