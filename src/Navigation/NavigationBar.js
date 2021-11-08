@@ -35,11 +35,13 @@ function NavigationBar(props) {
           <div></div>
 
           <div className={classes.User}>
+            <div className={classes.Users}>
             {userstat && userstat.photoURL ? (
               <img src={userstat.photoURL} all="" />
             ) : (
               <img src="/images/user1.svg" all="" />
             )}
+            </div>
           </div>
 
           {/*import * as React from 'react';

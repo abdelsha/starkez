@@ -4,7 +4,8 @@ import { combineReducers } from "redux";
 const INITIAL_STATE ={
     user:null,
     user_loaded:false,
-    online_users:[]
+    online_users:[],
+    conversations:[],
     
 };
 
@@ -21,6 +22,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         online_users: action.payload,
       };
+    case 'GET_REALTIME_MESSAGE':
+      return {
+        ...state,
+        conversations:action.payload.conversations,
+      }
     default:
       return state;
   }

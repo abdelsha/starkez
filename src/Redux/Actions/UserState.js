@@ -14,25 +14,35 @@ export const setUserOnline = (onlineUser)=>({
   payload: onlineUser,
 })
 
+export const getRealTimeMessage =(message)=>({
+  type: "GET_REALTIME_MESSAGE",
+  payload:message,
+})
+
 export function getOnlineUsers(){
 
   return async (dispatch)=>{
     let onlineuser=[];
-    let authen=auth.currentUser.uid;
-
-    db.collection("User")
-    .onSnapshot((querySnapshot)=>{
-      
-      const users=[];
-      querySnapshot.forEach(function(doc){
+    try{
+      let authen=await auth.currentUser.uid;
+      console.log(authen)
+      db.collection("User")
+      .onSnapshot((querySnapshot)=>{
         
-        if(doc.data().uid != authen){
-          users.push(doc.data());
-        }
-      });
+        const users=[];
+        querySnapshot.forEach(function(doc){
+          
+          if(doc.data().UID != authen){
+            users.push(doc.data());
+          }
+        });
+        console.log(users)
+        dispatch(setUserOnline(users));
+      })
+    }catch(err){
       
-      dispatch(setUserOnline(users));
-    })
+    }
+    
     
     
   }
@@ -52,13 +62,15 @@ export function signInWithGoogleApi() {
           .get()
           .then((doc) => {
             if (doc.data()) {
-              console.log(payload.user);
+              //console.log(payload.user);
               dispatch(setUser(payload.user));
             } else {
               console.log("data doesnt exist");
               db.collection("User").doc(`${payload.user.uid}`).set({
                 UID: payload.user.uid,
                 isOnline:true,
+                displayName: payload.user.displayName,
+                sharedImg:payload.user.photoURL
               });
               dispatch(setUser(payload.user));
             }
@@ -76,15 +88,12 @@ export function getUserAuth() {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         db.collection("User").doc(`${user.uid}`).set({
-          UID: user.uid,
+          
           isOnline:true,
-        });
+        },{ merge: true });
         dispatch(setUser(user));
       } else {
-        db.collection("User").doc(`${user.uid}`).set({
-          UID: user.uid,
-          isOnline:false,
-        });
+        
         dispatch(setUser(null));
       }
     });
@@ -93,7 +102,15 @@ export function getUserAuth() {
 
 export function signOutApi() {
   return (dispatch) => {
-    auth
+
+    let uid = auth.currentUser.uid;
+    //console.log(auth)
+    db.collection("User").doc(`${uid}`).set({
+      
+      isOnline:false,
+    },{ merge: true })
+    .then(()=>{
+      auth
       .signOut()
       .then(() => {
         dispatch(setUser(null));
@@ -101,15 +118,18 @@ export function signOutApi() {
       .catch((error) => {
         console.log(error.message);
       });
+
+    })
+    
   };
 }
 
 export function signInWithUsername(email, password) {
-  return (dispatch) => {
+  return async (dispatch) => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
-        //console.log(userCredential);
+        console.log(userCredential);
         dispatch(setUser(userCredential.user));
       })
       .catch((error) => {
@@ -117,8 +137,9 @@ export function signInWithUsername(email, password) {
         const errorMessage = error.message;
         //console.log(errorCode);
         //console.log(errorMessage);
-        dispatch(setUser(null));
         alert(`${errorCode}: Please Create an Account `);
+        dispatch(setUser(null));
+        
       });
   };
 }
@@ -170,7 +191,7 @@ export async function sendPasswordResetEmail(email) {
 export function updateUserInfo(payload, objPayload) {
   return (dispatch) => {
     const name= `${payload.firstName} ${payload.lastName}`;
-    console.log(objPayload.image);
+    //console.log(objPayload.image);
     if (objPayload.image != "") {
       const upload = storage
         .ref(`images/${objPayload.image.name}`)
@@ -209,7 +230,20 @@ export function updateUserInfo(payload, objPayload) {
               },
 
               { merge: true }
-            );
+            )
+            .then(()=>{
+              //console.log("here")
+              db.collection("User")
+            .doc(`${objPayload.user.uid}`).set({
+              firstName:payload.firstName,
+              lastName:payload.lastName,
+              fullName:name,
+              sharedImg: downloadURL,
+            },{ merge: true })
+            .then(()=>{
+              //console.log("done")
+            })
+            })
           })
           
         }
@@ -223,8 +257,75 @@ export function updateUserInfo(payload, objPayload) {
           { user: objPayload.user.displayName, info: payload },
 
           { merge: true }
-        );
+        )
+        .then(()=>{
+          //console.log("here")
+          db.collection("User")
+        .doc(`${objPayload.user.uid}`).set({
+          firstName:payload.firstName,
+          lastName:payload.lastName,
+          fullName:name,
+        },{ merge: true })
+        .then(()=>{
+          //console.log("done")
+        })
+        })
     }
   };
 }
 
+export const updateMessate = (messobj,userUid)=>{
+  return async (dispatch)=>{
+    db.collection("User")
+        .doc(`${auth.currentUser.uid}`)
+        .collection("conversations")
+        .add({
+          ...messobj,
+          isView: false,
+          createdAt: new Date()
+        })
+        .then(()=>{
+        db.collection("User")
+        .doc(`${userUid}`)
+        .collection("conversations")
+        .add({
+          ...messobj,
+          isView: false,
+          createdAt: new Date()
+        })
+        .then((data)=>{})
+          //dispatch(getRealTimeMessage())
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+  }
+}
+
+export const getRealTimeConversations=(user)=>{
+  return async (dispatch)=>{
+
+    db.collection("User")
+    .doc(`${auth.currentUser.uid}`)
+    .collection("conversations")
+    .where('user_uid_1','in',[user.uid_1, user.uid_2])
+    .orderBy('createdAt', 'asc')
+    .onSnapshot((querySnapshot)=>{
+      const conversations=[];
+      querySnapshot.forEach(doc=>{
+        //console.log(doc.data())
+        if(
+          (doc.data().user_uid_1 == user.uid_1 && doc.data().user_uid_2 == user.uid_2)
+          ||(doc.data().user_uid_1==user.uid_2 &&doc.data().user_uid_2 == user.uid_1)
+          ){
+            conversations.push(doc.data())
+        }
+        if(conversations.length>0){
+          dispatch(getRealTimeMessage({conversations}))
+        }
+        
+      })
+      console.log(conversations)
+    })
+  }
+}

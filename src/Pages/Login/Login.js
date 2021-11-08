@@ -35,7 +35,7 @@ function Login(props) {
   });
 
   const submitHelper = (e) => {
-    dispatch(signInWithUsername(userName, password));
+    dispatch(signInWithUsername(userName, password.password));
     //console.log(e);
   };
   const setPasswordHelper =(e)=>{

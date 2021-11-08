@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import { signOutApi } from "../../Redux/Actions/UserState";
+import { getOnlineUsers, signOutApi } from "../../Redux/Actions/UserState";
 import { Redirect } from "react-router-dom";
 import classes from "./Home.module.css";
 import { useState, useEffect } from "react";
@@ -36,6 +36,7 @@ function HomePage() {
   const courseData = useSelector((state) => {
     return state.courseState.courseData;
   });
+  const onlineUser = useSelector((state) => state.userState.online_users);
 
   const dispatch = useDispatch();
 
@@ -44,6 +45,7 @@ function HomePage() {
     if (assignmentData.length > 1) {
       setLoaded("true");
     }
+    dispatch(getOnlineUsers());
   }, [assignmentData]);
 
   const signOut = () => {
@@ -66,13 +68,79 @@ function HomePage() {
             <Deadlines />
           </div>
           <div className={classes.Friends}>
-            <div className={classes.CommonCard}>Friends</div>
+            <div className={classes.CommonCardss}>
+              <h2>Friends</h2>
+              {onlineUser.length > 0
+                ? onlineUser.map((user) => {
+                    return (
+                      <div
+                        
+                        key={user.UID}
+                        className={classes.displayName}
+                      >
+                        <div className={classes.displayPic}>
+                          {user.sharedImg ? (
+                            <img src={user.sharedImg} all="" />
+                          ) : (
+                            <img src="/images/user1.svg" all="" />
+                          )}
+                        </div>
+                        <div style={{ margin: "0 10px" }}>
+                          <span style={{ fontWeight: 500 }}>
+                            {user.fullName ? user.fullName : "UserName"}
+                          </span>
+                          <span
+                            className={
+                              user.isOnline
+                                ? `${classes.onlineStatus}`
+                                : `${classes.onlineStatusoff}`
+                            }
+                          ></span>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
           </div>
           <div className={classes.CourseDetail}>
             <Status />
           </div>
           <div className={classes.Messages}>
-            <div className={classes.CommonCard}>Messages</div>
+            <div className={classes.CommonCardss}>
+            <h2>Messages</h2>
+              {onlineUser.length > 0
+                ? onlineUser.map((user) => {
+                    return (
+                      <div
+                        
+                        key={user.UID}
+                        className={classes.displayName}
+                      >
+                        <div className={classes.displayPic}>
+                          {user.sharedImg ? (
+                            <img src={user.sharedImg} all="" />
+                          ) : (
+                            <img src="/images/user1.svg" all="" />
+                          )}
+                        </div>
+                        <div style={{ margin: "0 10px" }}>
+                          <span style={{ fontWeight: 500 }}>
+                            {user.fullName ? user.fullName : "UserName"}
+                          </span>
+                          <span
+                            className={
+                              user.isOnline
+                                ? `${classes.onlineStatus}`
+                                : `${classes.onlineStatusoff}`
+                            }
+                          ></span>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
           </div>
           <div className={classes.Videos}>
             <div className={classes.CommonCard}>Videos</div>
@@ -118,13 +186,83 @@ function HomePage() {
               );
             })}
           </div>
-          <div className={classes.Deadlines}>Deadlines</div>
-          <div className={classes.Friends}>
-            <div className={classes.CommonCard}>Friends</div>
+          <div className={classes.Deadlines}>
+          <div className={classes.CommonCard}>Deadlines</div>
           </div>
-          <div className={classes.CourseDetail}>Status</div>
+          <div className={classes.Friends}>
+            <div className={classes.CommonCardss}>
+            <h2>Friends</h2>
+              {onlineUser.length > 0
+                ? onlineUser.map((user) => {
+                    return (
+                      <div
+                        
+                        key={user.UID}
+                        className={classes.displayName}
+                      >
+                        <div className={classes.displayPic}>
+                          {user.sharedImg ? (
+                            <img src={user.sharedImg} all="" />
+                          ) : (
+                            <img src="/images/user1.svg" all="" />
+                          )}
+                        </div>
+                        <div style={{ margin: "0 10px" }}>
+                          <span style={{ fontWeight: 500 }}>
+                            {user.fullName ? user.fullName : "UserName"}
+                          </span>
+                          <span
+                            className={
+                              user.isOnline
+                                ? `${classes.onlineStatus}`
+                                : `${classes.onlineStatusoff}`
+                            }
+                          ></span>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+          </div>
+          <div className={classes.CourseDetail}>
+          <div className={classes.CommonCard}>Status</div>
+          </div>
           <div className={classes.Messages}>
-            <div className={classes.CommonCard}>Messages</div>
+            <div className={classes.CommonCardss}>
+            <h2>Messages</h2>
+              {onlineUser.length > 0
+                ? onlineUser.map((user) => {
+                    return (
+                      <div
+                        
+                        key={user.UID}
+                        className={classes.displayName}
+                      >
+                        <div className={classes.displayPic}>
+                          {user.sharedImg ? (
+                            <img src={user.sharedImg} all="" />
+                          ) : (
+                            <img src="/images/user1.svg" all="" />
+                          )}
+                        </div>
+                        <div style={{ margin: "0 10px" }}>
+                          <span style={{ fontWeight: 500 }}>
+                            {user.fullName ? user.fullName : "UserName"}
+                          </span>
+                          <span
+                            className={
+                              user.isOnline
+                                ? `${classes.onlineStatus}`
+                                : `${classes.onlineStatusoff}`
+                            }
+                          ></span>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
           </div>
           <div className={classes.Videos}>
             <div className={classes.CommonCard}>Videos</div>

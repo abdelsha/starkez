@@ -72,7 +72,7 @@ function SettingPage() {
     payload["timestamp"]= firebase.firestore.Timestamp.now()
     console.log(objPayload)
     dispatch(updateUserInfo(payload,objPayload));
-    reset(e);
+    //reset(e);
     //console.log(object)
     //console.log(Object.assign({},finArr))
   }

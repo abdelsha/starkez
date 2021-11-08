@@ -102,6 +102,11 @@
     justify-content: center;
     
 }
+.Users{
+    display: block;
+   
+    
+}
 .User img{
     border-radius: 50%;
     height: 25px;
