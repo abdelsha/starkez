@@ -8,6 +8,7 @@ import {
   retrieveFriendList,
   updateFriendListApi,
   updateMessate,
+  selectedFriend,
 } from "../../Redux/Actions/UserState";
 import { auth } from "../../Firebase/Firebase";
 import Card from "@mui/material/Card";
@@ -33,6 +34,10 @@ function FriendPage() {
 
   const friends = useSelector((state)=>{
     return state.userState.friendList;
+  })
+
+  const selectedFriends = useSelector((state)=>{
+    return state.userState.selectedFriend;
   })
   const onlineUser = useSelector((state) => state.userState.online_users);
   const [loaded, setLoaded] = useState("false");
@@ -126,7 +131,10 @@ const addFriendHelper=(user)=>{
                   return (
                     <Button
                     sx={{marginBottom:"15px", marginTop:"15px" }}
-                    
+                    onClick={(e)=>{
+                      dispatch(selectedFriend(user));
+                      console.log(user)
+                    }}
                     
                     >
                     

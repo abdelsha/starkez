@@ -27,42 +27,45 @@ function NavigationBar(props) {
         <div className={classes.NavBar}>
           <nav className={classes.NavMenue}>
             <Button variant="text">
+              <img 
+              
+              src="/images/Home.png" alt=""/>
               <Link className={classes.links} to="/Home">
                 Home
               </Link>
             </Button>
 
             <Button variant="text">
+            <img 
+              src="/images/course.png" alt=""/>
               <Link className={classes.links} to="/Courses">
                 Courses
               </Link>
             </Button>
 
             <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
               <Link className={classes.links} to="/Deadlines">
                 Deadlines
               </Link>
             </Button>
 
-            <Button variant="text">
-              <Link className={classes.links} to="/Study_History">
-                Study_History
-              </Link>
-            </Button>
+            
+
+            
 
             <Button variant="text">
-              <Link className={classes.links} to="/Friends">
-                Friends
-              </Link>
-            </Button>
-
-            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
               <Link className={classes.links} to="/Messages">
                 Messages
               </Link>
             </Button>
 
             <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
               <Link className={classes.links} to="/Settings">
                 Settings
               </Link>

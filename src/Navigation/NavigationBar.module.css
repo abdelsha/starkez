@@ -72,7 +72,12 @@
     padding: 0 0;
     display: flex;
     min-width: 50px;
-    margin: 0 0;
+    margin: 0 10px;
+}
+
+.NavMenue button img{
+    height: 25px;
+    
 }
 @media (max-width:768px){
     .NavMenue button:first-child{
@@ -80,10 +85,23 @@
         min-width: 35px;
     }
 }
-
+@media (max-width:768px){
+    .NavMenue button img:first-child{
+        
+       height: 15px;
+        
+        
+    }
+}
+@media (max-width:768px){
+    .NavMenue button img{
+       
+        height: 15px;
+    }
+}
 @media (max-width:768px){
     .NavMenue button{
-       
+        margin: 0 5px;
         min-width: 40px;
     }
 }
@@ -116,9 +134,10 @@
   }
 
   .User{
-    display: flex;
+    display: blocl;
     padding-right: 10px;
     padding-left: 10px;
+    margin-top: 10px;
     align-items: center;
     justify-content: flex-end;
     

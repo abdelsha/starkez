@@ -5,8 +5,9 @@ const INITIAL_STATE ={
     user:null,
     user_loaded:false,
     online_users:[],
-    conversations:[],
+    conversations:[""],
     friendList:[],
+    selectedFriend:[],
     
 };
 
@@ -32,6 +33,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         return {
           ...state,
           friendList:action.payload,
+        }
+        case 'SELECT_FRIEND':
+        return {
+          ...state,
+          selectedFriend:action.payload,
         }
     default:
       return state;

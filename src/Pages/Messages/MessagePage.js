@@ -20,6 +20,9 @@ function MessagePage(props) {
   const friends = useSelector((state)=>{
     return state.userState.friendList;
   })
+  const selectedFriend = useSelector((state)=>{
+    return state.userState.selectedFriend;
+  })
   const onlineUser = useSelector((state) => state.userState.online_users);
   const [loaded, setLoaded] = useState("false");
   const [chatStarted, setChatStarted] = useState(false);
@@ -43,10 +46,22 @@ function MessagePage(props) {
   useEffect(() => {
     try{dispatch(getOnlineUsers());
       dispatch(retrieveFriendList())
+      
     }catch{
 
     }
+    console.log(getMessage)
   }, [userstat,getMessage]);
+
+  useEffect(()=>{
+      if (selectedFriend.UID){
+        setChatStarted(true);
+        setChatUser(selectedFriend.fullName);
+        setUserUid(selectedFriend.UID)
+        dispatch(getRealTimeConversations({uid_1:userstat.uid, uid_2:selectedFriend.UID}));
+        
+      }
+  },[])
 
   const initChat = (user)=>{
     setChatStarted(true);
@@ -54,7 +69,7 @@ function MessagePage(props) {
     setUserUid(user.UID)
     console.log(user.UID)
     dispatch(getRealTimeConversations({uid_1:userstat.uid, uid_2:user.UID}));
-    console.log(user)
+    //console.log(user)
   }
 
   const submitMessage=(e) =>{
@@ -82,6 +97,7 @@ function MessagePage(props) {
                     <div
                       onClick={() => {
                         initChat(user);
+                        console.log(user);
                       }}
                       key={user.UID}
                       className={classes.displayName}
@@ -97,7 +113,13 @@ function MessagePage(props) {
                         <span style={{ fontWeight: 500 }}>
                           {user.fullName ? user.fullName : "UserName"}
                         </span>
-                        <span className={user.isOnline ? `${classes.onlineStatus}`:`${classes.onlineStatusoff}`}></span>
+                        <span
+                          className={
+                            user.isOnline
+                              ? `${classes.onlineStatus}`
+                              : `${classes.onlineStatusoff}`
+                          }
+                        ></span>
                       </div>
                     </div>
                   );
@@ -106,35 +128,42 @@ function MessagePage(props) {
           </div>
           <div className={classes.chatArea}>
             <div className={classes.chatHeader}>
-              {chatStarted  ? chatUser : ""}
+              {chatStarted ? chatUser : ""}
             </div>
 
             <div className={classes.messageSections}>
-              {chatStarted  ? (
-                getMessage.map(conv=>{
-                 return( <div style={{ textAlign: conv.user_uid_1 == userstat.uid? "right": "left" }}>
-                  <p className={classes.messageStyle}>{conv.message}</p>
-                </div>)
+              {console.log(chatStarted && getMessage.length > 1)}
+              {chatStarted ? (
+                getMessage.map((conv) => {
+                  console.log(conv);
+                  return (
+                    <div
+                      style={{
+                        textAlign:
+                          conv.user_uid_1 == userstat.uid ? "right" : "left",
+                      }}
+                    >
+                      <p className={classes.messageStyle}>{conv.message}</p>
+                    </div>
+                  );
                 })
-                
-              ) : null}
+              ) : (
+                <div >
+                  <p>Please send a message</p>
+                </div>
+              )}
             </div>
             {chatStarted ? (
               <div className={classes.chatControls}>
-                <textarea 
-                value={message}
-                onChange={((e)=>{
-                  setMessage(e.target.value)
-                })}
+                <textarea
+                  value={message}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                  }}
                 />
-                <button
-                onClick={submitMessage}
-                >Send</button>
+                <button onClick={submitMessage}>Send</button>
               </div>
-            ) : (
-              null
-            )}
-            
+            ) : null}
           </div>
         </div>
       ) : (

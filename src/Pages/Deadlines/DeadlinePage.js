@@ -278,7 +278,7 @@ function DeadlinePage() {
         </div>
       </div>
       <div className={classes.Status}>
-        <div className={classes.CommonCard}>
+        <div className={classes.CommonCardDeadLine}>
           <div className={classes.StatusCard}>
             <div className={classes.CommonCardss}>
               <List>

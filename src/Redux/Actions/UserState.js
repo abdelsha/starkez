@@ -23,6 +23,10 @@ export const friendList = (friends)=>({
   type: "GET_FRIENDS",
   payload:friends,
 })
+export const selectedFriend =(friend)=>({
+  type: 'SELECT_FRIEND',
+  payload:friend,
+})
 export function getOnlineUsers(){
 
   return async (dispatch)=>{
@@ -328,11 +332,11 @@ export const getRealTimeConversations=(user)=>{
             conversations.push(doc.data())
         }
         if(conversations.length>0){
-          dispatch(getRealTimeMessage({conversations}))
+          console.log("greater than 0")
         }
-        
+        dispatch(getRealTimeMessage({conversations}))
       })
-      console.log(conversations)
+      //console.log(conversations)
     })
   }
 }

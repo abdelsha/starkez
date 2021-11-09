@@ -24,23 +24,51 @@ function NavigationTab(props) {
       <div className={classes.MenuTab}>
         <nav className={classes.NavTab}>
           <a>
-          <Button variant="text"><Link className={classes.Home} to="/Home">Home</Link></Button>
+          <Button variant="text">
+          <img 
+              src="/images/Home.png" alt=""/>
+            <Link className={classes.Home} to="/Home">Home</Link>
+            </Button>
             
-            <Button variant="text"><Link to="/Courses">Courses</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/course.png" alt=""/>
+              <Link to="/Courses">Courses</Link>
+              </Button>
             
-            <Button variant="text"><Link to="/Deadlines">Deadlines</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
+              <Link to="/Deadlines">Deadlines</Link>
+              </Button>
             
-            <Button variant="text"><Link to="/Study_History">Study - History</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/study.png" alt=""/>
+              <Link to="/Study_History">Study - History</Link>
+              </Button>
             
           </a>
           <a>
-          <Button variant="text"><Link className={classes.Home} to="/Friends">Friends</Link></Button>
+          <Button variant="text">
+          <img 
+              src="/images/friend.png" alt=""/>
+            <Link className={classes.Home} to="/Friends">Friends</Link>
+            </Button>
             
-            <Button variant="text"><Link  to="/Messages">Messages</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
+              <Link  to="/Messages">Messages</Link>
+              </Button>
             
             </a>
             <a>
-            <Button variant="text"><Link className={classes.Home} to="/Settings">Settings</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
+              <Link className={classes.Home} to="/Settings">Settings</Link>
+              </Button>
             
             </a>
           
@@ -55,13 +83,29 @@ function NavigationTab(props) {
         <div className={classes.MenuBar}>
           <nav className={classes.NavMenue}>
             
-          <Button variant="text"><Link className={classes.links} to="/Courses">Courses</Link></Button>
+          <Button variant="text">
+          <img 
+              src="/images/course.png" alt=""/>
+            <Link className={classes.links} to="/Courses">Courses</Link>
+            </Button>
             
-            <Button variant="text"><Link className={classes.links} to="/Deadlines">Deadlines</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
+              <Link className={classes.links} to="/Deadlines">Deadlines</Link>
+              </Button>
 
-            <Button variant="text"><Link className={classes.links} to="/Messages">Messages</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
+              <Link className={classes.links} to="/Messages">Messages</Link>
+              </Button>
             
-            <Button variant="text"><Link className={classes.links} to="/Settings">Settings</Link></Button>
+            <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
+              <Link className={classes.links} to="/Settings">Settings</Link>
+              </Button>
       
           </nav>
           <div className={classes.User}>

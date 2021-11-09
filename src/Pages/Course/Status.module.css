@@ -1,4 +1,18 @@
-
+.Commoncardsss{
+  text-align: center;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 7px;
+  background-color:#eeeeee;
+  
+  margin-right: 5px;
+  position: relative;
+  border: none;
+  height: 100%;
+  
+}
 
 .itemb{
     grid-area: Status;
