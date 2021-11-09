@@ -251,18 +251,19 @@
   display: block;
   
   width: 30px;
-  opacity: 0%;
+  opacity: 0;
+  z-index: 1;
 }
 .User:hover ~ .Signout{
-    opacity: 100%;
+    opacity: 1;
     
 }
 .Signout:hover{
-    opacity: 100%;
+    opacity: 1;
 }
 .User:hover > .Signout {
     
-        opacity: 100%;
+        opacity: 1;
     
     
 }

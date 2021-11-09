@@ -9,6 +9,7 @@ import {
   updateFriendListApi,
   updateMessate,
   selectedFriend,
+  updateRequestListApi,
 } from "../../Redux/Actions/UserState";
 import { auth } from "../../Firebase/Firebase";
 import Card from "@mui/material/Card";
@@ -82,6 +83,28 @@ const addFriendHelper=(user)=>{
   dispatch(updateFriendListApi(friend));
 
 }
+const isFriendHelper=(user)=>{
+  let templist=[];
+  console.log(userstat)
+  friends.map((friendUid)=>{
+    console.log(friendUid.UID)
+    console.log(user.UID)
+    if (friendUid.UID==user.UID){
+      templist.push(user)
+      dispatch(selectedFriend(user));
+    }
+  
+    
+  })
+  
+
+  if (templist.length==0){
+      dispatch(updateRequestListApi(user));
+      dispatch(selectedFriend(user));
+      console.log("done")
+  }
+
+}
 
   return (
     <section className={classes.container}>
@@ -127,13 +150,15 @@ const addFriendHelper=(user)=>{
           <div className={classes.chatArea}>
             <h2>Friends</h2>
             {onlineUser.length > 0
-              ? onlineUser.map((user) => {
+              ? onlineUser.map((user,key) => {
                   return (
                     <Button
+                    key={user.UID}
                     sx={{marginBottom:"15px", marginTop:"15px" }}
                     onClick={(e)=>{
-                      dispatch(selectedFriend(user));
-                      console.log(user)
+                      isFriendHelper(user);
+                      //dispatch(selectedFriend(user));
+                      //console.log(user)
                     }}
                     
                     >

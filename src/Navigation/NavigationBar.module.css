@@ -171,17 +171,17 @@
 }
 
 .Signout{
-position: fixed;
+position: absolute;
   top: 45px;
   right: 55px;
   display: block;
   justify-content: flex-end;
   width: 30px;
-  opacity: 0%;
+  opacity: 0;
   z-index: 1;
 }
 .User:hover .Signout{
-    opacity: 100%;
+    opacity: 1;
     
 }
 
