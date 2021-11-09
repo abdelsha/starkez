@@ -20,7 +20,7 @@
 }
   .Layouts {
     display: grid;
-  
+    background-color: #eeeeee;
     grid-template-columns: minmax(0, 50%) minmax(0, 50%);
     grid-template-rows: minmax(0, 50%) minmax(0, 50%);
     grid-template-areas:

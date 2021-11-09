@@ -78,8 +78,8 @@ function Login(props) {
           <TextField
             required
             id="outlined-required"
-            label="Username"
-            placeholder="Enter Username"
+            label="Email"
+            placeholder="Enter Email"
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);

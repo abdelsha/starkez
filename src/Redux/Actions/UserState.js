@@ -19,13 +19,17 @@ export const getRealTimeMessage =(message)=>({
   payload:message,
 })
 
+export const friendList = (friends)=>({
+  type: "GET_FRIENDS",
+  payload:friends,
+})
 export function getOnlineUsers(){
 
   return async (dispatch)=>{
     let onlineuser=[];
     try{
       let authen=await auth.currentUser.uid;
-      console.log(authen)
+      //console.log(authen)
       db.collection("User")
       .onSnapshot((querySnapshot)=>{
         
@@ -159,6 +163,9 @@ export function createAccountWithhUserName(email, password,payload) {
           db.collection("User").doc(`${userCredential.user.uid}`).set({
             UID: userCredential.user.uid,
             isOnline:true,
+            firstName:payload.firstName,
+            lastName:payload.lastName,
+            fullName: payload.displayName,
           });
           //console.log(userCredential.user);
           dispatch(setUser(userCredential.user));
@@ -328,4 +335,39 @@ export const getRealTimeConversations=(user)=>{
       console.log(conversations)
     })
   }
+}
+
+export function updateFriendListApi(user){
+  return async (dispatch)=>{
+    db.collection("User")
+    .doc(`${auth.currentUser.uid}`)
+    .collection("Friends")
+    .add({
+      user
+    },{merge:true}).then(()=>{
+      //console.log("completed")
+    })
+  }
+
+}
+
+export function retrieveFriendList() {
+  return async (dispatch) => {
+    try{
+      db.collection("User")
+      .doc(`${auth.currentUser.uid}`)
+      .collection("Friends")
+      .onSnapshot((querySnapshot) => {
+        const friends = [];
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data().user)
+          friends.push(doc.data().user)
+        });
+        dispatch(friendList(friends))
+      });
+    }catch{
+
+    }
+    
+  };
 }

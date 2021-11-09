@@ -25,6 +25,7 @@ import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { Button } from "@mui/material";
+import {Redirect } from "react-router-dom";
 
 function DeadlinePage() {
   let templist = ["All"];
@@ -246,6 +247,7 @@ function DeadlinePage() {
   return (
     
     <div className={classes.Layouts}>
+      {!userstat && <Redirect to="/" />}
       <div className={classes.Deadlines}>
         <div className={classes.CommonCard}>
           <h2>Deadlines</h2>

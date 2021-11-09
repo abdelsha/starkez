@@ -2,9 +2,9 @@ import React, { version } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./MessagePage.module.css";
 import { useState, useEffect } from "react";
-import { getOnlineUsers, getRealTimeConversations, updateMessate } from "../../Redux/Actions/UserState";
+import { getOnlineUsers, getRealTimeConversations, retrieveFriendList, updateMessate } from "../../Redux/Actions/UserState";
 import { auth } from "../../Firebase/Firebase";
-
+import {Redirect} from "react-router-dom";
 function MessagePage(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
@@ -15,6 +15,10 @@ function MessagePage(props) {
 
   const getMessage = useSelector((state)=>{
     return state.userState.conversations;
+  })
+
+  const friends = useSelector((state)=>{
+    return state.userState.friendList;
   })
   const onlineUser = useSelector((state) => state.userState.online_users);
   const [loaded, setLoaded] = useState("false");
@@ -37,8 +41,11 @@ function MessagePage(props) {
   }, [[], userstat]);
 
   useEffect(() => {
-    dispatch(getOnlineUsers());
-    console.log(getMessage)
+    try{dispatch(getOnlineUsers());
+      dispatch(retrieveFriendList())
+    }catch{
+
+    }
   }, [userstat,getMessage]);
 
   const initChat = (user)=>{
@@ -65,11 +72,12 @@ function MessagePage(props) {
   }
   return (
     <section className={classes.container}>
+      {!userstat && <Redirect to="/" />}
       {loaded == "true" ? (
         <div className={classes.container}>
           <div className={classes.listOfUsers}>
-            {onlineUser.length > 0
-              ? onlineUser.map((user) => {
+            {friends.length > 0
+              ? friends.map((user) => {
                   return (
                     <div
                       onClick={() => {

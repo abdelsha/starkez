@@ -56,7 +56,7 @@ function CreateAccount(props) {
       let payload={
           firstName:firstName,
           lastName:lastName,
-          displayName:`${firstName}${lastName}`,
+          displayName:`${firstName} ${lastName}`,
       };
     dispatch(createAccountWithhUserName(userName, password.password,payload));
   };
@@ -85,8 +85,8 @@ function CreateAccount(props) {
           <TextField
             required
             id="outlined-required"
-            label="Username"
-            placeholder="Enter Username"
+            label="Email"
+            placeholder="Enter Email"
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);

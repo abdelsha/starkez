@@ -34,7 +34,7 @@
     }
 }
 .NavBar{
-    background-color: rgba(23, 25, 126,0.9);
+    background-color: rgba(255, 255, 255, 0.8);
     height: 45px;
     display: flex;
     
@@ -59,47 +59,68 @@
     flex-grow: 1;
     padding-left: 10px;
     justify-content: center;
+    align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 @media (max-width:768px) {
     .NavMenue{
-        padding-left: 5px;
+        margin-left: 7px;
+    }
+}
+.NavMenue button{
+    padding: 0 0;
+    display: flex;
+    min-width: 50px;
+    margin: 0 0;
+}
+@media (max-width:768px){
+    .NavMenue button:first-child{
+       
+        min-width: 35px;
+    }
+}
+
+@media (max-width:768px){
+    .NavMenue button{
+       
+        min-width: 40px;
     }
 }
 .NavMenue a{
     text-decoration: none ;
-    font-size: 15px;
+    font-size: 14px;
     align-items: center;
     display: flex;
-    padding: 0 10px;
-    margin: 5px 10px;
-    color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    margin: 5px 0px;
+    color: rgba(0, 0, 0, 0.2);
     justify-content: center;
 }
 @media (max-width:768px) {
     .NavMenue a{
-        margin: 5px 3px;
+        margin: 5px 0px;
         padding: 0 1px;
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 
-.NavMenue a:hover {
+.NavMenue button:hover .links {
     text-decoration: none;
     background-color: rgba(228,228,228,0.08);
-    color: rgba(228, 228, 228, 0.8);
+    color: rgba(0, 0, 0, 0.8);
     transform: translate3d(0,-2px,0);
     border-radius: 5px;
+    
   
   }
 
-.User{
+  .User{
     display: flex;
     padding-right: 10px;
     padding-left: 10px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     
 }
 .Users{
@@ -124,6 +145,24 @@
         height: 25px;
     }
 }
-.Body{
+
+.ContentInfo{
     grid-area: body;
+    
 }
+
+.Signout{
+position: fixed;
+  top: 45px;
+  right: 55px;
+  display: block;
+  justify-content: flex-end;
+  width: 30px;
+  opacity: 0%;
+  z-index: 1;
+}
+.User:hover .Signout{
+    opacity: 100%;
+    
+}
+

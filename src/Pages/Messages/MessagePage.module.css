@@ -11,6 +11,7 @@
   flex-direction: column;
   align-items: flex-start;
   overflow-x: hidden;
+  background-color: #eeeeee;
   border-right: 1px solid #ccc;
 }
 .chatArea{
@@ -18,10 +19,14 @@
   height: 100%;
   display: flex;
   overflow-x: hidden;
+  background-color: #eeeeee;
   position: relative;
 }
 .chatHeader{
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 70%;
   height: 40px;
   background: #e2e0e0;
@@ -34,14 +39,16 @@
 .chatControls{
   display: flex;
   position: fixed;
-  width: 70%;
+  width: 100%;
   height: 50px;
   bottom: 0;
 }
 .chatControls textarea{
+  display: flex;
   width: 90%;
 }
 .chatControls button{
+  display: flex;
   width: 10%;
 }
 

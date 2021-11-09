@@ -3,6 +3,7 @@ import React from "react";
 import classes from "./NavigationTab.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
+import { signOutApi } from "../Redux/Actions/UserState";
 
 function NavigationTab(props) {
   const userstat = useSelector((state) => {
@@ -13,27 +14,34 @@ function NavigationTab(props) {
   });
 
   const dispatch = useDispatch();
+  const signOut = () => {
+    dispatch(signOutApi());
+    
+    
+  };
   return (
     <div className={classes.Layout}>
       <div className={classes.MenuTab}>
         <nav className={classes.NavTab}>
           <a>
-            <Link className={classes.Home} to="/Home">Home</Link>
-
-            <Link to="/Courses">Courses</Link>
-
-            <Link to="/Deadlines">Deadlines</Link>
-
-            <Link to="/Study_History">Study - History</Link>
+          <Button variant="text"><Link className={classes.Home} to="/Home">Home</Link></Button>
+            
+            <Button variant="text"><Link to="/Courses">Courses</Link></Button>
+            
+            <Button variant="text"><Link to="/Deadlines">Deadlines</Link></Button>
+            
+            <Button variant="text"><Link to="/Study_History">Study - History</Link></Button>
+            
           </a>
           <a>
-            <Link className={classes.Home} to="/Friends">Friends</Link>
-
-            <Link  to="/Messages">Messages</Link>
+          <Button variant="text"><Link className={classes.Home} to="/Friends">Friends</Link></Button>
+            
+            <Button variant="text"><Link  to="/Messages">Messages</Link></Button>
+            
             </a>
             <a>
-          
-            <Link className={classes.Home} to="/Settings">Settings</Link>
+            <Button variant="text"><Link className={classes.Home} to="/Settings">Settings</Link></Button>
+            
             </a>
           
         </nav>
@@ -46,13 +54,15 @@ function NavigationTab(props) {
       <div className={classes.MenuBars}>
         <div className={classes.MenuBar}>
           <nav className={classes.NavMenue}>
-            <Link to="/Home">Home</Link>
+            
+          <Button variant="text"><Link className={classes.links} to="/Courses">Courses</Link></Button>
+            
+            <Button variant="text"><Link className={classes.links} to="/Deadlines">Deadlines</Link></Button>
 
-            <Link to="/Courses">Courses</Link>
-
-            <Link to="/Messages">Messages</Link>
-
-            <Link to="/Settings">Settings</Link>
+            <Button variant="text"><Link className={classes.links} to="/Messages">Messages</Link></Button>
+            
+            <Button variant="text"><Link className={classes.links} to="/Settings">Settings</Link></Button>
+      
           </nav>
           <div className={classes.User}>
             <div className={classes.Users}>
@@ -62,14 +72,18 @@ function NavigationTab(props) {
               <img src="/images/user1.svg" all="" />
             )}
             </div>
+            <div className={classes.Signout}> 
+              <Button
+              sx={{"background-color":"white"}}
+              onClick={() => {
+                signOut()
+              }}
+              >SignOut</Button>
+          </div>
           </div>
           
         </div>
-        <div className={classes.Signout}> 
-              <Button
-              sx={{"background-color":"white"}}
-              >SignOut</Button>
-          </div>
+        
       </div>
     </div>
   );
