@@ -14,8 +14,12 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "firebase": "^8.10.0",
+    "nodemon": "^2.0.15",
     "react": "^17.0.2",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
     "react-minimal-pie-chart": "^8.2.0",
     "react-redux": "^7.2.5",
@@ -25,6 +29,9 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "redux-toolkit": "^1.1.2",
+    "simple-peer": "^9.11.0",
+    "socket.io": "^4.3.2",
+    "socket.io-client": "^4.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
