@@ -20,6 +20,7 @@ import { getUserAuth } from "./Redux/Actions/UserState";
 import { getCoursesAPI,UpdateCourseInfo } from "./Redux/Actions/Course";
 import CreateAccount from "./Pages/Login/CreateAccount";
 import Video from "./Pages/Video/Video";
+import Videos from "./Pages/Video1/Video";
 
 function App() {
   const [loaded, setLoaded] = useState("false");
@@ -110,7 +111,7 @@ function App() {
           <StudyHistoryPage />
         </Route>
         <Route path="/Video">
-          <Video/>
+          <Videos/>
         </Route>
         
       </Switch>

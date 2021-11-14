@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Video.module.css";
+//import classes from "./Video.module.css";
 import { Typography, AppBar } from "@material-ui/core";
 import VideoPlayer from "./Components/VideoPlayer";
 import Notifications from "./Components/Notifications";

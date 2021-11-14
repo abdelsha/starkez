@@ -89,6 +89,7 @@ const ContextProvider = (props)=>{
             setName,
             callEnded,
             me,
+            userVideo,
             callUser,
             leaveCall,
             answerCall,
