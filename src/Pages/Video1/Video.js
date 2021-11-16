@@ -1,194 +1,274 @@
-import db from '../../Firebase/Firebase';
-import { auth, provider, storage } from "../../Firebase/Firebase";
-import React, { createRef, useRef} from 'react';
-import {useState, useEffect} from "react";
-import VideoChat from './Components/VideoChat';
-import { useSelector, useDispatch } from "react-redux";
-import {  createOffer, initiateConnection, startCall, sendAnswer, addCandidate, initiateLocalStream, listenToConnectionEvents } from './RTCModule';
+import { useRef, useState } from "react";
+
+import db from "../../Firebase/Firebase";
+import './Video.css'
+
+import { ReactComponent as HangupIcon } from "./icons/hangup.svg";
+import { ReactComponent as MoreIcon } from "./icons/more-vertical.svg";
+import { ReactComponent as CopyIcon } from "./icons/copy.svg";
 
 
-function Video(props){
-    const [loaded, setLoaded] = useState("false");
-    const userstat = useSelector((state) => {
-    return state.userState.user;
-  });
-    const [state, setState]= useState({
-        database: null,
-        connectedUser:null, 
-        localStream:null,
-        localConnection:null,
-    })
-    useEffect(()=>{
-        //console.log(courseStat)
-        if(userstat){
-          setLoaded("true");
-          
-        }
-        
-      },[userstat]);
-    const doLogin = async (username, database, handleUpdate) => {
-      try {
-        db.collection("notifs")
-          .doc("username")
-          .delete()
-          .then(() => {
-            db.collection("notifs")
-              .doc("username")
-              .onSnapshot((querySnapshot) => {
-                //console.log(querySnapshot.exists);
-                const friends = [];
 
-                querySnapshot.exists && querySnapshot.forEach((doc) => {
-                  //console.log(doc.data().data)
-                  handleUpdate(doc.data(), username);
+
+
+
+// Initialize WebRTC
+const servers = {
+    iceServers: [
+        {
+            urls: [
+                "stun:stun1.l.google.com:19302",
+                "stun:stun2.l.google.com:19302",
+            ],
+        },
+    ],
+    iceCandidatePoolSize: 10,
+};
+
+const pc = new RTCPeerConnection(servers);
+
+function Video() {
+    const [currentPage, setCurrentPage] = useState("home");
+    const [joinCode, setJoinCode] = useState("");
+
+    return (
+        <div className="app">
+            {currentPage === "home" ? (
+                <Menu
+                    joinCode={joinCode}
+                    setJoinCode={setJoinCode}
+                    setPage={setCurrentPage}
+                />
+            ) : (
+                <Videos
+                    mode={currentPage}
+                    callId={joinCode}
+                    setPage={setCurrentPage}
+                />
+            )}
+        </div>
+    );
+}
+
+function Menu({ joinCode, setJoinCode, setPage }) {
+    return (
+        <div className="home">
+            <div className="create box">
+                <button onClick={() => setPage("create")}>
+                    Create Call</button>
+            </div>
+
+            <div className="answer box">
+                <input
+                    value={joinCode}
+                    onChange={(e) => setJoinCode(e.target.value)}
+                    placeholder="Join with code"
+                />
+                <button onClick={() => setPage("join")}>
+                    Answer</button>
+            </div>
+        </div>
+    );
+}
+
+function Videos({ mode, callId, setPage }) {
+    const [webcamActive, setWebcamActive] = useState(false);
+    const [roomId, setRoomId] = useState(callId);
+
+    const localRef = useRef();
+    const remoteRef = useRef();
+
+    const setupSources = async () => {
+        const localStream = await navigator.mediaDevices
+        .getUserMedia({
+            video: true,
+            audio: true,
+        });
+        const remoteStream = new MediaStream();
+
+        localStream.getTracks().forEach((track) => {
+            pc.addTrack(track, localStream);
+        });
+
+        pc.ontrack = (event) => {
+            event.streams[0].getTracks().forEach((track) => {
+                remoteStream.addTrack(track);
+            });
+        };
+
+        localRef.current.srcObject = localStream;
+        remoteRef.current.srcObject = remoteStream;
+
+        setWebcamActive(true);
+
+        if (mode === "create") {
+            const callDoc = db.collection("calls").doc();
+            const offerCandidates = callDoc.collection("offerCandidates");
+            const answerCandidates = callDoc.collection("answerCandidates");
+
+            setRoomId(callDoc.id);
+
+            pc.onicecandidate = (event) => {
+                event.candidate &&
+                    offerCandidates.add(event.candidate.toJSON());
+            };
+
+            const offerDescription = await pc.createOffer();
+            await pc.setLocalDescription(offerDescription);
+
+            const offer = {
+                sdp: offerDescription.sdp,
+                type: offerDescription.type,
+            };
+
+            await callDoc.set({ offer });
+
+            callDoc.onSnapshot((snapshot) => {
+                const data = snapshot.data();
+                if (!pc.currentRemoteDescription && data?.answer) {
+                    const answerDescription = new RTCSessionDescription(
+                        data.answer
+                    );
+                    pc.setRemoteDescription(answerDescription);
+                }
+            });
+
+            answerCandidates.onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const candidate = new RTCIceCandidate(
+                            change.doc.data()
+                        );
+                        pc.addIceCandidate(candidate);
+                    }
                 });
-              });
-          });
-      } catch (error) {
-        console.log(error);
-      }
+            });
+        } else if (mode === "join") {
+            const callDoc = db.collection("calls").doc(callId);
+            const answerCandidates = callDoc.collection("answerCandidates");
+            const offerCandidates = callDoc.collection("offerCandidates");
+
+            pc.onicecandidate = (event) => {
+                event.candidate &&
+                    answerCandidates.add(event.candidate.toJSON());
+            };
+
+            const callData = (await callDoc.get()).data();
+
+            const offerDescription = callData.offer;
+            await pc.setRemoteDescription(
+                new RTCSessionDescription(offerDescription)
+            );
+
+            const answerDescription = await pc.createAnswer();
+            await pc.setLocalDescription(answerDescription);
+
+            const answer = {
+                type: answerDescription.type,
+                sdp: answerDescription.sdp,
+            };
+
+            await callDoc.update({ answer });
+
+            offerCandidates.onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        let data = change.doc.data();
+                        pc.addIceCandidate(new RTCIceCandidate(data));
+                    }
+                });
+            });
+        }
+
+        pc.onconnectionstatechange = (event) => {
+            if (pc.connectionState === "disconnected") {
+                hangUp();
+            }
+        };
     };
 
+    const hangUp = async () => {
+        pc.close();
 
-    const doOffer = async(to, offer, database, username) =>{
-        db.collection("notifs")
-        .doc(to)
-        .set({
-            type: 'offer',
-            from: username,
-            offer: JSON.stringify(offer),
-        })
-        .then(()=>{
-            console.log("done doOffer")
-        })
-    }
-    const doAnswer = async(to, answer, database, username) =>{
-        db.collection("notifs")
-        .doc(to)
-        .update({
-            type: 'answer',
-            from: username,
-            answer: JSON.stringify(answer),
-        })
-        .then(()=>{
-            console.log("done doAnswer")
-        })
-    }
+        if (roomId) {
+            let roomRef = db.collection("calls").doc(roomId);
+            await roomRef
+                .collection("answerCandidates")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        doc.ref.delete();
+                    });
+                });
+            await roomRef
+                .collection("offerCandidates")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        doc.ref.delete();
+                    });
+                });
 
-    const doCandidate = async(to, candidate, database, username) =>{
-        db.collection("notifs")
-        .doc(to)
-        .update({
-            type: 'candidate',
-            from: username,
-            answer: JSON.stringify(candidate),
-        })
-        .then(()=>{
-            console.log("done doCandidate")
-        })
-    }
-      
-    const dispatch = useDispatch();
-    let localVideoRef= createRef();
-    let remoteVideoRef= createRef();
-    
-    const componentDidMount = async () => {
-        // initialize firebase
-  
-        // getting local video stream
-        const localStream = await initiateLocalStream();
-        localVideoRef.srcObject=localStream;
-        // create the local connection
+            await roomRef.delete();
+        }
 
-        const localConnection = await initiateConnection()
-        setState({
-            database:db,
-            localStream,
-            localConnection,
-        })
-  
-      }
-  
-    function shouldComponentUpdate(nextProps, nextState) {
-        // prevent rerenders if not necessary
-        if (state.database !== nextState.database) {
-          return false
-        }
-        if (state.localStream !== nextState.localStream) {
-          return false
-        }
-        if (state.localConnection !== nextState.localConnection) {
-          return false
-        }
-  
-        return true
-      }
-       
-  
-     const startCall = async (username, userToCall) => {
-      const { localConnection, database, localStream } = state;
-      
-      listenToConnectionEvents(localConnection, username, userToCall, database, remoteVideoRef, doCandidate)
-      // create an offer
-      createOffer(localConnection, localStream, userToCall, doOffer, database, username)
-    }
-  
-     const onLogin = async (username) => {
-        // do the login phase
-        await doLogin(username, state.database, handleUpdate)
-      }
-  
-     const setLocalVideoRef = ref => {
-        localVideoRef = ref;
-      }
-  
-    const  setRemoteVideoRef = ref => {
-        remoteVideoRef = ref;
-      }
-  
-    const handleUpdate = (notif, username) => {
-        // read the received notif and apply it
-        const { localConnection, database, localStream } = state
-        if (notif){
-            switch(notif.type){
-                case 'offer':
-                    //listen to the connection events 
-                    setState({
-                      ...state,
-                      connectedUser: notif.from
-                    })
-                    //send an answer
-                    listenToConnectionEvents(localConnection, username, notif.from, database, remoteVideoRef, doCandidate)
+        window.location.reload();
+    };
 
-                  sendAnswer(localConnection, localStream, notif, doAnswer, database, username)
-                    break;
-                case 'answer':
-                    //start the call 
-                    setState({
-                      ...state,
-                      connectedUser: notif.from
-                    })
-                    startCall(localConnection, notif)
-                    break;
-                case 'candidate':
-                    //add candidate to the connection
-                    addCandidate(localConnection, notif)
-                    break;
-                default:
-                    break;    
-            }
-        }
-      }
-    return(
-        <VideoChat
-        startCall={startCall}
-        onLogin={onLogin}
-        componentDidMount={componentDidMount}
-        setLocalVideoRef={setLocalVideoRef}
-        setRemoteVideoRef={setRemoteVideoRef}
-        connectedUser={state.connectedUser}
-      />
-    )
+    return (
+        <div className="videos">
+            <video
+                ref={localRef}
+                autoPlay
+                playsInline
+                className="local"
+                muted
+            />
+            <video ref={remoteRef} autoPlay playsInline className="remote" />
+
+            <div className="buttonsContainer">
+                <button
+                    onClick={hangUp}
+                    disabled={!webcamActive}
+                    className="hangup button"
+                >
+                    <HangupIcon />
+                </button>
+                <div tabIndex={0} role="button" className="more button">
+                    <MoreIcon />
+                    <div className="popover">
+                        <button
+                            onClick={() => {
+                                navigator.clipboard.writeText(roomId);
+                            }}
+                        >
+                            <CopyIcon /> Copy joining code
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {!webcamActive && (
+                <div className="modalContainer">
+                    <div className="modal">
+                        <h3>
+                            Turn on your camera and microphone and start the
+                            call
+                        </h3>
+                        <div className="container">
+                            <button
+                                onClick={() => setPage("home")}
+                                className="secondary"
+                            >
+                                Cancel
+                            </button>
+                            <button onClick={setupSources}>Start</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Video;
