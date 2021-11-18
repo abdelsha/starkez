@@ -359,14 +359,20 @@ export const getRealTimeConversations=(user)=>{
 
 export function updateFriendListApi(user){
   return async (dispatch)=>{
+   try{
     db.collection("User")
     .doc(`${auth.currentUser.uid}`)
     .collection("Friends")
-    .add({
+    .doc(`${user.UID}`)
+    .set({
       user
     },{merge:true}).then(()=>{
       //console.log("completed")
     })
+   }catch(error){
+
+   }
+    
   }
 
 }

@@ -19,7 +19,7 @@ import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
 import { getCoursesAPI,UpdateCourseInfo } from "./Redux/Actions/Course";
 import CreateAccount from "./Pages/Login/CreateAccount";
-import Video from "./Pages/Video/Video";
+
 import Videos from "./Pages/Video1/Video";
 
 function App() {

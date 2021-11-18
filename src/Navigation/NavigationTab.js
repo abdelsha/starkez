@@ -61,6 +61,11 @@ function NavigationTab(props) {
               src="/images/message.png" alt=""/>
               <Link  to="/Messages">Messages</Link>
               </Button>
+              <Button variant="text">
+            <img 
+              src="/images/call.png" alt=""/>
+              <Link  to="/Video">Video</Link>
+              </Button>
             
             </a>
             <a>

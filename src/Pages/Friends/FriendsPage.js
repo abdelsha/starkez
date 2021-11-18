@@ -46,6 +46,8 @@ function FriendPage() {
   const [chatUser, setChatUser] = useState("");
   const [message, setMessage] = useState("");
   const [userUid, setUserUid] = useState("");
+  const [call, setCall]= useState(false);
+  const [isFriend, setIsFriend]= useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -65,7 +67,7 @@ function FriendPage() {
 
     }
     
-    console.log(getMessage);
+    //console.log(getMessage);
   }, [userstat, getMessage]);
 
   const initChat = (user) => {
@@ -83,14 +85,37 @@ const addFriendHelper=(user)=>{
   dispatch(updateFriendListApi(friend));
 
 }
+const checkIsFriend=(user)=>{
+  let friend=false;
+  
+  friends.map((friendUid)=>{
+    
+    //console.log(friendUid.UID==user.UID)
+    if (friendUid.UID==user.UID){
+      friend=true;
+      
+      
+    }
+  })
+  return friend;
+
+}
+const callFriendHelper=(user)=>{
+  console.log("sajklfbaljsb")
+  return(
+    <Redirect to="/Video"></Redirect>
+  )
+}
+
 const isFriendHelper=(user)=>{
   let templist=[];
-  console.log(userstat)
+  //console.log(userstat)
   friends.map((friendUid)=>{
-    console.log(friendUid.UID)
-    console.log(user.UID)
+    //console.log(friendUid.UID)
+    //console.log(user.UID)
     if (friendUid.UID==user.UID){
       templist.push(user)
+      setIsFriend(true);
       dispatch(selectedFriend(user));
     }
   
@@ -148,7 +173,8 @@ const isFriendHelper=(user)=>{
               : null}
           </div>
           <div className={classes.chatArea}>
-            <h2>Friends</h2>
+            {call && <Redirect to="/Video"></Redirect> } 
+            <h2>Users</h2>
             {onlineUser.length > 0
               ? onlineUser.map((user,key) => {
                   return (
@@ -203,6 +229,10 @@ const isFriendHelper=(user)=>{
                           <span onClick={(e)=>{
                             addFriendHelper(user)
                           }} ><img className={classes.addIcon} src="/images/plus.png" all=""/></span>
+                          
+                          {checkIsFriend(user)&&<span onClick={(e)=>{
+                            setCall(true);
+                          }} ><img className={classes.addIcon} src="/images/call.png" all=""/></span>}
                           </Typography>
                           <Typography variant="body2" color="text.secondary"
                           sx={{display:"flex", justifyContent:"center"}}
