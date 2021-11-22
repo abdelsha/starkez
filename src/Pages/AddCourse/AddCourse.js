@@ -196,7 +196,7 @@ function AddCourse(props) {
     if (userstat) {
       if (courseName != "" && courseDesc != "" && courseYear != ""&& courseStart != ""&& courseEnd != "") {
         dispatch(submitCourseInfo(payloadss,userstat));
-        //reset(e);
+        reset(e);
         //console.log("submitted");
       } else {
         alert("Please complete required fields");

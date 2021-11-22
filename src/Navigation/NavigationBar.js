@@ -3,6 +3,10 @@ import React from "react";
 import classes from "./NavigationBar.module.css";
 import { useSelector, useDispatch } from "react-redux";
 
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { signOutApi } from "../Redux/Actions/UserState";
+
 function NavigationBar(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
@@ -12,35 +16,76 @@ function NavigationBar(props) {
   });
 
   const dispatch = useDispatch();
-
+  const signOut = () => {
+    dispatch(signOutApi());
+    
+    
+  };
   return (
     <div className={classes.Layout}>
       <div className={classes.MenuBar}>
         <div className={classes.NavBar}>
           <nav className={classes.NavMenue}>
-            <Link to="/Home">Home</Link>
+            <Button variant="text">
+              <img 
+              
+              src="/images/Home.png" alt=""/>
+              <Link className={classes.links} to="/Home">
+                Home
+              </Link>
+            </Button>
 
-            <Link to="/Courses">Courses</Link>
+            <Button variant="text">
+            <img 
+              src="/images/course.png" alt=""/>
+              <Link className={classes.links} to="/Courses">
+                Courses
+              </Link>
+            </Button>
 
-            <Link to="/Deadlines">Deadlines</Link>
+            <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
+              <Link className={classes.links} to="/Deadlines">
+                Deadlines
+              </Link>
+            </Button>
 
-            <Link to="/Study_History">Study_History</Link>
+            
 
-            <Link to="/Friends">Friends</Link>
+            
 
-            <Link to="/Messages">Messages</Link>
+            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
+              <Link className={classes.links} to="/Messages">
+                Messages
+              </Link>
+            </Button>
 
-            <Link to="/Settings">Settings</Link>
+            <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
+              <Link className={classes.links} to="/Settings">
+                Settings
+              </Link>
+            </Button>
           </nav>
-          <div></div>
 
           <div className={classes.User}>
             <div className={classes.Users}>
-            {userstat && userstat.photoURL ? (
-              <img src={userstat.photoURL} all="" />
-            ) : (
-              <img src="/images/user1.svg" all="" />
-            )}
+              {userstat && userstat.photoURL ? (
+                <img src={userstat.photoURL} all="" />
+              ) : (
+                <img src="/images/user1.svg" all="" />
+              )}
+            </div>
+            <div className={classes.Signout}>
+              <Button sx={{ "background-color": "white" }}
+              onClick={() => {
+                signOut()
+              }}
+              >SignOut</Button>
             </div>
           </div>
 
@@ -143,7 +188,6 @@ function NavigationBar(props) {
               }
               */}
         </div>
-        
       </div>
       <div className={classes.Body}>{props.children}</div>
     </div>

@@ -8,7 +8,10 @@ export const setUser = (user) => ({
   type: "SET_USER",
   payload: user,
 });
-
+export const setUserInfo = (user) => ({
+  type: "SET_USERINFO",
+  payload: user,
+});
 export const setUserOnline = (onlineUser)=>({
   type: "SET_ONLINE_USER",
   payload: onlineUser,
@@ -19,25 +22,44 @@ export const getRealTimeMessage =(message)=>({
   payload:message,
 })
 
+export const friendList = (friends)=>({
+  type: "GET_FRIENDS",
+  payload:friends,
+})
+export const selectedFriend =(friend)=>({
+  type: 'SELECT_FRIEND',
+  payload:friend,
+})
+
+export const requestList = (friends)=>({
+  type: "GET_REQUESTS",
+  payload:friends,
+})
 export function getOnlineUsers(){
 
   return async (dispatch)=>{
     let onlineuser=[];
     try{
       let authen=await auth.currentUser.uid;
-      console.log(authen)
+      //console.log(authen)
       db.collection("User")
       .onSnapshot((querySnapshot)=>{
         
         const users=[];
+        let curruser={};
         querySnapshot.forEach(function(doc){
           
           if(doc.data().UID != authen){
             users.push(doc.data());
           }
+          else{
+            curruser=doc.data();
+          }
+
         });
-        console.log(users)
+        //console.log(users)
         dispatch(setUserOnline(users));
+        dispatch(setUserInfo(curruser));
       })
     }catch(err){
       
@@ -65,7 +87,7 @@ export function signInWithGoogleApi() {
               //console.log(payload.user);
               dispatch(setUser(payload.user));
             } else {
-              console.log("data doesnt exist");
+              //console.log("data doesnt exist");
               db.collection("User").doc(`${payload.user.uid}`).set({
                 UID: payload.user.uid,
                 isOnline:true,
@@ -129,7 +151,7 @@ export function signInWithUsername(email, password) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
-        console.log(userCredential);
+        //console.log(userCredential);
         dispatch(setUser(userCredential.user));
       })
       .catch((error) => {
@@ -159,6 +181,10 @@ export function createAccountWithhUserName(email, password,payload) {
           db.collection("User").doc(`${userCredential.user.uid}`).set({
             UID: userCredential.user.uid,
             isOnline:true,
+            firstName:payload.firstName,
+            lastName:payload.lastName,
+            fullName: payload.displayName,
+            sharedImg:"",
           });
           //console.log(userCredential.user);
           dispatch(setUser(userCredential.user));
@@ -321,11 +347,113 @@ export const getRealTimeConversations=(user)=>{
             conversations.push(doc.data())
         }
         if(conversations.length>0){
-          dispatch(getRealTimeMessage({conversations}))
+          //console.log("greater than 0")
         }
-        
+        dispatch(getRealTimeMessage({conversations}))
       })
-      console.log(conversations)
+      //console.log(conversations)
+      
     })
   }
+}
+
+export function updateFriendListApi(user){
+  return async (dispatch)=>{
+   try{
+    db.collection("User")
+    .doc(`${auth.currentUser.uid}`)
+    .collection("Friends")
+    .doc(`${user.UID}`)
+    .set({
+      user
+    },{merge:true}).then(()=>{
+      //console.log("completed")
+    })
+   }catch(error){
+
+   }
+    
+  }
+
+}
+
+export function retrieveFriendList() {
+  return async (dispatch) => {
+    try{
+      db.collection("User")
+      .doc(`${auth.currentUser.uid}`)
+      .collection("Friends")
+      .onSnapshot((querySnapshot) => {
+        const friends = [];
+        querySnapshot.forEach((doc) => {
+          //console.log(doc.data().user)
+          friends.push(doc.data().user)
+        });
+        dispatch(friendList(friends))
+      });
+    }catch{
+
+    }
+    
+  };
+}
+
+export function updateRequestListApi(user){
+  return async (dispatch)=>{
+    try{
+      db.collection("User")
+      .doc(`${auth.currentUser.uid}`)
+      .get()
+      .then((doc)=>{
+        let data=doc.data();
+        db.collection("User")
+        .doc(`${user.UID}`)
+        .collection("Requests")
+        .doc(`${auth.currentUser.uid}`)
+        .set({
+          data,
+        }).then(()=>{
+          let data=user;
+          db.collection("User")
+        .doc(`${auth.currentUser.uid}`)
+        .collection("Requests")
+        .doc(`${user.UID}`)
+        .set({
+          data,
+        }).then(()=>{
+          //console.log("completed")
+        })
+        })
+      })
+    }catch{
+
+    }
+    
+    
+    
+  }
+
+}
+
+export function retrieveRequestList() {
+  return async (dispatch) => {
+    try{
+      db.collection("User")
+      .doc(`${auth.currentUser.uid}`)
+      .collection("Requests")
+      .onSnapshot((querySnapshot) => {
+        
+        const friends = [];
+        querySnapshot.forEach((doc) => {
+          //console.log(doc.data().data)
+          friends.push(doc.data().data)
+        });
+        //console.log(friends)
+        dispatch(requestList(friends))
+      });
+    }catch{
+
+    }
+    
+  };
 }

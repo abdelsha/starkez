@@ -38,6 +38,7 @@ function Deadlines(props) {
     return dates;
   };
   return (
+    <div className={classes.Commoncardss}>
     <div className={classes.Layouts}>
       <div className={classes.Deadline}>
         <div className={classes.Commoncard}>
@@ -77,6 +78,7 @@ function Deadlines(props) {
           </div>*/}
         </div>
       </div>
+    </div>
     </div>
   );
 }

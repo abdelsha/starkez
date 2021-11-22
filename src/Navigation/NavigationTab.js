@@ -3,6 +3,8 @@ import React from "react";
 import classes from "./NavigationTab.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
+import { signOutApi } from "../Redux/Actions/UserState";
+import {useState} from 'react';
 
 function NavigationTab(props) {
   const userstat = useSelector((state) => {
@@ -11,29 +13,73 @@ function NavigationTab(props) {
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
-
+  const [goHome, setGoHome]=useState(false);
+  const [goCourse, setGoCourse]=useState(false);
+  const [goDeadline, setGoDeadline]=useState(false);
+  const [goMessage, setGoMessage]=useState(false);
+  const [goSetting, setGoSetting]=useState(false);
   const dispatch = useDispatch();
+  const signOut = () => {
+    dispatch(signOutApi());
+  
+    
+  };
   return (
     <div className={classes.Layout}>
       <div className={classes.MenuTab}>
         <nav className={classes.NavTab}>
           <a>
+          <Button variant="text">
+          <img 
+              src="/images/Home.png" alt=""/>
             <Link className={classes.Home} to="/Home">Home</Link>
-
-            <Link to="/Courses">Courses</Link>
-
-            <Link to="/Deadlines">Deadlines</Link>
-
-            <Link to="/Study_History">Study - History</Link>
+            </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/course.png" alt=""/>
+              <Link to="/Courses">Courses</Link>
+              </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
+              <Link to="/Deadlines">Deadlines</Link>
+              </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/study.png" alt=""/>
+              <Link to="/Study_History">Study - History</Link>
+              </Button>
+            
           </a>
           <a>
+          <Button variant="text">
+          <img 
+              src="/images/friend.png" alt=""/>
             <Link className={classes.Home} to="/Friends">Friends</Link>
-
-            <Link  to="/Messages">Messages</Link>
+            </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
+              <Link  to="/Messages">Messages</Link>
+              </Button>
+              <Button variant="text">
+            <img 
+              src="/images/call.png" alt=""/>
+              <Link  to="/Video">Video</Link>
+              </Button>
+            
             </a>
             <a>
-          
-            <Link className={classes.Home} to="/Settings">Settings</Link>
+            <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
+              <Link className={classes.Home} to="/Settings">Settings</Link>
+              </Button>
+            
             </a>
           
         </nav>
@@ -46,13 +92,31 @@ function NavigationTab(props) {
       <div className={classes.MenuBars}>
         <div className={classes.MenuBar}>
           <nav className={classes.NavMenue}>
-            <Link to="/Home">Home</Link>
+            
+          <Button variant="text">
+          <img 
+              src="/images/course.png" alt=""/>
+            <Link className={classes.links} to="/Courses">Courses</Link>
+            </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/deadline.png" alt=""/>
+              <Link className={classes.links} to="/Deadlines">Deadlines</Link>
+              </Button>
 
-            <Link to="/Courses">Courses</Link>
-
-            <Link to="/Messages">Messages</Link>
-
-            <Link to="/Settings">Settings</Link>
+            <Button variant="text">
+            <img 
+              src="/images/message.png" alt=""/>
+              <Link className={classes.links} to="/Messages">Messages</Link>
+              </Button>
+            
+            <Button variant="text">
+            <img 
+              src="/images/setting.png" alt=""/>
+              <Link className={classes.links} to="/Settings">Settings</Link>
+              </Button>
+      
           </nav>
           <div className={classes.User}>
             <div className={classes.Users}>
@@ -62,14 +126,18 @@ function NavigationTab(props) {
               <img src="/images/user1.svg" all="" />
             )}
             </div>
+            <div className={classes.Signout}> 
+              <Button
+              sx={{"background-color":"white"}}
+              onClick={() => {
+                signOut()
+              }}
+              >SignOut</Button>
+          </div>
           </div>
           
         </div>
-        <div className={classes.Signout}> 
-              <Button
-              sx={{"background-color":"white"}}
-              >SignOut</Button>
-          </div>
+        
       </div>
     </div>
   );

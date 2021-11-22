@@ -236,6 +236,7 @@ function Status (){
   //This section is for the pie graph
 
   return (
+    <div className={classes.Commoncardsss}>
     <div className={classes.Layouts}>
       <div className={classes.Status}>
         <div className={classes.CommonCard}>
@@ -299,6 +300,7 @@ function Status (){
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
