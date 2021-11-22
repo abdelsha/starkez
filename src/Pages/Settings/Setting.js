@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import {Button} from "@mui/material";
 import firebase from "firebase";
 import { updateUserInfo } from "../../Redux/Actions/UserState";
+import {Redirect} from "react-router-dom";
 
 /*TODO 
 CHANGE FIRST AND LAST NAME
@@ -77,7 +78,8 @@ function SettingPage() {
     //console.log(Object.assign({},finArr))
   }
   return (
-    <div>
+    <div className={classes.main}>
+      {!userstat && <Redirect to="/" />}
       <header className={classes.Header}>
         <h1>Settings</h1>
         <div className={classes.User}>

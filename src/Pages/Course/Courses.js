@@ -9,6 +9,7 @@ import StudyHistory from "./StudyHistory";
 import { getCoursesAPI, UpdateCourseInfo } from "../../Redux/Actions/Course";
 import { getUserAuth } from "../../Redux/Actions/UserState";
 import Project from "../AddCourse/Projects";
+import {Redirect } from "react-router-dom";
 
 function CoursePage() {
   const [loaded, setLoaded] = useState("false");
@@ -70,6 +71,7 @@ function CoursePage() {
 
   return (
     <div className={classes.CommonCards}>
+      {!userstat && <Redirect to="/" />}
     <div className={classes.Layouts}>
       <div className={classes.Deadline}>
         

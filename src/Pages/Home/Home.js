@@ -1,12 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import { getOnlineUsers, signOutApi } from "../../Redux/Actions/UserState";
+import { getOnlineUsers, retrieveFriendList, signOutApi } from "../../Redux/Actions/UserState";
 import { Redirect } from "react-router-dom";
 import classes from "./Home.module.css";
 import { useState, useEffect } from "react";
 import Status from "../Course/Status";
 import Deadlines from "../Course/Deadlines";
+import Video from "../Video1/Video";
 
 function HomePage() {
   var redirectReq = 0;
@@ -36,8 +37,11 @@ function HomePage() {
   const courseData = useSelector((state) => {
     return state.courseState.courseData;
   });
+  const friends = useSelector((state)=>{
+    return state.userState.friendList;
+  })
   const onlineUser = useSelector((state) => state.userState.online_users);
-
+  const [videoOn, setVideoOn] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,15 +49,24 @@ function HomePage() {
     if (assignmentData.length > 1) {
       setLoaded("true");
     }
-    dispatch(getOnlineUsers());
+    try{dispatch(getOnlineUsers());
+      dispatch(retrieveFriendList())
+    }catch{
+
+    }
   }, [assignmentData]);
 
   const signOut = () => {
     dispatch(signOutApi());
+    
+    
   };
+
 
   return (
     <div className={classes.CommonCards}>
+            {!userstat && <Redirect to="/" />}
+
       {loaded == "true" ? (
         <div className={classes.Layouts}>
           <div className={classes.Courses}>
@@ -70,8 +83,8 @@ function HomePage() {
           <div className={classes.Friends}>
             <div className={classes.CommonCardss}>
               <h2>Friends</h2>
-              {onlineUser.length > 0
-                ? onlineUser.map((user) => {
+              {friends.length > 0
+                ? friends.map((user) => {
                     return (
                       <div
                         
@@ -109,8 +122,8 @@ function HomePage() {
           <div className={classes.Messages}>
             <div className={classes.CommonCardss}>
             <h2>Messages</h2>
-              {onlineUser.length > 0
-                ? onlineUser.map((user) => {
+              {friends.length > 0
+                ? friends.map((user) => {
                     return (
                       <div
                         
@@ -143,7 +156,19 @@ function HomePage() {
             </div>
           </div>
           <div className={classes.Videos}>
-            <div className={classes.CommonCard}>Videos</div>
+            <div className={classes.CommonCardss}><h2>
+              Video
+              </h2>
+              <div>
+              <Button variant="contained" onClick={(e)=>{
+                setVideoOn(true)
+              }}>
+                Start Video Call
+                {videoOn && <Redirect to="/Video"/> }
+              </Button>
+              </div>
+              </div>
+              
           </div>
           <div className={classes.StudySession}>
             <div className={classes.CommonCard}>Study Session</div>
@@ -154,11 +179,12 @@ function HomePage() {
           <div className={classes.Encouraging}>
             <div className={classes.CommonCard}>
               Encouraging words
-              <Button
+              {/*<Button
                 variant="contained"
                 onClick={() => {
-                  signOut();
+                  signOut()
                 }}
+                
               >
                 SignOut
               </Button>
@@ -172,7 +198,7 @@ function HomePage() {
                 >
                   SignIn
                 </Link>
-              </Button>
+                </Button>*/}
             </div>
           </div>
         </div>
@@ -192,8 +218,8 @@ function HomePage() {
           <div className={classes.Friends}>
             <div className={classes.CommonCardss}>
             <h2>Friends</h2>
-              {onlineUser.length > 0
-                ? onlineUser.map((user) => {
+              {friends.length > 0
+                ? friends.map((user) => {
                     return (
                       <div
                         
@@ -231,8 +257,8 @@ function HomePage() {
           <div className={classes.Messages}>
             <div className={classes.CommonCardss}>
             <h2>Messages</h2>
-              {onlineUser.length > 0
-                ? onlineUser.map((user) => {
+              {friends.length > 0
+                ? friends.map((user) => {
                     return (
                       <div
                         
@@ -265,7 +291,18 @@ function HomePage() {
             </div>
           </div>
           <div className={classes.Videos}>
-            <div className={classes.CommonCard}>Videos</div>
+          <div className={classes.CommonCardss}><h2>
+              Video
+              </h2>
+              <div>
+              <Button variant="contained" onClick={(e)=>{
+                setVideoOn(true)
+              }}>
+                Start Video Call
+                {videoOn && <Redirect to="/Video"/> }
+              </Button>
+              </div>
+              </div>
           </div>
           <div className={classes.StudySession}>
             <div className={classes.CommonCard}>Study Session</div>
@@ -276,11 +313,13 @@ function HomePage() {
           <div className={classes.Encouraging}>
             <div className={classes.CommonCard}>
               Encouraging words
-              <Button
+              
+              {/*<Button
                 variant="contained"
                 onClick={() => {
-                  signOut();
+                  signOut()
                 }}
+                
               >
                 SignOut
               </Button>
@@ -294,7 +333,7 @@ function HomePage() {
                 >
                   SignIn
                 </Link>
-              </Button>
+                </Button>*/}
             </div>
           </div>
         </div>

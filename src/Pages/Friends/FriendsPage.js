@@ -5,7 +5,11 @@ import { useState, useEffect } from "react";
 import {
   getOnlineUsers,
   getRealTimeConversations,
+  retrieveFriendList,
+  updateFriendListApi,
   updateMessate,
+  selectedFriend,
+  updateRequestListApi,
 } from "../../Redux/Actions/UserState";
 import { auth } from "../../Firebase/Firebase";
 import Card from "@mui/material/Card";
@@ -15,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, Button } from "@mui/material";
 import { Redirect } from "react-router";
 import MessagePage from "../Messages/MessagePage";
+import { Link } from "react-router-dom";
 
 function FriendPage() {
   const userstat = useSelector((state) => {
@@ -27,12 +32,22 @@ function FriendPage() {
   const getMessage = useSelector((state) => {
     return state.userState.conversations;
   });
+
+  const friends = useSelector((state)=>{
+    return state.userState.friendList;
+  })
+
+  const selectedFriends = useSelector((state)=>{
+    return state.userState.selectedFriend;
+  })
   const onlineUser = useSelector((state) => state.userState.online_users);
   const [loaded, setLoaded] = useState("false");
   const [chatStarted, setChatStarted] = useState(false);
   const [chatUser, setChatUser] = useState("");
   const [message, setMessage] = useState("");
   const [userUid, setUserUid] = useState("");
+  const [call, setCall]= useState(false);
+  const [isFriend, setIsFriend]= useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,8 +61,13 @@ function FriendPage() {
   }, [[], userstat]);
 
   useEffect(() => {
-    dispatch(getOnlineUsers());
-    console.log(getMessage);
+    try{dispatch(getOnlineUsers());
+      dispatch(retrieveFriendList());
+    }catch{
+
+    }
+    
+    //console.log(getMessage);
   }, [userstat, getMessage]);
 
   const initChat = (user) => {
@@ -60,35 +80,66 @@ function FriendPage() {
     );
     console.log(user);
   };
+const addFriendHelper=(user)=>{
+  let friend=user;
+  dispatch(updateFriendListApi(friend));
 
-  const submitMessage = (e) => {
-    const messObj = {
-      user_uid_1: userstat.uid,
-      user_uid_2: userUid,
-      message,
-    };
-
-    if (message != "") {
-      dispatch(updateMessate(messObj, userUid)).then(() => {
-        setMessage("");
-      });
+}
+const checkIsFriend=(user)=>{
+  let friend=false;
+  
+  friends.map((friendUid)=>{
+    
+    //console.log(friendUid.UID==user.UID)
+    if (friendUid.UID==user.UID){
+      friend=true;
+      
+      
     }
-    //console.log(messObj)
+  })
+  return friend;
 
-  };
-  const redirectPage=(user)=>{
-    //console.log(user)
+}
+const callFriendHelper=(user)=>{
+  console.log("sajklfbaljsb")
+  return(
+    <Redirect to="/Video"></Redirect>
+  )
+}
+
+const isFriendHelper=(user)=>{
+  let templist=[];
+  //console.log(userstat)
+  friends.map((friendUid)=>{
+    //console.log(friendUid.UID)
+    //console.log(user.UID)
+    if (friendUid.UID==user.UID){
+      templist.push(user)
+      setIsFriend(true);
+      dispatch(selectedFriend(user));
+    }
+  
     
-      <Redirect to="/Messages" user={user} />
-    
+  })
+  
+
+  if (templist.length==0){
+      dispatch(updateRequestListApi(user));
+      dispatch(selectedFriend(user));
+      console.log("done")
   }
+
+}
+
   return (
     <section className={classes.container}>
+      {!userstat && <Redirect to="/" />}
       {loaded == "true" ? (
         <div className={classes.container}>
           <div className={classes.listOfUsers}>
+            <h2>Friends</h2>
             {onlineUser.length > 0
-              ? onlineUser.map((user) => {
+              ? friends.map((user) => {
                   return (
                     <div
                       onClick={() => {
@@ -122,17 +173,22 @@ function FriendPage() {
               : null}
           </div>
           <div className={classes.chatArea}>
-            <h2>Friends</h2>
+            {call && <Redirect to="/Video"></Redirect> } 
+            <h2>Users</h2>
             {onlineUser.length > 0
-              ? onlineUser.map((user) => {
+              ? onlineUser.map((user,key) => {
                   return (
                     <Button
+                    key={user.UID}
                     sx={{marginBottom:"15px", marginTop:"15px" }}
-                    href ='/Messages'
                     onClick={(e)=>{
-                      console.log("heree")
+                      isFriendHelper(user);
+                      //dispatch(selectedFriend(user));
+                      //console.log(user)
                     }}
+                    
                     >
+                    
                     <Card sx={{ minWidth: 345, display:"flex", "justifyContent":"center",
                     }}
                     
@@ -143,7 +199,7 @@ function FriendPage() {
                       
                     }}
 
-                      >
+                      ><Link to ='/Messages'>
                         <CardMedia
                           component="img"
                           height="140"
@@ -156,16 +212,27 @@ function FriendPage() {
                           display:"flex",
                           justifyContent:"center", alignItems:"center"}}
                         />
+                        </Link>
                         <CardContent sx={{display:"flex", flexDirection:"column"}}>
                           <Typography gutterBottom variant="h5" component="div"
                           sx={{display:"flex"}}
                           >
+                        <Link style= {{textDecoration:"none", color:"black"}}to ='/Messages'>
+
                             <span>{user.fullName}</span>
                             <span className={
                             user.isOnline
                               ? `${classes.onlineStatus}`
                               : `${classes.onlineStatusoff}`
                           }></span>
+                          </Link>
+                          <span onClick={(e)=>{
+                            addFriendHelper(user)
+                          }} ><img className={classes.addIcon} src="/images/plus.png" all=""/></span>
+                          
+                          {checkIsFriend(user)&&<span onClick={(e)=>{
+                            setCall(true);
+                          }} ><img className={classes.addIcon} src="/images/call.png" all=""/></span>}
                           </Typography>
                           <Typography variant="body2" color="text.secondary"
                           sx={{display:"flex", justifyContent:"center"}}
@@ -175,6 +242,7 @@ function FriendPage() {
                         </CardContent>
                       </CardActionArea>
                     </Card>
+                  
                     </Button>
                   );
                 })
