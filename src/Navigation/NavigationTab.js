@@ -4,6 +4,7 @@ import classes from "./NavigationTab.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { signOutApi } from "../Redux/Actions/UserState";
+import {useState} from 'react';
 
 function NavigationTab(props) {
   const userstat = useSelector((state) => {
@@ -12,11 +13,15 @@ function NavigationTab(props) {
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
-
+  const [goHome, setGoHome]=useState(false);
+  const [goCourse, setGoCourse]=useState(false);
+  const [goDeadline, setGoDeadline]=useState(false);
+  const [goMessage, setGoMessage]=useState(false);
+  const [goSetting, setGoSetting]=useState(false);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(signOutApi());
-    
+  
     
   };
   return (

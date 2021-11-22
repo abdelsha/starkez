@@ -184,11 +184,32 @@ body{
     margin-top: 5px;
     border-top: solid rgba(0,0,0,0);
 }
+.NavTab a Button{
+    text-decoration: none ;
+    font-size: 15px;
+    display: flex;
+    padding: 0 5px;
+    
+    margin-top: 10px;
+    color: rgba(0, 0, 0, 0.452);
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: flex-start;
+    
 
+}
+@media (max-width:768px) {
+    .NavTab a Button{
+        
+        padding: 0 1px;
+        font-size: 7px;
+         
+    }
+}
 .Home{
     border-top: solid rgba(0,0,0,0.3);
 }
-.NavTab a a:hover {
+.NavTab a Button:hover {
     text-decoration: none;
     background-color: rgba(228,228,228,0.08);
     color: rgba(0, 0, 0, 0.8);

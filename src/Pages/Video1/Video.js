@@ -227,6 +227,7 @@ function Videos({ mode, callId, setPage, selectedFriend }) {
             const callData = (await callDoc.get()).data();
 
             const offerDescription = callData.offer;
+            console.log(callData)
             await pc.setRemoteDescription(
                 new RTCSessionDescription(offerDescription)
             );

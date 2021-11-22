@@ -7,6 +7,7 @@ import classes from "./Home.module.css";
 import { useState, useEffect } from "react";
 import Status from "../Course/Status";
 import Deadlines from "../Course/Deadlines";
+import Video from "../Video1/Video";
 
 function HomePage() {
   var redirectReq = 0;
@@ -40,7 +41,7 @@ function HomePage() {
     return state.userState.friendList;
   })
   const onlineUser = useSelector((state) => state.userState.online_users);
-
+  const [videoOn, setVideoOn] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,6 +61,7 @@ function HomePage() {
     
     
   };
+
 
   return (
     <div className={classes.CommonCards}>
@@ -154,7 +156,19 @@ function HomePage() {
             </div>
           </div>
           <div className={classes.Videos}>
-            <div className={classes.CommonCard}>Videos</div>
+            <div className={classes.CommonCardss}><h2>
+              Video
+              </h2>
+              <div>
+              <Button variant="contained" onClick={(e)=>{
+                setVideoOn(true)
+              }}>
+                Start Video Call
+                {videoOn && <Redirect to="/Video"/> }
+              </Button>
+              </div>
+              </div>
+              
           </div>
           <div className={classes.StudySession}>
             <div className={classes.CommonCard}>Study Session</div>
@@ -277,7 +291,18 @@ function HomePage() {
             </div>
           </div>
           <div className={classes.Videos}>
-            <div className={classes.CommonCard}>Videos</div>
+          <div className={classes.CommonCardss}><h2>
+              Video
+              </h2>
+              <div>
+              <Button variant="contained" onClick={(e)=>{
+                setVideoOn(true)
+              }}>
+                Start Video Call
+                {videoOn && <Redirect to="/Video"/> }
+              </Button>
+              </div>
+              </div>
           </div>
           <div className={classes.StudySession}>
             <div className={classes.CommonCard}>Study Session</div>
