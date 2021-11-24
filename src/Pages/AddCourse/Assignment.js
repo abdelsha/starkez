@@ -51,9 +51,6 @@ function Assignment(props) {
   const [assignmentNumbers1, setassignmentNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -63,7 +60,24 @@ function Assignment(props) {
       complete: false,
     },
   ]);
+ ///////////////////////////////////////////////////////////////////
+ const updateCourseName=()=>{
+  let mod=itemss;
+  mod.map((val)=>{
+    val.courseName=courseName
+  })
+  setItemss(()=>mod);
+  //console.log(itemss)
+}
 
+useEffect(() => {
+  setCourseNames(()=>props.courseName)
+  updateCourseName()
+  //console.log(courseName)
+}, [[], props.courseName]);
+
+
+//////////////////////////////////////////////////////////////////////
   useEffect(() => {
     newElements();
   }, [props.assignmentNum]);
@@ -187,7 +201,7 @@ function Assignment(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`assignment${key + 1}Date`}

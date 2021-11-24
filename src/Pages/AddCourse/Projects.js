@@ -42,9 +42,24 @@ function Project(props) {
   const [projectNumbers1, setprojectNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
+   ///////////////////////////////////////////////////////////////////
+   const updateCourseName=()=>{
+    let mod=itemss;
+    mod.map((val)=>{
+      val.courseName=courseName
+    })
+    setItemss(()=>mod);
+    console.log(itemss)
+  }
+
   useEffect(() => {
-    setCourseNames(props.courseName);
+    setCourseNames(()=>props.courseName)
+    updateCourseName()
+    //console.log(courseName)
   }, [[], props.courseName]);
+
+
+  //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -175,7 +190,7 @@ function Project(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`project${key + 1}Date`}

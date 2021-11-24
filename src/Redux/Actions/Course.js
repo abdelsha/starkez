@@ -115,7 +115,7 @@ export const setOrderedCourse = (course) => ({
 });
 export function submitCourseInfo(payload,user) {
   return (dispatch) => {
-    console.log(user.uid)
+    console.log(payload)
     db.collection("User")
       .doc(`${user.uid}`)
       .collection("Course")

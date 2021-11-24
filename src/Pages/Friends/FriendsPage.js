@@ -163,7 +163,7 @@ const isFriendHelper=(user)=>{
                           className={
                             user.isOnline
                               ? `${classes.onlineStatus}`
-                              : `${classes.onlineStatusoff}`
+                              : null
                           }
                         ></span>
                       </div>
@@ -179,7 +179,7 @@ const isFriendHelper=(user)=>{
               ? onlineUser.map((user,key) => {
                   return (
                     <Button
-                    key={user.UID}
+                    key={key}
                     sx={{marginBottom:"15px", marginTop:"15px" }}
                     onClick={(e)=>{
                       isFriendHelper(user);
@@ -223,7 +223,7 @@ const isFriendHelper=(user)=>{
                             <span className={
                             user.isOnline
                               ? `${classes.onlineStatus}`
-                              : `${classes.onlineStatusoff}`
+                              : null
                           }></span>
                           </Link>
                           <span onClick={(e)=>{

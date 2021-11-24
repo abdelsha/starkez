@@ -126,7 +126,7 @@ function MessagePage(props) {
                             className={
                               user.isOnline
                                 ? `${classes.onlineStatus}`
-                                : `${classes.onlineStatusoff}`
+                                : null
                             }
                           ></span>
                         </div>
@@ -164,7 +164,7 @@ function MessagePage(props) {
                             className={
                               user.isOnline
                                 ? `${classes.onlineStatus}`
-                                : `${classes.onlineStatusoff}`
+                                : null
                             }
                           ></span>
                         </div>

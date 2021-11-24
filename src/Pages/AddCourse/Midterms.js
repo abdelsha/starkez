@@ -42,10 +42,11 @@ function Midterm(props) {
   const [midtermNumbers, setMidtermNumbers] = useState("");
   const [midtermNumbers1, setMidtermNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
-
+/*
   useEffect(() => {
     setCourseNames(props.courseName);
   }, [[], props.courseName]);
+  */
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -55,10 +56,28 @@ function Midterm(props) {
       complete: false,
     },
   ]);
+  ///////////////////////////////////////////////////////////////////
+  const updateCourseName=()=>{
+    let mod=itemss;
+    mod.map((val)=>{
+      val.courseName=courseName
+    })
+    setItemss(()=>mod);
+    console.log(itemss)
+  }
 
+  useEffect(() => {
+    setCourseNames(()=>props.courseName)
+    updateCourseName()
+    //console.log(courseName)
+  }, [[], props.courseName]);
+
+
+  //////////////////////////////////////////////////////////////////////
   useEffect(() => {
     newElements();
   }, [midtermNumber12]);
+
   const newElements = () => {
     let value = midtermNumber12;
     let array = [];
@@ -175,7 +194,7 @@ function Midterm(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`midterm${key + 1}Date`}
@@ -183,6 +202,7 @@ function Midterm(props) {
                 inputFormat="MM/dd/yyyy"
                 value={index != -1 ? itemss[index].date : midtermone}
                 onChange={(e) => {
+                  
                   midtermDatesHelper({
                     id: `midterm${key + 1}`,
                     date: e,
@@ -197,6 +217,7 @@ function Midterm(props) {
                 value={index != -1 ? itemss[index].desc : midtermoneText}
                 onChange={(e) => {
                   ////console.log(e.target.value)
+                  
                   midtermTexts({
                     id: `midterm${key + 1}`,
                     desc: e.target.value,

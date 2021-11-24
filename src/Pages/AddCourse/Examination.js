@@ -41,12 +41,26 @@ function Examination(props) {
   const [examNumbers, setExamNumbers] = useState("");
   const [examNumbers1, setExamNumbers1] = useState([]);
 
-  const setCourseName = (name) => {
-    courseNames = name;
-  };
+  const [courseName, setCourseNames] = useState("");
+  
+   ///////////////////////////////////////////////////////////////////
+   const updateCourseName=()=>{
+    let mod=itemss;
+    mod.map((val)=>{
+      val.courseName=courseName
+    })
+    setItemss(()=>mod);
+    //console.log(itemss)
+  }
+
   useEffect(() => {
-    setCourseName(props.courseName);
+    setCourseNames(()=>props.courseName)
+    updateCourseName()
+    //console.log(courseName)
   }, [[], props.courseName]);
+
+
+  //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseNames,
@@ -118,7 +132,7 @@ function Examination(props) {
   };
 
   const examTexts = (val) => {
-    console.log(courseNames);
+    console.log(courseName);
     let text = val.desc;
     let newArr = [...itemss];
     let index = itemss.findIndex((x) => x.id == val.id);
@@ -178,7 +192,7 @@ function Examination(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`exam${key + 1}Date`}

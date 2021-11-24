@@ -7,7 +7,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
@@ -112,23 +112,28 @@ function AddCourse(props) {
   };
 
   const reset = (e) => {
-    setCourseStart(new Date());
-    setCourseEnd(new Date());
-    setCourseName("");
-    setCourseYear("");
-    setCourseName("");
-    setCourseDesc("");
-    dispatch(setExamNumber(""));
-    dispatch(setMidtermNumber(""));
-    dispatch(setQuizNumber(""));
-    dispatch(setAssignmentNumber(""));
-    dispatch(setProjectNumber(""));
-    setExamData3([{ id: "", date: "", desc: "",complete:"", }]);
-    setMidtermData3([{ id: "", date: "", desc: "",complete:"", }]);
-    setQuizData3([{ id: "", date: "", desc: "",complete:"", }]);
-    setAssignmentData3([{ id: "", date: "", desc: "",complete:"", }]);
-    setProjectData3([{ id: "", date: "", desc: "",complete:"", }]);
-    handleClick(e);
+    try{
+      setCourseStart(new Date());
+      setCourseEnd(new Date());
+      setCourseName("");
+      setCourseYear("");
+      setCourseName("");
+      setCourseDesc("");
+      setExamNumber(0);
+      setMidtermNumber(0);
+      setQuizNumber(0);
+      setProjectNumber(0);
+      setAssignmentNumber(0);
+      setExamData3([{ id: "", date: "", desc: "",complete:"", }]);
+      setMidtermData3([{ id: "", date: "", desc: "",complete:"", }]);
+      setQuizData3([{ id: "", date: "", desc: "",complete:"", }]);
+      setAssignmentData3([{ id: "", date: "", desc: "",complete:"", }]);
+      setProjectData3([{ id: "", date: "", desc: "",complete:"", }]);
+      handleClick(e);
+    }catch(err) {
+      console.log(err)
+    }
+    
   };
 
   const courseStartHelper = (newValue) => {
@@ -138,6 +143,10 @@ function AddCourse(props) {
   const courseEndHelper = (newValue) => {
     setCourseEnd(newValue);
   };
+
+  useEffect(() => {
+    //console.log(midtermData3)
+  }, [midtermData3, courseName])
 
   function submitEverything(e) {
     let everyarr=[];

@@ -39,9 +39,24 @@ function Quiz(props) {
   const [quizNumbers1, setQuizNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
+    ///////////////////////////////////////////////////////////////////
+    const updateCourseName=()=>{
+      let mod=itemss;
+      mod.map((val)=>{
+        val.courseName=courseName
+      })
+      setItemss(()=>mod);
+      //console.log(itemss)
+    }
+  
+    useEffect(() => {
+      setCourseNames(()=>props.courseName)
+      updateCourseName()
+      //console.log(courseName)
+    }, [[], props.courseName]);
+  
+  
+    //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -171,7 +186,7 @@ function Quiz(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`quiz${key + 1}Date`}

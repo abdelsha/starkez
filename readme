@@ -1,0 +1,8 @@
+version 1.0.1{
+    fixed course display buy
+    fixed courseName bug
+    fixed name bug when sending video call through friends page 
+    fixed name bug when sending video call through call 
+    fixed the online icon
+    removed the extra lines
+}

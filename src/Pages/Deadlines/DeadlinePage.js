@@ -253,9 +253,9 @@ function DeadlinePage() {
           <h2>Deadlines</h2>
           {loaded == "true" ? (
             <div>
-              {orderdCourse.map((data, key) => {
+              {retdeadlines.map((data, key) => {
                 return (
-                  <div className={classes.CommonCards}>
+                  <div className={classes.CommonCards} key={key}>
                     <span>Course Name: {data.courseName}</span>
                     <span>Description: {data.desc}</span>
                     <span>

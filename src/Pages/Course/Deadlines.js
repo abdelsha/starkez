@@ -29,6 +29,7 @@ function Deadlines(props) {
   useEffect(() => {
     totOrdArr = retdeadlines;
     totArr = orderdCourse;
+    console.log(orderdCourse)
   }, [retdeadlines]);
 
   const dateMaker = (date) => {
@@ -48,7 +49,7 @@ function Deadlines(props) {
             {retdeadlines.map((data, key) => {
               //console.log(data.date.toDate())
               return (
-                <div className={classes.DataDisplays}>
+                <div className={classes.DataDisplays} key={key}>
                   <div className={classes.Commoncards}>
                     <div className={classes.DeadLineText}>
                       <span>Course Name: {data.courseName}</span>
