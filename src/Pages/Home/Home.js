@@ -106,7 +106,7 @@ function HomePage() {
                             className={
                               user.isOnline
                                 ? `${classes.onlineStatus}`
-                                : `${classes.onlineStatusoff}`
+                                : null
                             }
                           ></span>
                         </div>
@@ -241,7 +241,7 @@ function HomePage() {
                             className={
                               user.isOnline
                                 ? `${classes.onlineStatus}`
-                                : `${classes.onlineStatusoff}`
+                                : null
                             }
                           ></span>
                         </div>

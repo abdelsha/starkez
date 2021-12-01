@@ -12,16 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 import {
-  setAssignmentData,
-  setAssignmentNumber,
-  setExamData,
-  setExamNumber,
-  setMidtermData,
-  setMidtermNumber,
-  setProjectData,
-  setProjectNumber,
-  setQuizData,
-  setQuizNumber,
+
   submitCourseInfo,
 } from "../../Redux/Actions/Course";
 import Examination from "./Examination";
@@ -39,14 +30,10 @@ function AddCourse(props) {
   const courseStat = useSelector((state) => {
     return state.courseState.course;
   });
- 
-  const dispatch = useDispatch();
-  
-  const [courseStart, setCourseStart] = useState(
-    new Date()
-  );
 
- 
+  const dispatch = useDispatch();
+
+  const [courseStart, setCourseStart] = useState(new Date());
 
   const [courseEnd, setCourseEnd] = useState(new Date());
 
@@ -55,55 +42,12 @@ function AddCourse(props) {
 
   const [courseDesc, setCourseDesc] = useState("");
 
-  const [midtermData3, setMidtermData3] = useState([
-    { id: "", date: "", desc: "", complete: "" },
-  ]);
-  const [examData3, setExamData3] = useState([
-    { id: "", date: "", desc: "", complete: "" },
-  ]);
-  const [quizData3, setQuizData3] = useState([
-    { id: "", date: "", desc: "", complete: "" },
-  ]);
-  const [assignmentData3, setAssignmentData3] = useState([
-    { id: "", date: "", desc: "", complete: "" },
-  ]);
-  const [projectData3, setProjectData3] = useState([
-    { id: "", date: "", desc: "", complete: "" },
-  ]);
   const [examNumber, setExamNumber] = useState("");
-  const [midtermNumber, setMidtermNumber]= useState("");
+  const [midtermNumber, setMidtermNumber] = useState("");
   const [quizNumber, setQuizNumber] = useState("");
   const [projectNumber, setProjectNumber] = useState("");
   const [assignmentNumber, setAssignmentNumber] = useState("");
 
-  const getCourseNameHelper = () => {
-    return courseName;
-  };
-
-  const getMidtermDataHelper = (data) => {
-    setMidtermData3(data);
-    //console.log(midtermData3)
-  };
-
-  const getExamDataHelper = (data) => {
-    setExamData3(data);
-    //console.log(courseName)
-  };
-
-  const getQuizDataHelper = (data) => {
-    setQuizData3(data);
-    //console.log(midtermData3)
-  };
-
-  const getAssignmentDataHelper = (data) => {
-    setAssignmentData3(data);
-    //console.log(midtermData3)
-  };
-
-  const getProjectDataHelper = (data) => {
-    setProjectData3(data);
-    //console.log(midtermData3)
-  };
   const handleClick = (e) => {
     e.preventDefault();
     if (e.target !== e.currentTarget) {
@@ -112,7 +56,7 @@ function AddCourse(props) {
   };
 
   const reset = (e) => {
-    try{
+    try {
       setCourseStart(new Date());
       setCourseEnd(new Date());
       setCourseName("");
@@ -124,16 +68,10 @@ function AddCourse(props) {
       setQuizNumber(0);
       setProjectNumber(0);
       setAssignmentNumber(0);
-      setExamData3([{ id: "", date: "", desc: "",complete:"", }]);
-      setMidtermData3([{ id: "", date: "", desc: "",complete:"", }]);
-      setQuizData3([{ id: "", date: "", desc: "",complete:"", }]);
-      setAssignmentData3([{ id: "", date: "", desc: "",complete:"", }]);
-      setProjectData3([{ id: "", date: "", desc: "",complete:"", }]);
       handleClick(e);
-    }catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-    
   };
 
   const courseStartHelper = (newValue) => {
@@ -144,76 +82,139 @@ function AddCourse(props) {
     setCourseEnd(newValue);
   };
 
+  ///////////////////////////////////////////////////////////////////
+  const [itemss, setItemss] = useState([
+    {
+      courseName: courseName,
+      id: "",
+      date: "",
+      desc: "",
+      complete: false,
+    },
+  ]);
+  const updateCourseName = () => {
+    let mod = itemss;
+    mod.map((val) => {
+      val.courseName = courseName;
+    });
+    setItemss(() => mod);
+    console.log(itemss);
+  };
+
   useEffect(() => {
-    //console.log(midtermData3)
-  }, [midtermData3, courseName])
+    //setCourseNames(()=>props.courseName)
+    updateCourseName();
+    //console.log(courseName)
+  }, [[], courseName]);
 
-  function submitEverything(e) {
-    let everyarr=[];
-    e.preventDefault();
-    if (e.target !== e.currentTarget) {
-      return;
-    }
-    //console.log(quizData12);
-    //console.log(projectData12);
-    let examDataSub = examData3.filter((x) => x.id != "");
-    let midtermDataSub = midtermData3.filter((x) => x.id != "");
-    let quizDataSub = quizData3.filter((x) => x.id != "");
-    let assignmentDataSub = assignmentData3.filter((x) => x.id != "");
-    let projectDataSub = projectData3.filter((x) => x.id != "");
+  useEffect(() => {
+    console.log(itemss);
+    //props.data(itemss)
+  }, [[], itemss, courseName]);
 
-    examDataSub.map((data)=>{
-      everyarr=[...everyarr,data];
-    })
-    midtermDataSub.map((data)=>{
-      everyarr=[...everyarr,data];
-    })
-    quizDataSub.map((data)=>{
-      everyarr=[...everyarr,data];
-    })
-    assignmentDataSub.map((data)=>{
-      everyarr=[...everyarr,data];
-    })
-    projectDataSub.map((data)=>{
-      everyarr=[...everyarr,data];
-    })
-    const payloads = {
-      user: userstat,
-      timestamp: firebase.firestore.Timestamp.now(),
-      courseName: courseName,
-      courseDesc: courseDesc,
-      courseYear: courseYear,
-      courseStart: courseStart,
-      courseEnd: courseEnd,
-      midterms: midtermDataSub,
-      exams: examDataSub,
-      quizes: quizDataSub,
-      assignments: assignmentDataSub,
-      projects: projectDataSub,
-    };
-    const payloadss={
-      timestamp: firebase.firestore.Timestamp.now(),
-      courseName: courseName,
-      courseDesc: courseDesc,
-      courseYear: courseYear,
-      courseStart: courseStart,
-      courseEnd: courseEnd,
-      status:everyarr,
-    }
-    
-    console.log(payloadss);
-    if (userstat) {
-      if (courseName != "" && courseDesc != "" && courseYear != ""&& courseStart != ""&& courseEnd != "") {
-        dispatch(submitCourseInfo(payloadss,userstat));
-        reset(e);
-        //console.log("submitted");
-      } else {
-        alert("Please complete required fields");
+  const descHelper = (id, value, type) => {
+    try {
+      let index = itemss.findIndex((x) => x.id == id);
+      //console.log(value)
+      if (index == -1) {
+        if (type == "desc") {
+          setItemss((prev) => [
+            ...prev,
+            {
+              courseName: courseName,
+              id: id,
+              date: new Date(),
+              desc: value,
+              complete: false,
+            },
+          ]);
+        } else if (type == "date") {
+          setItemss((prev) => [
+            ...prev,
+            {
+              courseName: courseName,
+              id: id,
+              date: value,
+              desc: "",
+              complete: false,
+            },
+          ]);
+        }
+      } else if (index != -1) {
+        console.log("here2");
+        if (type === "remove") {
+          console.log(id);
+          const updateddes = itemss.filter((todo) => todo.id !== id);
+          setItemss(() => updateddes);
+        } else {
+          const updateddes = itemss.map((todo) => {
+            if (todo.id == id) {
+              if (type == "desc") {
+                return {
+                  ...todo,
+                  desc: value,
+                };
+              } else if (type == "date") {
+                return {
+                  ...todo,
+                  date: value,
+                };
+              }
+            }
+            return todo;
+          });
+          setItemss(() => updateddes);
+        }
       }
-    } else {
-      console.log("user not logged in");
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log(itemss);
+    //props.data(items);
+  };
+  function submitEverything(e) {
+    try {
+      let everyarr = itemss.filter((rem) => rem.id !== "");
+      e.preventDefault();
+      if (e.target !== e.currentTarget) {
+        return;
+      }
+
+      const payloadss = {
+        timestamp: firebase.firestore.Timestamp.now(),
+        courseName: courseName,
+        courseDesc: courseDesc,
+        courseYear: courseYear,
+        courseStart: courseStart,
+        courseEnd: courseEnd,
+        status: everyarr,
+      };
+
+      console.log(payloadss);
+      if (userstat) {
+        if (
+          courseName != "" &&
+          courseDesc != "" &&
+          courseYear != "" &&
+          courseStart != "" &&
+          courseEnd != ""
+        ) {
+          dispatch(submitCourseInfo(payloadss, userstat));
+          reset(e);
+          alert("Submition Complete");
+          //console.log("submitted");
+        } else {
+          alert("Please complete required fields");
+        }
+      } else {
+        console.log("user not logged in");
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
+  //////////////////////////////////////////////////////////////////////
 
   return (
     <div className={classes.CommonCard}>
@@ -281,6 +282,11 @@ function AddCourse(props) {
                 }}
                 value={examNumber}
                 onChange={(e) => {
+                  //console.log(examNumber)
+                  //console.log(e.target.value)
+                  if (examNumber > e.target.value) {
+                    descHelper(`exam${examNumber}`, null, "remove");
+                  }
                   setExamNumber(e.target.value);
                 }}
               />
@@ -293,6 +299,9 @@ function AddCourse(props) {
                 }}
                 value={midtermNumber}
                 onChange={(e) => {
+                  if (midtermNumber > e.target.value) {
+                    descHelper(`midterm${midtermNumber}`, null, "remove");
+                  }
                   setMidtermNumber(e.target.value);
                 }}
               />
@@ -306,7 +315,12 @@ function AddCourse(props) {
                   shrink: true,
                 }}
                 value={quizNumber}
-                onChange={(e) => setQuizNumber(e.target.value)}
+                onChange={(e) => {
+                  if (quizNumber > e.target.value) {
+                    descHelper(`quiz${quizNumber}`, null, "remove");
+                  }
+                  setQuizNumber(e.target.value);
+                }}
               />
               <TextField
                 id="outlined-number"
@@ -317,6 +331,9 @@ function AddCourse(props) {
                 }}
                 value={assignmentNumber}
                 onChange={(e) => {
+                  if (assignmentNumber > e.target.value) {
+                    descHelper(`assignment${assignmentNumber}`, null, "remove");
+                  }
                   setAssignmentNumber(e.target.value);
                 }}
               />
@@ -330,7 +347,12 @@ function AddCourse(props) {
                   shrink: true,
                 }}
                 value={projectNumber}
-                onChange={(e) => setProjectNumber(e.target.value)}
+                onChange={(e) => {
+                  if (projectNumber > e.target.value) {
+                    descHelper(`project${projectNumber}`, null, "remove");
+                  }
+                  setProjectNumber(e.target.value);
+                }}
               />
               <TextField
                 required
@@ -344,13 +366,38 @@ function AddCourse(props) {
             <div className={classes.CourseDesc}></div>
           </div>
         </div>
-        <Midterm data={getMidtermDataHelper} courseName={courseName} midtermNum={midtermNumber}/>
+        <Midterm
+          itemss={itemss}
+          inputdesc={descHelper}
+          courseName={courseName}
+          midtermNum={midtermNumber}
+        />
 
-        <Examination data={getExamDataHelper} courseName={courseName} examNum={examNumber} />
-        <Quiz data={getQuizDataHelper} courseName={courseName} quizNum={quizNumber} />
-        <Assignment data={getAssignmentDataHelper} courseName={courseName} assignmentNum={assignmentNumber} />
-        <Project data={getProjectDataHelper} courseName={courseName} projectNum={projectNumber} />
-        
+        <Examination
+          itemss={itemss}
+          inputdesc={descHelper}
+          courseName={courseName}
+          examNum={examNumber}
+        />
+        <Quiz
+          itemss={itemss}
+          inputdesc={descHelper}
+          courseName={courseName}
+          quizNum={quizNumber}
+        />
+        <Assignment
+          itemss={itemss}
+          inputdesc={descHelper}
+          courseName={courseName}
+          assignmentNum={assignmentNumber}
+        />
+        <Project
+          itemss={itemss}
+          inputdesc={descHelper}
+          courseName={courseName}
+          projectNum={projectNumber}
+        />
+
         <div className={classes.Button}>
           <Button
             variant="contained"

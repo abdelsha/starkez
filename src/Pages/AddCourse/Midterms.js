@@ -7,9 +7,9 @@ import DateFnsUtils from "@date-io/date-fns";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, listItemIconClasses } from "@mui/material";
+import { Button, CardActions, listItemIconClasses } from "@mui/material";
 import firebase from "firebase";
 
 import { setMidtermData, setMidtermNumber } from "../../Redux/Actions/Course";
@@ -28,12 +28,11 @@ function Midterm(props) {
     return state.courseState.midtermData;
   });
 
-  const dispatch = useDispatch();
+  const dispatchs = useDispatch();
 
   const setMidtermNumberDispatch = (payload) => {
-    dispatch(setMidtermNumber(payload));
+    dispatchs(setMidtermNumber(payload));
   };
-  
 
   const [midtermone, setMidtermone] = useState(new Date());
 
@@ -42,38 +41,11 @@ function Midterm(props) {
   const [midtermNumbers, setMidtermNumbers] = useState("");
   const [midtermNumbers1, setMidtermNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
-/*
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
-  */
-  const [itemss, setItemss] = useState([
-    {
-      courseName: courseName,
-      id: "",
-      date: "",
-      desc: "",
-      complete: false,
-    },
-  ]);
+ 
   ///////////////////////////////////////////////////////////////////
-  const updateCourseName=()=>{
-    let mod=itemss;
-    mod.map((val)=>{
-      val.courseName=courseName
-    })
-    setItemss(()=>mod);
-    console.log(itemss)
-  }
 
-  useEffect(() => {
-    setCourseNames(()=>props.courseName)
-    updateCourseName()
-    //console.log(courseName)
-  }, [[], props.courseName]);
+  ///////////////////////////////////////////////////////////////////
 
-
-  //////////////////////////////////////////////////////////////////////
   useEffect(() => {
     newElements();
   }, [midtermNumber12]);
@@ -87,93 +59,7 @@ function Midterm(props) {
     setMidtermNumbers1(array);
   };
 
-  const midtermDatesHelper = (val) => {
-    let newArr = [...itemss];
-
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      //console.log("sdaas");
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: val.date,
-          desc: "",
-          complete: false,
-        },
-      ]);
-    } else {
-      newArr[index].date = val.date;
-      newArr[index].courseName = courseName;
-      //console.log(newArr);
-      ////console.log(newArr[1]);
-
-      if (newArr.length > parseInt(midtermNumbers, 10) + 1) {
-        let finArr = [];
-        //console.log("heresss");
-        newArr.map((x, key) => {
-          if (key < parseInt(midtermNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-
-        /*//console.log("newArr:")
-        //console.log(newArr)
-        //console.log("items")
-        //console.log(itemss)*/
-      }
-      ////console.log(itemss[index].date)
-    }
-    props.data(itemss);
-    //setMidtermDataDispatch(itemss);
-  };
-
-  const midtermTexts = (val) => {
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: "",
-          desc: val.desc,
-          complete: false,
-        },
-      ]);
-    } else {
-      let value = val.desc;
-      newArr[index].desc = value;
-      newArr[index].courseName = courseName;
-      if (newArr.length > parseInt(midtermNumbers, 10) + 1) {
-        //console.log(midtermNumbers);
-        let finArr = [];
-        //console.log("here");
-        newArr.map((x, key) => {
-          if (key < parseInt(midtermNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-      }
-
-      //console.log(itemss);
-    }
-    props.data(itemss);
-    //setMidtermDataDispatch(itemss);
-  };
+  //////////////////////////////////////////////////////////////////////
 
   return (
     <div className={classes.Exams}>
@@ -183,7 +69,8 @@ function Midterm(props) {
 
       {midtermNumbers1.map((val, key) => {
         ////console.log(items);
-        let index = itemss.findIndex((x) => x.id == `midterm${key + 1}`);
+        let index = props.itemss.findIndex((x) => x.id == `midterm${key + 1}`);
+        //console.log(index)
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
@@ -200,28 +87,20 @@ function Midterm(props) {
                 id={`midterm${key + 1}Date`}
                 label={`midterm ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : midtermone}
+                value={index != -1 ? props.itemss[index].date : midtermone}
                 onChange={(e) => {
-                  
-                  midtermDatesHelper({
-                    id: `midterm${key + 1}`,
-                    date: e,
-                    desc: "",
-                  });
+                  props.inputdesc(`midterm${key + 1}`, e, "date");
+                  //descHelper(`midterm${key + 1}`,e, "date")
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
                 id={`midterm${key + 1}Description`}
                 label={`Midterm ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : midtermoneText}
+                value={index != -1 ? props.itemss[index].desc : midtermoneText}
                 onChange={(e) => {
                   ////console.log(e.target.value)
-                  
-                  midtermTexts({
-                    id: `midterm${key + 1}`,
-                    desc: e.target.value,
-                  });
+                  props.inputdesc(`midterm${key + 1}`, e.target.value, "desc");
                 }}
               />
             </LocalizationProvider>
