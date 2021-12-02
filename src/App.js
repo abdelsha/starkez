@@ -4,8 +4,8 @@ import React from "react";
 import Layout from "./Layout/Layout";
 import AddCourse from "./Pages/AddCourse/AddCourse";
 import { useSelector, useDispatch } from "react-redux";
-import {useState, useEffect} from 'react';
-
+import { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 
 import Login from "./Pages/Login/Login";
 import HomePage from "./Pages/Home/Home";
@@ -17,9 +17,9 @@ import FriendPage from "./Pages/Friends/FriendsPage";
 import MessagePage from "./Pages/Messages/MessagePage";
 import StudyHistoryPage from "./Pages/StudyHistory/StudyHistoryPage";
 import { getUserAuth } from "./Redux/Actions/UserState";
-import { getCoursesAPI,UpdateCourseInfo } from "./Redux/Actions/Course";
+import { getCoursesAPI, UpdateCourseInfo } from "./Redux/Actions/Course";
 import CreateAccount from "./Pages/Login/CreateAccount";
-
+import {CircularProgress, Box} from '@mui/material';
 import Videos from "./Pages/Video1/Video";
 
 function App() {
@@ -41,81 +41,80 @@ function App() {
   });
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getUserAuth());
     if (userstat) {
       //console.log("here")
       dispatch(getCoursesAPI(userstat));
-
     }
-  },[userstat]);
+  }, [userstat]);
 
-  useEffect(()=>{
-    
-    
-    if (courseStat){
+  useEffect(() => {
+    if (courseStat) {
       dispatch(UpdateCourseInfo(courseStat));
     }
-  },[courseStat])
-
-  useEffect(()=>{
-    
-    
-    if (courseData){
+  }, [courseStat]);
+  useEffect(() => {
+    if (courseData) {
       //console.log("upadated")
       setLoaded("true");
     }
-  },[courseData])
+  }, [courseData]);
 
-  
   return (
-    
-    <Layout>
-      
-      <Switch>
-        <Route path="/" exact={true}>
-          <Login />
-        </Route>
-        <Route path="/Create_Account">
-          <CreateAccount />
-        </Route>
-        <Route path="/Home">
-          <HomePage />
-        </Route>
-        <Route path="/Courses">
-          <CoursePage />
-        </Route>
-        <Route path="/Add_Course">
-          <AddCourse />
-        </Route>
-        <Route path="/Settings">
-          <SettingPage />
-        </Route>
-        <Route path="/Portfolio">
-          <PortfolioPage />
-        </Route>
-        <Route path="/Deadlines">
-          <DeadlinePage />
-        </Route>
-        <Route path="/Deadlines_specific">
-          {/* Use Redux store to pass which course the user is viewing and then create this link*/}
-          Deadlines_specific
-        </Route>
-        <Route path="/Friends">
-          <FriendPage />
-        </Route>
-        <Route path="/Messages">
-          <MessagePage />
-        </Route>
-        <Route path="/Study_History">
-          <StudyHistoryPage />
-        </Route>
-        <Route path="/Video">
-          <Videos/>
-        </Route>
-        
-      </Switch>
-    </Layout>
+    <>
+      {!loaded ? (
+        <Box sx={{ display: 'flex', justifyContent:'center', marginTop:'15px' }}>
+        <CircularProgress />
+      </Box>
+      ) : (
+        <Layout>
+          <Switch>
+            <Route path="/" exact={true}>
+              <Login />
+            </Route>
+            <Route path="/Create_Account">
+              <CreateAccount />
+            </Route>
+            <Route path="/Home">
+              <HomePage />
+            </Route>
+            <Route path="/Courses">
+              <CoursePage />
+            </Route>
+            <Route path="/Add_Course">
+              <AddCourse />
+            </Route>
+            <Route path="/Settings">
+              <SettingPage />
+            </Route>
+            <Route path="/Portfolio">
+              <PortfolioPage />
+            </Route>
+            <Route path="/Deadlines">
+              <DeadlinePage />
+            </Route>
+            <Route path="/Deadlines_specific">
+              {/* Use Redux store to pass which course the user is viewing and then create this link*/}
+              Deadlines_specific
+            </Route>
+            <Route path="/Friends">
+              <FriendPage />
+            </Route>
+            <Route path="/Messages">
+              <MessagePage />
+            </Route>
+            <Route path="/Study_History">
+              <StudyHistoryPage />
+            </Route>
+            <Route path="/Video">
+              <Videos />
+            </Route>
+          </Switch>
+        </Layout>
+      )}
+    </>
   );
 }
 

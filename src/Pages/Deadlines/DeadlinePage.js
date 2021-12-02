@@ -26,6 +26,7 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { Button } from "@mui/material";
 import {Redirect } from "react-router-dom";
+import { CircularProgress } from "@mui/material"
 
 function DeadlinePage() {
   let templist = ["All"];
@@ -245,7 +246,13 @@ function DeadlinePage() {
   //This section is for the pie graph
 
   return (
-    
+    <>
+    {!loaded ? (
+  <Box
+    sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
+  >
+    <CircularProgress />
+  </Box>):(
     <div className={classes.Layouts}>
       {!userstat && <Redirect to="/" />}
       <div className={classes.Deadlines}>
@@ -340,7 +347,8 @@ function DeadlinePage() {
         </div>
       </div>
     </div>
-    
+  )}
+    </>
   );
 }
 

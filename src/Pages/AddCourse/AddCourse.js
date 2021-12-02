@@ -108,7 +108,7 @@ function AddCourse(props) {
   }, [[], courseName]);
 
   useEffect(() => {
-    console.log(itemss);
+    //console.log(itemss);
     //props.data(itemss)
   }, [[], itemss, courseName]);
 
@@ -141,9 +141,9 @@ function AddCourse(props) {
           ]);
         }
       } else if (index != -1) {
-        console.log("here2");
+        //console.log("here2");
         if (type === "remove") {
-          console.log(id);
+          //console.log(id);
           const updateddes = itemss.filter((todo) => todo.id !== id);
           setItemss(() => updateddes);
         } else {
@@ -170,7 +170,7 @@ function AddCourse(props) {
       console.log(error);
     }
 
-    console.log(itemss);
+    //console.log(itemss);
     //props.data(items);
   };
   function submitEverything(e) {

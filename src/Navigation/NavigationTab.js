@@ -28,14 +28,14 @@ function NavigationTab(props) {
     <div className={classes.Layout}>
       <div className={classes.MenuTab}>
         <nav className={classes.NavTab}>
-          <a>
-          <Button variant="text">
+          <a onClick={()=>props.menueoption(props.currmenue)} >
+          <Button variant="text"  >
           <img 
               src="/images/Home.png" alt=""/>
-            <Link className={classes.Home} to="/Home">Home</Link>
+            <Link className={classes.Home}  to="/Home">Home</Link>
             </Button>
             
-            <Button variant="text">
+            <Button >
             <img 
               src="/images/course.png" alt=""/>
               <Link to="/Courses">Courses</Link>
@@ -54,7 +54,7 @@ function NavigationTab(props) {
               </Button>
             
           </a>
-          <a>
+          <a onClick={()=>props.menueoption(props.currmenue)}>
           <Button variant="text">
           <img 
               src="/images/friend.png" alt=""/>
@@ -73,7 +73,7 @@ function NavigationTab(props) {
               </Button>
             
             </a>
-            <a>
+            <a onClick={()=>props.menueoption(props.currmenue)}>
             <Button variant="text">
             <img 
               src="/images/setting.png" alt=""/>

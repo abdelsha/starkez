@@ -44,7 +44,7 @@ function Deadlines(props) {
       <div className={classes.Deadline}>
         <div className={classes.Commoncard}>
           <h2>Deadlines</h2>
-          {retdeadlines.length>1?(
+          {retdeadlines?(
             <div>
             {retdeadlines.map((data, key) => {
               //console.log(data.date.toDate())

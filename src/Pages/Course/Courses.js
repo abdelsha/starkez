@@ -10,6 +10,7 @@ import { getCoursesAPI, UpdateCourseInfo } from "../../Redux/Actions/Course";
 import { getUserAuth } from "../../Redux/Actions/UserState";
 import Project from "../AddCourse/Projects";
 import {Redirect } from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material";
 
 function CoursePage() {
   const [loaded, setLoaded] = useState("false");
@@ -69,7 +70,15 @@ function CoursePage() {
     
   },[assignmentData])
 
+ 
   return (
+    <>
+    {!loaded ? (
+  <Box
+    sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
+  >
+    <CircularProgress />
+  </Box>):(
     <div className={classes.CommonCards}>
       {!userstat && <Redirect to="/" />}
     <div className={classes.Layouts}>
@@ -118,6 +127,8 @@ function CoursePage() {
       </div>
     </div>
     </div>
+  )}
+  </>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "../Navigation/Navigation";
 import classes from './Layout.module.css';
 import {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
@@ -38,15 +37,15 @@ function Layout(props) {
                 
             </div>
            
-            {menuBarStatus=="true"? (
+            {menuBarStatus? (
             <div>
-            <NavigationBar>
+            <NavigationBar currmenue={menuBarStatus} menueoption={setMenuBarDispatch}>
             {props.children}
             </NavigationBar>
             </div>
             ):(
                 <div>
-                <NavigationTab>
+                <NavigationTab currmenue={menuBarStatus} menueoption={setMenuBarDispatch}>
                 {props.children}
                 </NavigationTab>
                 </div>)}

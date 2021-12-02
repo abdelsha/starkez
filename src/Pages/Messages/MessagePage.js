@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getOnlineUsers, getRealTimeConversations, retrieveFriendList, retrieveRequestList, updateMessate } from "../../Redux/Actions/UserState";
 import { auth } from "../../Firebase/Firebase";
 import {Redirect} from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material"
 function MessagePage(props) {
   const userstat = useSelector((state) => {
     return state.userState.user;
@@ -92,7 +93,15 @@ function MessagePage(props) {
     }
     
   }
+
   return (
+    <>
+    {!loaded ? (
+  <Box
+    sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
+  >
+    <CircularProgress />
+  </Box>):(
     <section className={classes.container}>
       {!userstat && <Redirect to="/" />}
       {loaded == "true" ? (
@@ -218,6 +227,8 @@ function MessagePage(props) {
         <div></div>
       )}
     </section>
+  )}
+  </>
   );
 }
 
