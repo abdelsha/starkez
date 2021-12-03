@@ -2,6 +2,7 @@
     text-align: center;
     overflow-y: auto;
     display: flex;
+    flex-grow: 1;
     background-color: rgba(238, 238, 238,0.6);
     border: none;
     max-height: 100%;
@@ -22,6 +23,7 @@
     column-gap: 5px;
     row-gap: 5px;
     height: 100%;
+    width: 100%;
   }
   @media (max-width: 768px) {
     .Home_Layouts {
