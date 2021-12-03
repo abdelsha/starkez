@@ -7,7 +7,7 @@ import {
   signOutApi,
 } from "../../Redux/Actions/UserState";
 import { Redirect } from "react-router-dom";
-import classes from "./Home.module.css";
+import "./Home.css";
 import { useState, useEffect } from "react";
 import Status from "../Course/Status";
 import Deadlines from "../Course/Deadlines";
@@ -80,7 +80,7 @@ function HomePage() {
 
   return (
     <>
-    
+    {!userstat && <Redirect to="/" />}
       {!loaded ? (
         <Box
           sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
@@ -88,35 +88,35 @@ function HomePage() {
           <CircularProgress />
         </Box>
       ) : (
-        <div className={classes.CommonCards}>
-          {!userstat && <Redirect to="/" />}
-
-          <div className={classes.Layouts}>
-            <div className={classes.Courses}>
+        <div className="Home_CommonCards">
+          <div className="Home_Layouts">
+            <div className="Home_Courses">
+            <div className="Home_BlockCards">
               <h2>Courses</h2>
               {!courseStat.length > 1 ? (
                 <div />
               ) : (
                 courseStat.map((course, key) => {
                   return (
-                    <div className={classes.CoursesCard}>
+                    <div className="Home_CoursesCard">
                       {course.courseName}
                     </div>
                   );
                 })
               )}
+              </div>
             </div>
-            <div className={classes.Deadlines}>
+            <div className="Home_Deadlines">
               {!courseload ? null : <Deadlines />}
             </div>
-            <div className={classes.Friends}>
-              <div className={classes.CommonCardss}>
+            <div className="Home_Friends">
+              <div className="Home_CommonCardss">
                 <h2>Friends</h2>
                 {friends.length > 0
                   ? friends.map((user) => {
                       return (
-                        <div key={user.UID} className={classes.displayName}>
-                          <div className={classes.displayPic}>
+                        <div key={user.UID} className="Home_displayName">
+                          <div className="Home_displayPic">
                             {user.sharedImg ? (
                               <img src={user.sharedImg} all="" />
                             ) : (
@@ -129,7 +129,7 @@ function HomePage() {
                             </span>
                             <span
                               className={
-                                user.isOnline ? `${classes.onlineStatus}` : null
+                                user.isOnline ? `${"Home_onlineStatus"}` : null
                               }
                             ></span>
                           </div>
@@ -139,17 +139,17 @@ function HomePage() {
                   : null}
               </div>
             </div>
-            <div className={classes.CourseDetail}>
+            <div className="Home_CourseDetail">
               {!courseStat.length > 1 ? <div /> : <Status />}
             </div>
-            <div className={classes.Messages}>
-              <div className={classes.CommonCardss}>
+            <div className="Home_Messages">
+              <div className="Home_CommonCardss">
                 <h2>Messages</h2>
                 {friends.length > 0
                   ? friends.map((user) => {
                       return (
-                        <div key={user.UID} className={classes.displayName}>
-                          <div className={classes.displayPic}>
+                        <div key={user.UID} className="Home_displayName">
+                          <div className="Home_displayPic">
                             {user.sharedImg ? (
                               <img src={user.sharedImg} all="" />
                             ) : (
@@ -163,8 +163,8 @@ function HomePage() {
                             <span
                               className={
                                 user.isOnline
-                                  ? `${classes.onlineStatus}`
-                                  : `${classes.onlineStatusoff}`
+                                  ? "Home_onlineStatus"
+                                  : "Home_onlineStatusoff"
                               }
                             ></span>
                           </div>
@@ -174,8 +174,8 @@ function HomePage() {
                   : null}
               </div>
             </div>
-            <div className={classes.Videos}>
-              <div className={classes.CommonCardss}>
+            <div className="Home_Videos">
+              <div className="Home_CommonCardss">
                 <h2>Video</h2>
                 <div>
                   <Button
@@ -190,35 +190,15 @@ function HomePage() {
                 </div>
               </div>
             </div>
-            <div className={classes.StudySession}>
-              <div className={classes.CommonCard}>Study Session</div>
+            <div className="Home_StudySession">
+              <div className="Home_CommonCard">Study Session</div>
             </div>
-            <div className={classes.StudyHistory}>
-              <div className={classes.CommonCard}>Study History</div>
+            <div className="Home_StudyHistory">
+              <div className="Home_CommonCard">Study History</div>
             </div>
-            <div className={classes.Encouraging}>
-              <div className={classes.CommonCard}>
+            <div className="Home_Encouraging">
+              <div className="Home_CommonCard">
                 Encouraging words
-                {/*<Button
-                variant="contained"
-                onClick={() => {
-                  signOut()
-                }}
-                
-              >
-                SignOut
-              </Button>
-              <Button variant="contained">
-                <Link
-                  href="/"
-                  underline="none"
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  SignIn
-                </Link>
-                </Button>*/}
               </div>
             </div>
           </div>

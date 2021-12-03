@@ -13,7 +13,7 @@ import {Redirect } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
 
 function CoursePage() {
-  const [loaded, setLoaded] = useState("false");
+  const [loaded, setLoaded] = useState(false);
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -65,7 +65,7 @@ function CoursePage() {
   useEffect(()=>{
     //console.log(courseStat)
     if(assignmentData.length>1){
-      setLoaded("true");
+      setLoaded(()=>true);
     }
     
   },[assignmentData])
@@ -73,6 +73,7 @@ function CoursePage() {
  
   return (
     <>
+    {!userstat && <Redirect to="/" />}
     {!loaded ? (
   <Box
     sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
@@ -80,11 +81,11 @@ function CoursePage() {
     <CircularProgress />
   </Box>):(
     <div className={classes.CommonCards}>
-      {!userstat && <Redirect to="/" />}
+      
     <div className={classes.Layouts}>
       <div className={classes.Deadline}>
         
-        {loaded == "true" ? (
+        {loaded ? (
           <Deadlines 
           assignments={assignmentData} 
           exams={examData}
@@ -96,7 +97,7 @@ function CoursePage() {
         )}
       </div>
       <div className={classes.Status}>
-      {loaded == "true" ? (
+      {loaded ? (
           <Status assignments={assignmentData} />
         ) : (
           <div />
@@ -104,7 +105,7 @@ function CoursePage() {
        
       </div>
       <div className={classes.History}>
-      {loaded == "true" ? (
+      {loaded ? (
           <StudyHistory />
         ) : (
           <div />

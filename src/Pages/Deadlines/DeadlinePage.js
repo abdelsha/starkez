@@ -31,7 +31,7 @@ import { CircularProgress } from "@mui/material"
 function DeadlinePage() {
   let templist = ["All"];
   
-  const [loaded, setLoaded] = useState("false");
+  const [loaded, setLoaded] = useState(false);
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -118,7 +118,7 @@ function DeadlinePage() {
     //console.log(orderdCourse);
     if (assignmentData.length > 1) {
       //console.log(examNumber);
-      setLoaded("true");
+      setLoaded(()=>true);
       piedatt=[
         { title: "Exams", value: examNumber, color: "#E38627" },
         { title: "Projects", value: projNumber, color: "#C13C37" },
@@ -258,7 +258,7 @@ function DeadlinePage() {
       <div className={classes.Deadlines}>
         <div className={classes.CommonCard}>
           <h2>Deadlines</h2>
-          {loaded == "true" ? (
+          {loaded ? (
             <div>
               {retdeadlines.map((data, key) => {
                 return (

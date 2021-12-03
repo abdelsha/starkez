@@ -29,7 +29,7 @@ function MessagePage(props) {
     return state.userState.requestList;
   })
   const onlineUser = useSelector((state) => state.userState.online_users);
-  const [loaded, setLoaded] = useState("false");
+  const [loaded, setLoaded] = useState(false);
   const [chatStarted, setChatStarted] = useState(false);
   const [chatUser, setChatUser] = useState("");
   const [message, setMessage] = useState("");
@@ -42,7 +42,7 @@ function MessagePage(props) {
     //console.log(userstat)
     if (userstat) {
       //console.log(true);
-      setLoaded("true");
+      setLoaded(()=>true);
 
       //console.log(onlineUser)
     }
@@ -104,7 +104,7 @@ function MessagePage(props) {
   </Box>):(
     <section className={classes.container}>
       {!userstat && <Redirect to="/" />}
-      {loaded == "true" ? (
+      {loaded ? (
         <div className={classes.container}>
           <div className={classes.listOfUsers}>
             <div className={classes.listOfFriends}>

@@ -1,5 +1,5 @@
 const INITIAL_STATE ={
-    menuBar:true,
+    menuBar:false,
     menuTab: false,
 }
 
