@@ -7,11 +7,12 @@
     top: 8px;
     left: 10px;
     z-index: 20;
-    padding: 3px 3px;
+    padding: 2px 3px;
 }
 @media(max-width:768px) {
     .Layout_NavButton{
         left: 5px;
+        top: 11px;
         
     }
 }
@@ -19,6 +20,12 @@
     width: 20px;
     cursor: pointer;
     
+}
+@media(max-width:768px) {
+    .Layout_NavButton img{
+       width: 15px;
+        
+    }
 }
 .Layout_NavButton:hover{
    
