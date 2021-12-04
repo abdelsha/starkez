@@ -236,7 +236,7 @@ function Status (){
   //This section is for the pie graph
 
   return (
-    <div className={classes.Commoncardsss}>
+    
     <div className={classes.Layouts}>
       <div className={classes.Status}>
         <div className={classes.CommonCard}>
@@ -254,7 +254,7 @@ function Status (){
                       return (
                         <div>
                         <Button onClick={(e)=>{setPieDataHelper(course.courseName)}}>
-                          <ListItemText primary={course.courseName} />
+                          <ListItemText primary={course.courseName} sx={{fontSize:10}}/>
                         </Button>
                         </div>
                       );
@@ -301,7 +301,7 @@ function Status (){
         </div>
       </div>
     </div>
-    </div>
+    
   );
 }
 

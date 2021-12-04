@@ -194,6 +194,10 @@ position: absolute;
     
     background-color: rgba(0, 0, 0,0.7);
     z-index: 3;
+    transition-property: width;
+    transition-duration: 4s;
+    transition-timing-function: ease-in;
+    transition-delay: 4s;
 }
 
 .NavigationBar_NavTab{

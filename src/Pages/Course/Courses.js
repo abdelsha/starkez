@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import classes from "./Course.module.css";
+import "./Course.css";
 import Deadlines from "./Deadlines";
 import Status from "./Status";
 import StudyHistory from "./StudyHistory";
@@ -80,10 +80,10 @@ function CoursePage() {
   >
     <CircularProgress />
   </Box>):(
-    <div className={classes.CommonCards}>
+    <div className="CoursePage_CommonCards">
       
-    <div className={classes.Layouts}>
-      <div className={classes.Deadline}>
+    <div className="CoursePage_Layouts">
+      <div className="CoursePage_BlockCards">
         
         {loaded ? (
           <Deadlines 
@@ -96,27 +96,29 @@ function CoursePage() {
           <div />
         )}
       </div>
-      <div className={classes.Status}>
+      <div className="CoursePage_Status">
+      <div className="CoursePage_BlockCards">
       {loaded ? (
           <Status assignments={assignmentData} />
         ) : (
           <div />
         )}
-       
+       </div>
       </div>
-      <div className={classes.History}>
+      <div className="CoursePage_History">
+      <div className="CoursePage_BlockCards">
       {loaded ? (
           <StudyHistory />
         ) : (
           <div />
         )}
-       
+       </div>
       </div>
-      <div className={classes.Button}>
+      <div className="CoursePage_Button">
         <Button
           variant="contained"
           href="/Add_Course"
-          className={classes.buttons}
+          className="CoursePage_buttons"
           sx={{
             "border-radius": "50%",
             padding: "5px 5px",

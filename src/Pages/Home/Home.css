@@ -3,11 +3,24 @@
     overflow-y: auto;
     display: flex;
     flex-grow: 1;
-    background-color: rgba(238, 238, 238,0.6);
+    background-color: rgba(238, 238, 238,0.2);
     border: none;
     max-height: 100%;
   }
-
+  .Home_CoursesCard {
+    text-align: center;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    margin: 5px 5px;
+    padding: 5px 0;
+    background-color:rgba(255, 245, 222);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+    
+  }
   .Home_Layouts {
     display: grid;
     grid-template-columns: repeat(3, 1fr) ;
@@ -32,11 +45,10 @@
       margin: 0 25px;
     }
   }
+
   .Home_BlockCards{
     margin-top: 5px;
-    margin-left: 5px;
-    grid-area: courses;
-    background-color: rgb(255, 226, 255,0.7);
+    background-color: rgba(255, 245, 222,0.9);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -46,7 +58,21 @@
     position: relative;
     border: none;
     box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
-    max-height: 200px;
+    max-height: 150px;
+  }
+  .Home_BlockCardTwo{
+    margin-top: 5px;
+    background-color: rgba(255, 245, 222,0.9);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    height: 98%;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+    max-height: 100%;
   }
   .Home_Courses{
     grid-area: courses;
@@ -57,59 +83,7 @@
       margin-right: 5px;
     }
   }
-  .Home_CommonCard {
-    text-align: center;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    margin: 5px 5px;
-    padding: 10px 0;
-    background-color: rgb(255, 255, 255);
-    border-radius: 5px;
-    position: relative;
-    border: none;
-    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
-  }
-  .Home_CommonCardss {
-    text-align: center;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    min-height: 100px;
-    height: 98%;
-    background-color: #fff;
-    border-radius: 5px;
-    position: relative;
-    border: none;
-    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
-  }
-  @media(max-width:768px){
-    .Home_CommonCardss {
-      min-height: 100px;
-      max-height: 120px;
-      max-width: 100%;
-    }
-    
-  }
 
-
-  .Home_CoursesCard {
-    text-align: center;
-    
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    margin: 5px 5px;
-    padding: 5px 0;
-    background-color: #fff;
-    border-radius: 5px;
-    position: relative;
-    border: none;
-    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
-    
-  }
   .Home_Deadlines{
       grid-area: deadliness;
       
@@ -140,21 +114,8 @@
       grid-area: encouraging;
       margin-right: 5px;
   }
-  @media (max-width: 768px) {
-    .Home_Layouts {
-      display: flex;
-      flex-direction: column;
-      margin: 0 25px;
-    }
-  }
-  
-  
-  
-  
-  
+ 
 
-  
-  
   .Home_Button {
     position: fixed;
     bottom: 15px;

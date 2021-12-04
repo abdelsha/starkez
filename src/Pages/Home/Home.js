@@ -80,10 +80,10 @@ function HomePage() {
 
   return (
     <>
-    {!userstat && <Redirect to="/" />}
+    {!userstat && !loaded && <Redirect to="/" />}
       {!loaded ? (
         <Box
-          sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
+          sx={{ display: "flex", flexGrow:1, justifyContent: "center", marginTop: "15px" }}
         >
           <CircularProgress />
         </Box>
@@ -106,11 +106,11 @@ function HomePage() {
               )}
               </div>
             </div>
-            <div className="Home_Deadlines">
+            <div className="Home_BlockCards">
               {!courseload ? null : <Deadlines />}
             </div>
             <div className="Home_Friends">
-              <div className="Home_CommonCardss">
+              <div className="Home_BlockCards">
                 <h2>Friends</h2>
                 {friends.length > 0
                   ? friends.map((user) => {
@@ -140,10 +140,12 @@ function HomePage() {
               </div>
             </div>
             <div className="Home_CourseDetail">
+            <div className="Home_BlockCardTwo">
               {!courseStat.length > 1 ? <div /> : <Status />}
             </div>
+            </div>
             <div className="Home_Messages">
-              <div className="Home_CommonCardss">
+              <div className="Home_BlockCards">
                 <h2>Messages</h2>
                 {friends.length > 0
                   ? friends.map((user) => {
@@ -175,7 +177,7 @@ function HomePage() {
               </div>
             </div>
             <div className="Home_Videos">
-              <div className="Home_CommonCardss">
+              <div className="Home_BlockCards">
                 <h2>Video</h2>
                 <div>
                   <Button
@@ -191,13 +193,13 @@ function HomePage() {
               </div>
             </div>
             <div className="Home_StudySession">
-              <div className="Home_CommonCard">Study Session</div>
+              <div className="Home_BlockCards">Study Session</div>
             </div>
             <div className="Home_StudyHistory">
-              <div className="Home_CommonCard">Study History</div>
+              <div className="Home_BlockCardTwo">Study History</div>
             </div>
             <div className="Home_Encouraging">
-              <div className="Home_CommonCard">
+              <div className="Home_BlockCards">
                 Encouraging words
               </div>
             </div>
