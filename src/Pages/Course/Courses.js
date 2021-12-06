@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
 import "./Course.css";
 import Deadlines from "./Deadlines";
-import Status from "./Status";
+import Status from "./PieChart";
 import StudyHistory from "./StudyHistory";
 import { getCoursesAPI, UpdateCourseInfo } from "../../Redux/Actions/Course";
 import { getUserAuth } from "../../Redux/Actions/UserState";

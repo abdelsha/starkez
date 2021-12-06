@@ -24,7 +24,7 @@
 .NavigationBar_MenuBar{
     grid-area: main;
     height: 45px;
-    
+    padding-left: 10px;
     display: flex;
 }
 

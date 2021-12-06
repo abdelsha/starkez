@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import classes from "./Status.module.css";
+import classes from "./PieChart.css";
 
 import { ClassNames } from "@emotion/react";
 
@@ -79,8 +79,6 @@ function Status (){
   const compAssignmentNumber = useSelector((state) => {
     return state.courseState.compAssignmentNumber;
   });
-  let totArr = [];
-  let totOrdArr = [];
   let piedatt=[
     { title: "Exams", value: examNumber, color: "#E38627" },
     { title: "Projects", value: projNumber, color: "#C13C37" },
@@ -101,7 +99,6 @@ function Status (){
   });
   const dispatch = useDispatch();
 
- 
   const [pieData, setPieData] = useState([
     { title: "Exams", value: examNumber, color: "#E38627" },
     { title: "Projects", value: projNumber, color: "#C13C37" },
@@ -114,22 +111,40 @@ function Status (){
     },
   ])
   const [pieNum,setPieNum] = useState(courseNumber)
+  const [thisPieData, setThisPieData] = useState([])
+
+  const setThePieData =(exams=0, projs=0, midterms=0, assign=0, quizes=0, comp=0) =>{
+    setThisPieData(()=>[]);
+    if (exams>0){
+      setThisPieData((prevData)=> [...prevData, { title: "Exams", value: examNumber, color: "#E38627" }])
+    }
+    if (projs>0){
+      setThisPieData(prevData=> [...prevData, { title: "Projects", value: projNumber, color: "#C13C37" }])
+    }
+    if (midterms>0){
+      setThisPieData(prevData=> [...prevData, { title: "Midterms", value: midtermNumber, color: "#6A2135" }])
+    }
+    if (assign>0){
+      setThisPieData(prevData=> [...prevData, { title: "Assignments", value: assignmentNumber, color: "#6A5D35"}])
+    }
+    if (quizes>0){
+      setThisPieData(prevData=> [...prevData, { title: "Quizes", value: quizNumber, color: "#C14835" }])
+    }
+    if (comp>0){
+      setThisPieData(prevData=> [...prevData, { title: "Complete", value: comp, color: "#2ba34f" }])
+    }
+  }
+  useEffect(()=>{
+    setThePieData(examNumber, projNumber, midtermNumber, assignmentNumber, quizNumber)
+    //console.log(thisPieData)
+  }, [examNumber])
   useEffect(() => {
     //console.log(orderdCourse);
     if (assignmentData.length > 1) {
       //console.log(examNumber);
       setLoaded("true");
-      piedatt=[
-        { title: "Exams", value: examNumber, color: "#E38627" },
-        { title: "Projects", value: projNumber, color: "#C13C37" },
-        { title: "Midterms", value: midtermNumber, color: "#6A2135" },
-        { title: "Quizes", value: quizNumber, color: "#C14835" },
-        {
-          title: "Assignments",
-          value: assignmentNumber,
-          color: "#6A5D35",
-        },
-      ]
+      //console.log(quizNumber)
+      
       
     }
     //console.log(courseStat)
@@ -141,7 +156,7 @@ function Status (){
 
   //This section works on the option bar for the pie graph
   
-  
+
   const setPieDataHelper = (course) => {
     let tempData = [{}];
     let assign = 0;
@@ -155,20 +170,11 @@ function Status (){
     //console.log(course);
     try {
       if(course=="All"){
-        tempData=[
-          { title: "Exams", value: examNumber, color: "#E38627" },
-          { title: "Projects", value: projNumber, color: "#C13C37" },
-          { title: "Midterms", value: midtermNumber, color: "#6A2135" },
-          { title: "Quizes", value: quizNumber, color: "#C14835" },
-          {
-            title: "Assignments",
-            value: assignmentNumber,
-            color: "#6A5D35",
-          },
-        ];
+        setThePieData(examNumber, projNumber, midtermNumber, assignmentNumber, quizNumber)
         num=courseNumber;
-        //console.log(tempData)
-        setPieData(tempData);
+        //console.log(thisPieData)
+        setPieData(thisPieData);
+        
         setPieNum(num);
       }
       else{
@@ -202,28 +208,14 @@ function Status (){
       });
      comp=tot-num;
      if(comp>=1){
-      tempData=[
-        { title: "Exams", value: exam, color: "#E38627" },
-        { title: "Projects", value: proj, color: "#C13C37" },
-        { title: "Midterms", value: mid, color: "#6A2135" },
-        { title: "Quizes", value: quiz, color: "#C14835" },
-        { title: "Assignments", value: assign, color: "#6A5D35" },
-        { title: "Complete", value: comp, color: "#2ba34f" }
-        
-      ]
+      setThePieData(exam, proj, mid, assign, quiz, comp)
+      
      }else{
-      tempData=[
-        { title: "Exams", value: exam, color: "#E38627" },
-        { title: "Projects", value: proj, color: "#C13C37" },
-        { title: "Midterms", value: mid, color: "#6A2135" },
-        { title: "Quizes", value: quiz, color: "#C14835" },
-        { title: "Assignments", value: assign, color: "#6A5D35" },
-        
-        
-      ]
+      setThePieData(exam, proj, mid, assign, quiz) 
+      
      }
       
-      setPieData(tempData);
+      setPieData(thisPieData);
       setPieNum(num);
       //console.log(tempData)
       //console.log(num)
@@ -237,11 +229,11 @@ function Status (){
 
   return (
     
-    <div className={classes.Layouts}>
-      <div className={classes.Status}>
-        <div className={classes.CommonCard}>
-          <div className={classes.StatusCard}>
-            <div className={classes.CommonCardss}>
+    <div className="PieChart_Layouts">
+      <div className="PieChart_Status">
+        
+          <div className="PieChart_StatusCard">
+            <div className="PieChart_CommonCardss">
               <List>
                 
                 {courseStat.length > 1 ? (
@@ -265,40 +257,23 @@ function Status (){
                 )}
               </List>
             </div>
-            <div>
+            <div className="PieChart_pieCharts">
               <span>Pie Chart</span>
-              {pieData[0].value==0?(
               <PieChart
                 animation
                 animationDuration={500}
                 animationEasing="ease-out"
                 center={[50, 50]}
-                data={piedatt}
+                data={thisPieData}
                 label={(data) => data.dataEntry.title}
                 
                 style={{ height: "250px", "font-size": "3px" }}
                 >
                   
               </PieChart>
-              ):(
-              <PieChart
-                animation
-                animationDuration={500}
-                animationEasing="ease-out"
-                center={[50, 50]}
-                data={pieData}
-                label={(data) => data.dataEntry.title}
-                
-                style={{ height: "250px", "font-size": "4px" }}
-              />
-              )}
-                  
-                
-              
-              
             </div>
           </div>
-        </div>
+        
       </div>
     </div>
     

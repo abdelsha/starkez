@@ -58,7 +58,13 @@
     position: relative;
     border: none;
     box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
-    max-height: 150px;
+    
+  }
+  @media (max-width: 768px) {
+    .Home_BlockCards {
+      max-height: 150px;
+    
+    }
   }
   .Home_BlockCardTwo{
     margin-top: 5px;
@@ -80,7 +86,7 @@
 
   @media (max-width: 768px) {
     .Home_Courses {
-      margin-right: 5px;
+      
     }
   }
 
@@ -90,29 +96,30 @@
   }
   .Home_Friends{
       grid-area: friends;
-      margin-right: 5px;
+      
   }
   .Home_CourseDetail{
       grid-area: course_detail;
+      
   }
   .Home_Messages{
       grid-area: message;
-      margin-right: 5px;
+      
   }
   .Home_Videos{
       grid-area: video;
-      margin-right: 5px;
+      
   }
   .Home_StudySession{
       grid-area: study_session;
-      margin-right: 5px;
+      
   }
   .Home_StudyHistory{
       grid-area: study_history;
   }
   .Home_Encouraging{
       grid-area: encouraging;
-      margin-right: 5px;
+      
   }
  
 

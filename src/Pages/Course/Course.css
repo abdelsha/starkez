@@ -21,6 +21,7 @@
   border: none;
   max-height: 100%;
   flex-grow: 1;
+  padding: 5px 5px;
   
 }
 .CoursePage_Layouts {

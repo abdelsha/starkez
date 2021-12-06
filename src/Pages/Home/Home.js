@@ -9,7 +9,7 @@ import {
 import { Redirect } from "react-router-dom";
 import "./Home.css";
 import { useState, useEffect } from "react";
-import Status from "../Course/Status";
+import Status from "../Course/PieChart";
 import Deadlines from "../Course/Deadlines";
 import Video from "../Video1/Video";
 import { Spinner } from "react-bootstrap";
@@ -106,8 +106,10 @@ function HomePage() {
               )}
               </div>
             </div>
+            <div className="Home_Deadlines">
             <div className="Home_BlockCards">
               {!courseload ? null : <Deadlines />}
+            </div>
             </div>
             <div className="Home_Friends">
               <div className="Home_BlockCards">

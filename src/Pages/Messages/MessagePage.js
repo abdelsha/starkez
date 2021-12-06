@@ -206,7 +206,7 @@ function MessagePage(props) {
                 })
               ) : (
                 <div>
-                  <p>Please send a message</p>
+                  <p>Please select a user to send a message too</p>
                 </div>
               )}
             </div>

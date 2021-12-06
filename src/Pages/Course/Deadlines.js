@@ -29,7 +29,7 @@ function Deadlines(props) {
   useEffect(() => {
     totOrdArr = retdeadlines;
     totArr = orderdCourse;
-    console.log(orderdCourse)
+    //console.log(orderdCourse)
   }, [retdeadlines]);
 
   const dateMaker = (date) => {
@@ -56,8 +56,7 @@ function Deadlines(props) {
                     
                     style={currentDate.getTime()>data.date.toDate().getTime()?{color:"red", fontWeight:"bold"}:{color:"black"}}
                     > 
-                      {console.log(currentDate.getTime())}
-                      {console.log(data.date.toDate().getTime())}
+                      
                       <p>{data.courseName}</p>
                       <p> {data.desc}</p>
                       <p>
