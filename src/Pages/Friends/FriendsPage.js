@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import classes from "./FriendsPage.module.css";
+import classes from "./FriendsPage.css";
+import "./FriendsPage.css"
 import { useState, useEffect } from "react";
 import {
   getOnlineUsers,
@@ -136,11 +137,11 @@ function FriendPage() {
           <CircularProgress />
         </Box>
       ) : (
-        <section className={classes.container}>
+        <section className="FriendsPage_container">
           {!userstat && <Redirect to="/" />}
           {loaded ? (
-            <div className={classes.container}>
-              <div className={classes.listOfUsers}>
+            <div className="FriendsPage_container">
+              <div className="FriendsPage_listOfUsers">
                 <h2>Friends</h2>
                 {onlineUser.length > 0
                   ? friends.map((user) => {
@@ -150,9 +151,9 @@ function FriendPage() {
                             initChat(user);
                           }}
                           key={user.UID}
-                          className={classes.displayName}
+                          className="FriendsPage_displayName"
                         >
-                          <div className={classes.displayPic}>
+                          <div className="FriendsPage_displayPic">
                             {user.sharedImg ? (
                               <img src={user.sharedImg} all="" />
                             ) : (
@@ -165,7 +166,7 @@ function FriendPage() {
                             </span>
                             <span
                               className={
-                                user.isOnline ? `${classes.onlineStatus}` : null
+                                user.isOnline ? "FriendsPage_onlineStatus" : null
                               }
                             ></span>
                           </div>
@@ -174,7 +175,7 @@ function FriendPage() {
                     })
                   : null}
               </div>
-              <div className={classes.chatArea}>
+              <div className="FriendsPage_chatArea">
                 {call && <Redirect to="/Video"></Redirect>}
                 <h2>Users</h2>
                 {onlineUser.length > 0
@@ -182,7 +183,7 @@ function FriendPage() {
                       return (
                         <Button
                           key={key}
-                          sx={{ marginBottom: "15px", marginTop: "15px" }}
+                          sx={{ marginBottom: "15px", marginTop: "15px", }}
                           onClick={(e) => {
                             isFriendHelper(user);
                             //dispatch(selectedFriend(user));
@@ -194,6 +195,7 @@ function FriendPage() {
                               minWidth: 345,
                               display: "flex",
                               justifyContent: "center",
+                              background:"rgba(255, 245, 222)" ,
                             }}
                           >
                             <CardActionArea
@@ -247,7 +249,7 @@ function FriendPage() {
                                     <span
                                       className={
                                         user.isOnline
-                                          ? `${classes.onlineStatus}`
+                                          ? "FriendsPage_onlineStatus"
                                           : null
                                       }
                                     ></span>
@@ -258,7 +260,7 @@ function FriendPage() {
                                     }}
                                   >
                                     <img
-                                      className={classes.addIcon}
+                                      className="FriendsPage_addIcon"
                                       src="/images/plus.png"
                                       all=""
                                     />
@@ -271,7 +273,7 @@ function FriendPage() {
                                       }}
                                     >
                                       <img
-                                        className={classes.addIcon}
+                                        className="FriendsPage_addIcon"
                                         src="/images/call.png"
                                         all=""
                                       />

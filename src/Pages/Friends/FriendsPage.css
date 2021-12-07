@@ -1,50 +1,51 @@
-.container{
+.FriendsPage_container{
   display: flex;
   width: 100%;
   height: 100%;
   
   
 }
-.listOfUsers{
-  width: 30%;
+.FriendsPage_listOfUsers{
+  min-width: 30%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   overflow-x: hidden;
-  background-color: #eeeeee;
-  border-right: 1px solid #ccc;
+  background-color: rgba(255, 245, 222,0.8);
+  border-right: 3px solid rgba(255, 245, 222,1);
 }
-.listOfUsers h2{
+.FriendsPage_listOfUsers h2{
   margin:15px auto;
 }
-.chatArea{
-  width: 70%;
+.FriendsPage_chatArea{
+  margin-right: 5px;
+  min-width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  background-color: #eeeeee;
+  background-color: rgba(255, 245, 222,0.8);
   
   
 }
 
-.chatControls{
+.FriendsPage_chatControls{
   display: flex;
   position: fixed;
   width: 70%;
   height: 50px;
   bottom: 0;
 }
-.chatControls textarea{
+.FriendsPage_chatControls textarea{
   width: 90%;
 }
-.chatControls button{
+.FriendsPage_chatControls button{
   width: 10%;
 }
 
-.displayName{
+.FriendsPage_displayName{
   display: flex;
   align-items: center;
   padding: 5px 10px;
@@ -52,24 +53,24 @@
   cursor: pointer;
 }
 
-.displayName.active{
+.FriendsPage_displayName.active{
   background: #ccc;
 }
 
-.displayName .displayPic{
+.FriendsPage_displayName .FriendsPage_displayPic{
   width: 35px;
   height: 35px;
   overflow: hidden;
   border-radius: 25px;
 }
 
-.displayName .displayPic img{
+.FriendsPage_displayName .FriendsPage_displayPic img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.messageStyle{
+.FriendsPage_messageStyle{
   background: skyblue;
   display: inline-block;
   padding: 5px 10px;
@@ -78,7 +79,7 @@
   display: inline-block;
 }
 
-.messageSections{
+.FriendsPage_messageSections{
   height: calc(100% - 90px);
   width: 100%;
   overflow-x: hidden;
@@ -86,7 +87,7 @@
   top: 40px;
 }
 
-.onlineStatus{
+.FriendsPage_onlineStatus{
   display: inline-block;
   margin-top: 10px;
   margin-left: 15px;
@@ -97,7 +98,7 @@
   box-shadow: 0 0 10px 0 #16e316;
 }
 
-.onlineStatusoff{
+.FriendsPage_onlineStatusoff{
   display: inline-block;
   width: 10px;
   margin-top: 10px;
@@ -107,7 +108,7 @@
   border-radius: 5px;
   box-shadow: 0 0 0 0;
 }
-.addIcon{
+.FriendsPage_addIcon{
   display: inline-block;
   width: 10px;
   margin-top: 0px;
