@@ -30,7 +30,6 @@ function Quiz(props) {
     dispatch(setQuizNumber(payload));
   };
 
-
   const [quizone, setQuizone] = useState(new Date());
 
   let [quizoneText, setQuizoneText] = useState("");
@@ -39,9 +38,9 @@ function Quiz(props) {
   const [quizNumbers1, setQuizNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
+  ///////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -64,94 +63,6 @@ function Quiz(props) {
     setQuizNumbers1(array);
   };
 
-  const quizDatesHelper = (val) => {
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      //console.log("sdaas");
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: val.date,
-          desc: "",
-          complete: false,
-        },
-      ]);
-    } else {
-      newArr[index].date = val.date;
-      newArr[index].courseName = courseName;
-      //console.log(newArr);
-      ////console.log(newArr[1]);
-
-      if (newArr.length > parseInt(quizNumbers, 10) + 1) {
-        let finArr = [];
-        //console.log("heresss");
-        newArr.map((x, key) => {
-          if (key < parseInt(quizNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-
-        /*//console.log("newArr:")
-        //console.log(newArr)
-        //console.log("items")
-        //console.log(itemss)*/
-      }
-      ////console.log(itemss[index].date)
-    }
-
-    props.data(itemss);
-    //setQuizDataDispatch(itemss);
-  };
-
-  const quizTexts = (val) => {
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: "",
-          desc: val.desc,
-          complete: false,
-        },
-      ]);
-    } else {
-      let value = val.desc;
-      newArr[index].courseName = courseName;
-      newArr[index].desc = value;
-      if (newArr.length > parseInt(quizNumbers, 10) + 1) {
-        //console.log(quizNumbers);
-        let finArr = [];
-        //console.log("here");
-        newArr.map((x, key) => {
-          if (key < parseInt(quizNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-      }
-
-      ////console.log(itemss);
-    }
-    props.data(itemss);
-    //setQuizDataDispatch(itemss);
-  };
-
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
@@ -160,7 +71,7 @@ function Quiz(props) {
 
       {quizNumbers1.map((val, key) => {
         ////console.log(items);
-        let index = itemss.findIndex((x) => x.id == `quiz${key + 1}`);
+        let index = props.itemss.findIndex((x) => x.id == `quiz${key + 1}`);
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
@@ -171,32 +82,24 @@ function Quiz(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`quiz${key + 1}Date`}
                 label={`quiz ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : quizone}
+                value={index != -1 ? props.itemss[index].date : quizone}
                 onChange={(e) => {
-                  quizDatesHelper({
-                    id: `quiz${key + 1}`,
-                    date: e,
-                    desc: "",
-                  });
+                  props.inputdesc(`quiz${key + 1}`, e, "date");
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
                 id={`quiz${key + 1}Description`}
                 label={`Quiz ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : quizoneText}
+                value={index != -1 ? props.itemss[index].desc : quizoneText}
                 onChange={(e) => {
-                  ////console.log(e.target.value)
-                  quizTexts({
-                    id: `quiz${key + 1}`,
-                    desc: e.target.value,
-                  });
+                  props.inputdesc(`quiz${key + 1}`, e.target.value, "desc");
                 }}
               />
             </LocalizationProvider>

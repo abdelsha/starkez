@@ -1,6 +1,6 @@
 const INITIAL_STATE ={
-    menuBar:"true",
-    menuTab: "false",
+    menuBar:false,
+    menuTab: false,
 }
 
 const menuReducer = (state = INITIAL_STATE, action) => {

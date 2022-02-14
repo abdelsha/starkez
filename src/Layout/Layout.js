@@ -1,12 +1,11 @@
 import React from "react";
-import Navigation from "../Navigation/Navigation";
-import classes from './Layout.module.css';
+import './Layout.css';
 import {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {setExamNumber} from "../Redux/Actions/Course";
 import { switchMenu } from "../Redux/Actions/Menu";
 import NavigationBar from "../Navigation/NavigationBar";
-import NavigationTab from "../Navigation/NavigationTab";
+
 
 
 function Layout(props) {
@@ -14,9 +13,7 @@ function Layout(props) {
     const menuBarStatus = useSelector((state)=>{
         return state.menuState.menuBar;
     })
-    const menuTabStatus = useSelector((state)=>{
-        return state.menuState.menuTab;
-    })
+    
       const dispatch = useDispatch();
     
       const setMenuBarDispatch = (trigger) => {
@@ -31,30 +28,27 @@ function Layout(props) {
       }
     return(
         
-        <div className={classes.Layout}>
-            <div className={classes.NavButton} >
+        <div className="Layout_Layout">
+            <div className="Layout_NavButton" >
                
-                <img src="./images/menu.png" all="" onClick={(e)=>{setMenuBarDispatch(menuBarStatus)}}/>
+                <img 
+                src="./images/menu.png" 
+                all="" 
+                onClick={(e)=>{setMenuBarDispatch(menuBarStatus)}}
+                style={
+                    menuBarStatus
+                      ? { transform: "rotate(90deg)" }
+                      : { transform: "rotate(0deg)" }
+                  }/>
                 
             </div>
-           
-            {menuBarStatus=="true"? (
-            <div>
-            <NavigationBar>
+            <NavigationBar currmenue={menuBarStatus} menueoption={setMenuBarDispatch}>
             {props.children}
             </NavigationBar>
-            </div>
-            ):(
-                <div>
-                <NavigationTab>
-                {props.children}
-                </NavigationTab>
-                </div>)}
-            
             
             
         </div>
     )
 }
-
+//something else
 export default Layout;

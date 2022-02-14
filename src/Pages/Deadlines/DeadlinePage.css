@@ -1,0 +1,166 @@
+.DeadlinePage_Layouts {
+  display: grid;
+  
+  grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+  grid-template-rows: minmax(0, 50%) minmax(0, 50%);
+  grid-template-areas:
+    "deadline deadline"
+    "status status";
+  column-gap: 0px;
+  row-gap: 5px;
+  height: 100%;
+  min-width: 100%;
+  overflow-y: auto;
+}
+@media (max-width: 768px) {
+  .DeadlinePage_Layouts {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+    max-height: 100vh;
+    overflow-y: auto;
+    
+  }
+}
+.DeadlinePage_CommonCard {
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px 5px 10px;
+    background-color: rgba(0 0 0 15%);
+    background-color: rgba(255, 245, 222,0.9);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    max-height: 98%;
+    flex-grow: 1;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
+.DeadlinePage_CommonCardDeadLine {
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px 5px 10px;
+    background-color: rgba(0 0 0 15%);
+    background-color: rgba(255, 245, 222,0.9);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    max-height: 98%;
+    flex-grow: 1;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  }
+@media (max-width:768px){
+  .DeadlinePage_CommonCard{
+    max-height: 300px;
+  }
+}
+.DeadlinePage_Deadlines {
+    grid-area: deadline;
+    display: flex;
+    
+  }
+
+.DeadlinePage_CurrentPastDeadlines{
+  display: flex;
+}
+.DeadlinePage_CurrentDeadlines{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-width: 50%;
+  max-height: 400px;
+}
+.DeadlinePage_DeadlineCards{
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.DeadlinePage_PastDeadlines{
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  min-width: 50%;
+  max-height: 400px;
+}
+
+.DeadlinePage_Status {
+    margin-top: 5px;
+      grid-area: status;
+  }
+.DeadlinePage_DataDisplays{
+    
+  display: flex;
+  flex-direction: column;
+    
+}
+.DeadlinePage_Commoncards{
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right:5px ;
+    padding: 0px 0px;
+    background-color: rgba(255, 245, 222);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb( 0 0 0/ 20%);
+}
+
+.DeadlinePage_DeadLineText{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  
+}
+.DeadlinePage_DeadLineText p{
+  font-size: 12px;
+  
+  
+}
+.DeadlinePage_StatusCard{
+    display: flex;
+    margin: 10px 10px;
+    justify-content: space-around;
+    
+  }
+.DeadlinePage_StatusCard Button{
+    display: flex;
+    align-items: flex-start;
+    
+    
+  }
+.DeadlinePage_CommonCardss {
+    overflow-y: auto;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    
+   
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    max-height: 270px;
+    
+    border-right: solid rgba(0,0,0,0.15);
+    
+  }
+.DeadlinePage_pieCharts{
+    margin-right: 25px;
+  }
+
+@media (max-width: 768px){
+  .DeadlinePage_pieCharts{
+    margin-right: 0px;
+    margin-left: 10px;
+    }
+  }
+ 

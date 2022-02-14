@@ -108,11 +108,11 @@ function Videos({ mode, callId, setPage, selectedFriend }) {
     const localRef = useRef();
     const remoteRef = useRef();
     const initChat = (user)=>{
-        console.log(user)
+        //console.log(user)
         const messObj={
             user_uid_1: userstat.uid,
             user_uid_2:user.UID,
-            message: `${selectedFriend.fullName} invited you to a call, 
+            message: `${userstat.displayName} invited you to a call, 
             enter ID ${roomId} in video page to join`,
           }
           setShowFriend(false);
@@ -155,7 +155,7 @@ function Videos({ mode, callId, setPage, selectedFriend }) {
                 const messObj={
                   user_uid_1: userstat.uid,
                   user_uid_2:selectedFriend.UID,
-                  message: `${selectedFriend.fullName} invited you to a call, 
+                  message: `${userstat.displayName} invited you to a call, 
                   enter ID ${callDoc.id} in video page to join`,
                 }
             

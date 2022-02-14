@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import classes from "./Login.module.css";
+import "./Login.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -68,7 +68,7 @@ function CreateAccount(props) {
     event.preventDefault();
   };
   return (
-    <div className={classes.CommonCard}>
+    <div className="Login_CommonCard">
       {userstat && <Redirect to="/Home" />}
       <Box
         component="form"
@@ -78,8 +78,8 @@ function CreateAccount(props) {
         noValidate
         autoComplete="off"
       >
-        <div className={classes.TextField}>
-          <div className={classes.Starkez}>
+        <div className="Login_TextField">
+          <div className="Login_Starkez">
             <h2>STARKEZ</h2>
           </div>
           <TextField
@@ -136,7 +136,7 @@ function CreateAccount(props) {
                 setLastName(e.target.value);
               }}
             />
-          <div className={classes.SubmitButton}>
+          <div className="Login_SubmitButton">
             <Button
               variant="contained"
               onClick={(event) => submitHelper(event)}
@@ -152,7 +152,7 @@ function CreateAccount(props) {
           </div>
           <Button
             variant="outlined"
-            className={classes.LoginButton}
+            className="Login_LoginButton"
             onClick={(event) => {
               signInWithGoogleHelper(event);
             }}

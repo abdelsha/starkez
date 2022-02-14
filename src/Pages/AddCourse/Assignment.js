@@ -36,7 +36,6 @@ function Assignment(props) {
 
   const dispatch = useDispatch();
 
-
   /*const setAssisgnmentDataDispatch = (payload) => {
       dispatch(setAssignmentData(payload));
   }*/
@@ -51,9 +50,6 @@ function Assignment(props) {
   const [assignmentNumbers1, setassignmentNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -63,7 +59,10 @@ function Assignment(props) {
       complete: false,
     },
   ]);
+  ///////////////////////////////////////////////////////////////////
 
+
+  //////////////////////////////////////////////////////////////////////
   useEffect(() => {
     newElements();
   }, [props.assignmentNum]);
@@ -77,97 +76,6 @@ function Assignment(props) {
     setassignmentNumbers1(array);
   };
 
-  const assignmentDatesHelper = (val) => {
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      //console.log("sdaas");
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: val.date,
-          desc: "",
-          complete: false,
-        },
-      ]);
-    } else {
-      newArr[index].date = val.date;
-      newArr[index].courseName = courseName;
-      //console.log(newArr);
-      ////console.log(newArr[1]);
-
-      if (newArr.length > parseInt(assignmentNumbers, 10) + 1) {
-        let finArr = [];
-        //console.log("heresss");
-        newArr.map((x, key) => {
-          if (key < parseInt(assignmentNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-
-        /*//console.log("newArr:")
-        //console.log(newArr)
-        //console.log("items")
-        //console.log(itemss)*/
-      }
-      ////console.log(itemss[index].date)
-      console.log(itemss);
-      console.log(courseName);
-    }
-    props.data(itemss);
-    //setAssisgnmentDataDispatch(itemss);
-  };
-
-  const assignmentTexts = (val) => {
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: "",
-          desc: val.desc,
-          complete: false,
-        },
-      ]);
-    } else {
-      let value = val.desc;
-      newArr[index].desc = value;
-      newArr[index].courseName = courseName;
-      if (newArr.length > parseInt(assignmentNumbers, 10) + 1) {
-        //console.log(assignmentNumbers);
-        let finArr = [];
-        //console.log("here");
-        newArr.map((x, key) => {
-          if (key < parseInt(assignmentNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-      }
-
-      console.log(itemss);
-      console.log(courseName);
-    }
-    //console.log(itemss)
-    props.data(itemss);
-    //setAssisgnmentDataDispatch(itemss);
-  };
-
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
@@ -176,7 +84,9 @@ function Assignment(props) {
 
       {assignmentNumbers1.map((val, key) => {
         ////console.log(items);
-        let index = itemss.findIndex((x) => x.id == `assignment${key + 1}`);
+        let index = props.itemss.findIndex(
+          (x) => x.id == `assignment${key + 1}`
+        );
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
@@ -187,32 +97,40 @@ function Assignment(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`assignment${key + 1}Date`}
                 label={`assignment ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : assignmentone}
+                value={index != -1 ? props.itemss[index].date : assignmentone}
                 onChange={(e) => {
-                  assignmentDatesHelper({
+                  props.inputdesc(`assignment${key + 1}`, e, "date");
+                  /*assignmentDatesHelper({
                     id: `assignment${key + 1}`,
                     date: e,
                     desc: "",
-                  });
+                  });*/
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
                 id={`assignment${key + 1}Description`}
                 label={`Assignment ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : assignmentoneText}
+                value={
+                  index != -1 ? props.itemss[index].desc : assignmentoneText
+                }
                 onChange={(e) => {
                   ////console.log(e.target.value)
-                  assignmentTexts({
+                  props.inputdesc(
+                    `assignment${key + 1}`,
+                    e.target.value,
+                    "desc"
+                  );
+                  /* assignmentTexts({
                     id: `assignment${key + 1}`,
                     desc: e.target.value,
-                  });
+                  });*/
                 }}
               />
             </LocalizationProvider>

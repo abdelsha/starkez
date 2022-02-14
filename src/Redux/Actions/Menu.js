@@ -10,12 +10,12 @@ export const setMenuTab =(trigger) => ({
 
 export function switchMenu (current){
     return (dispatch) => {
-    if (current=="true"){
-        dispatch(setMenueBar("false"));
+    if (current==true){
+        dispatch(setMenueBar(false));
         
     }else{
         
-        dispatch(setMenueBar("true"));
+        dispatch(setMenueBar(true));
     }
 }
 

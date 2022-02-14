@@ -2,17 +2,18 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link } from "@mui/material";
-import classes from "./Course.module.css";
+import "./Course.css";
 import Deadlines from "./Deadlines";
-import Status from "./Status";
+import Status from "./PieChart";
 import StudyHistory from "./StudyHistory";
 import { getCoursesAPI, UpdateCourseInfo } from "../../Redux/Actions/Course";
 import { getUserAuth } from "../../Redux/Actions/UserState";
 import Project from "../AddCourse/Projects";
 import {Redirect } from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material";
 
 function CoursePage() {
-  const [loaded, setLoaded] = useState("false");
+  const [loaded, setLoaded] = useState(false);
   const userstat = useSelector((state) => {
     return state.userState.user;
   });
@@ -64,18 +65,27 @@ function CoursePage() {
   useEffect(()=>{
     //console.log(courseStat)
     if(assignmentData.length>1){
-      setLoaded("true");
+      setLoaded(()=>true);
     }
     
   },[assignmentData])
 
+ 
   return (
-    <div className={classes.CommonCards}>
-      {!userstat && <Redirect to="/" />}
-    <div className={classes.Layouts}>
-      <div className={classes.Deadline}>
+    <>
+    {!userstat && <Redirect to="/" />}
+    {!loaded ? (
+  <Box
+    sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
+  >
+    <CircularProgress />
+  </Box>):(
+    <div className="CoursePage_CommonCards">
+      
+    <div className="CoursePage_Layouts">
+      <div className="CoursePage_BlockCards">
         
-        {loaded == "true" ? (
+        {loaded ? (
           <Deadlines 
           assignments={assignmentData} 
           exams={examData}
@@ -86,27 +96,29 @@ function CoursePage() {
           <div />
         )}
       </div>
-      <div className={classes.Status}>
-      {loaded == "true" ? (
+      <div className="CoursePage_Status">
+      <div className="CoursePage_BlockCards">
+      {loaded ? (
           <Status assignments={assignmentData} />
         ) : (
           <div />
         )}
-       
+       </div>
       </div>
-      <div className={classes.History}>
-      {loaded == "true" ? (
+      <div className="CoursePage_History">
+      <div className="CoursePage_BlockCards">
+      {loaded ? (
           <StudyHistory />
         ) : (
           <div />
         )}
-       
+       </div>
       </div>
-      <div className={classes.Button}>
+      <div className="CoursePage_Button">
         <Button
           variant="contained"
           href="/Add_Course"
-          className={classes.buttons}
+          className="CoursePage_buttons"
           sx={{
             "border-radius": "50%",
             padding: "5px 5px",
@@ -118,6 +130,8 @@ function CoursePage() {
       </div>
     </div>
     </div>
+  )}
+  </>
   );
 }
 

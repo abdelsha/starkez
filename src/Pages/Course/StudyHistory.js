@@ -17,9 +17,9 @@ function StudyHistory (){
     return (
         <div className={classes.itemc}>
             {!userstat && <Redirect to="/" />}
-        <div className={classes.Commoncard}>
+       
             Study History
-        </div>
+        
       </div>
     )
 }

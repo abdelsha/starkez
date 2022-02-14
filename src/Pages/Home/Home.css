@@ -1,0 +1,209 @@
+  .Home_CommonCards {
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-grow: 1;
+    background-color: rgba(238, 238, 238,0.2);
+    border: none;
+    max-height: 100%;
+  }
+  .Home_CoursesCard {
+    text-align: center;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    margin: 5px 5px;
+    padding: 5px 0;
+    background-color:rgba(255, 245, 222);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+    
+  }
+  .Home_Layouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) ;
+    grid-template-rows: repeat(5, 20%);
+    grid-template-areas:
+      "courses deadliness friends"
+      "course_detail course_detail message"
+      "course_detail course_detail video"
+      "study_history study_history study_session"
+      "study_history study_history encouraging"
+      ;
+      
+    column-gap: 5px;
+    row-gap: 5px;
+    height: 100%;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    .Home_Layouts {
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
+    }
+  }
+
+  .Home_BlockCards{
+    margin-top: 5px;
+    background-color: rgba(255, 245, 222,0.9);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    height: 98%;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+    
+  }
+  @media (max-width: 768px) {
+    .Home_BlockCards {
+      max-height: 150px;
+    
+    }
+  }
+  .Home_BlockCardTwo{
+    margin-top: 5px;
+    background-color: rgba(255, 245, 222,0.9);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    height: 98%;
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+    max-height: 100%;
+  }
+  .Home_Courses{
+    grid-area: courses;
+  }
+
+  @media (max-width: 768px) {
+    .Home_Courses {
+      
+    }
+  }
+
+  .Home_Deadlines{
+      grid-area: deadliness;
+      
+  }
+  .Home_Friends{
+      grid-area: friends;
+      
+  }
+  .Home_CourseDetail{
+      grid-area: course_detail;
+      
+  }
+  .Home_Messages{
+      grid-area: message;
+      
+  }
+  .Home_Videos{
+      grid-area: video;
+      
+  }
+  .Home_StudySession{
+      grid-area: study_session;
+      
+  }
+  .Home_StudyHistory{
+      grid-area: study_history;
+  }
+  .Home_Encouraging{
+      grid-area: encouraging;
+      
+  }
+ 
+
+  .Home_Button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    display: block;
+    justify-content: flex-end;
+    width: 30px;
+    opacity: 50%;
+  }
+  .Home_Buttons {
+    border-radius: 25px;
+  }
+  .Home_Button:hover {
+    opacity: 100%;
+  }
+  .Home_Button img {
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+  .Home_displayName{
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  
+  .Home_displayName.active{
+    background: #ccc;
+  }
+  
+  .Home_displayName .Home_displayPic{
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    border-radius: 25px;
+  }
+  
+  .Home_displayName .Home_displayPic img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .Home_messageStyle{
+    background: skyblue;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 5px;
+    display: inline-block;
+  }
+  
+  .Home_messageSections{
+    height: calc(100% - 90px);
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    top: 40px;
+  }
+  
+  .Home_onlineStatus{
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 10px;
+    height: 10px;
+    background: #16e316;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #16e316;
+  }
+  
+  .Home_onlineStatusoff{
+    display: inline-block;
+    width: 10px;
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 10px;
+    background: green;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0;
+  }

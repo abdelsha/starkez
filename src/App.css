@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+* {
+  font-family: "Times New Roman", Times, serif;
+}
+body {
+  background-image: url("./background.jpeg");
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

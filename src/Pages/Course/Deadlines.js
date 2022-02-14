@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Link, SwipeableDrawer } from "@mui/material";
-import classes from "./Deadlines.module.css";
+import "./Deadlines.css";
 
 import firebase from "firebase";
 import {
@@ -29,6 +29,7 @@ function Deadlines(props) {
   useEffect(() => {
     totOrdArr = retdeadlines;
     totArr = orderdCourse;
+    //console.log(orderdCourse)
   }, [retdeadlines]);
 
   const dateMaker = (date) => {
@@ -37,25 +38,30 @@ function Deadlines(props) {
 
     return dates;
   };
+
+  const currentDate = new Date();
   return (
-    <div className={classes.Commoncardss}>
-    <div className={classes.Layouts}>
-      <div className={classes.Deadline}>
-        <div className={classes.Commoncard}>
+    
+    
+      <>
           <h2>Deadlines</h2>
-          {retdeadlines.length>1?(
+          {retdeadlines?(
             <div>
-            {retdeadlines.map((data, key) => {
+            {orderdCourse.map((data, key) => {
               //console.log(data.date.toDate())
               return (
-                <div className={classes.DataDisplays}>
-                  <div className={classes.Commoncards}>
-                    <div className={classes.DeadLineText}>
-                      <span>Course Name: {data.courseName}</span>
-                      <span>Description: {data.desc}</span>
-                      <span>
-                        Due Date: {dateMaker(data.date.toDate()).toString()}
-                      </span>
+                <div className="Deadline_DataDisplays" key={key}>
+                  <div className="Deadline_Commoncards">
+                    <div className="Deadline_DeadLineText"
+                    
+                    style={currentDate.getTime()>data.date.toDate().getTime()?{color:"red", fontWeight:"bold"}:{color:"black"}}
+                    > 
+                      
+                      <p>{data.courseName}</p>
+                      <p> {data.desc}</p>
+                      <p>
+                        {dateMaker(data.date.toDate()).toString()}
+                      </p>
                     </div>
                     {/*data.toDateString()*/}
                   </div>
@@ -76,10 +82,10 @@ function Deadlines(props) {
           <div>
             <button onClick={()=>{dateArry()}}>sort</button>
           </div>*/}
-        </div>
-      </div>
-    </div>
-    </div>
+      
+     </>
+   
+   
   );
 }
 

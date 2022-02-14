@@ -82,6 +82,7 @@ function SettingPage() {
       {!userstat && <Redirect to="/" />}
       <header className={classes.Header}>
         <h1>Settings</h1>
+        <span>{userstat.displayName? userstat.displayName:null}</span>
         <div className={classes.User}>
           {userstat && userstat.photoURL ? (
             <img src={userstat.photoURL} all="" />
@@ -134,14 +135,7 @@ function SettingPage() {
               onChange={(e) => setValuesHelper("email", e.target.value)}
             />
           </div>
-          <div className={classes.rowone}>
-            <TextField
-              helperText="Please enter your name"
-              id="demo-helper-text-aligned-no-helper"
-              label="Name"
-              sx={{ "flex-grow": "1" }}
-            />
-          </div>
+          
         </div>
         <div className={classes.coltwo}>
           <div className={classes.LastName}>
@@ -162,14 +156,7 @@ function SettingPage() {
               onChange={(e) => setValuesHelper("contactNumber", e.target.value)}
             />
           </div>
-          <div className={classes.rowone}>
-            <TextField
-              helperText="Please enter your name"
-              id="demo-helper-text-aligned-no-helper"
-              label="Name"
-              sx={{ "flex-grow": "1" }}
-            />
-          </div>
+          
         </div>
       </main>
       <div className={classes.Submit}>

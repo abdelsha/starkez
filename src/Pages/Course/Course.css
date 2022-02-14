@@ -1,0 +1,120 @@
+.CoursePage_Commoncard {
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 5px 10px;
+  padding: 10px 0;
+  background-color: #fff;
+  border-radius: 5px;
+  position: relative;
+  border: none;
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+}
+.CoursePage_CommonCards {
+  text-align: center;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(238, 238, 238,0.2);
+  position: relative;
+  border: none;
+  max-height: 100%;
+  flex-grow: 1;
+  padding: 5px 5px;
+  
+}
+.CoursePage_Layouts {
+  display: grid;
+
+  grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+  grid-template-rows: minmax(0, 50%) minmax(0, 50%);
+  grid-template-areas:
+    "leftside right"
+    "bottom bottom";
+  column-gap: 5px;
+  margin-left: 10px;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .CoursePage_Layouts {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 5px;
+    max-height: 100%;
+  }
+}
+
+
+.CoursePage_BlockCards{
+  margin-top: 5px;
+  background-color: rgba(255, 245, 222,0.9);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  height: 100%;
+  border-radius: 5px;
+  position: relative;
+  border: none;
+  box-shadow: 0 0 0 4px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0/ 20%);
+  min-width: 100%;
+}
+
+
+.CoursePage_Deadline{
+  
+  grid-area: leftside;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  max-height: 100%;
+  flex-grow: 1;
+  
+}
+.CoursePage_Status {
+    grid-area: right;
+    display: flex;
+    max-height: 100%;
+}
+
+.CoursePage_History{
+    margin-top: 7px;
+    grid-area: bottom;
+    
+    
+    
+}
+@media (max-width: 768px) {
+  .CoursePage_History {
+    margin-top: 15px;
+  }
+}
+.CoursePage_main {
+  display: flex;
+}
+
+
+
+.CoursePage_Button {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: block;
+  justify-content: flex-end;
+  width: 30px;
+  opacity: 0.5;
+  z-index: 10;
+}
+.CoursePage_Buttons {
+  border-radius: 25px;
+}
+.CoursePage_Button:hover {
+  opacity: 1;
+}
+.CoursePage_Button img {
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+}

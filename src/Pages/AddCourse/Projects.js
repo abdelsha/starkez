@@ -42,9 +42,9 @@ function Project(props) {
   const [projectNumbers1, setprojectNumbers1] = useState([]);
   const [courseName, setCourseNames] = useState("");
 
-  useEffect(() => {
-    setCourseNames(props.courseName);
-  }, [[], props.courseName]);
+  ///////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseName,
@@ -68,94 +68,6 @@ function Project(props) {
     setprojectNumbers1(array);
   };
 
-  const projectDatesHelper = (val) => {
-    let newArr = [...itemss];
-
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      //console.log("sdaas");
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: val.date,
-          desc: "",
-          complete: false,
-        },
-      ]);
-    } else {
-      newArr[index].date = val.date;
-      newArr[index].courseName = courseName;
-      //console.log(newArr);
-      ////console.log(newArr[1]);
-
-      if (newArr.length > parseInt(projectNumbers, 10) + 1) {
-        let finArr = [];
-        //console.log("heresss");
-        newArr.map((x, key) => {
-          if (key < parseInt(projectNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-
-        /*//console.log("newArr:")
-        //console.log(newArr)
-        //console.log("items")
-        //console.log(itemss)*/
-      }
-      ////console.log(itemss[index].date)
-    }
-    props.data(itemss);
-    //setProjectDataDispatch(itemss);
-  };
-
-  const projectTexts = (val) => {
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseName,
-          id: val.id,
-          date: "",
-          desc: val.desc,
-          complete: false,
-        },
-      ]);
-    } else {
-      let value = val.desc;
-      newArr[index].desc = value;
-      newArr[index].courseName = courseName;
-      if (newArr.length > parseInt(projectNumbers, 10) + 1) {
-        //console.log(projectNumbers);
-        let finArr = [];
-        //console.log("here");
-        newArr.map((x, key) => {
-          if (key < parseInt(projectNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        ////console.log(newArr)
-        setItemss(newArr);
-      }
-
-      //console.log(itemss);
-    }
-    props.data(itemss);
-    //setProjectDataDispatch(itemss);
-  };
-
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
@@ -164,7 +76,7 @@ function Project(props) {
 
       {projectNumbers1.map((val, key) => {
         ////console.log(items);
-        let index = itemss.findIndex((x) => x.id == `project${key + 1}`);
+        let index = props.itemss.findIndex((x) => x.id == `project${key + 1}`);
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
@@ -175,32 +87,24 @@ function Project(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`project${key + 1}Date`}
                 label={`project ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : projectone}
+                value={index != -1 ? props.itemss[index].date : projectone}
                 onChange={(e) => {
-                  projectDatesHelper({
-                    id: `project${key + 1}`,
-                    date: e,
-                    desc: "",
-                  });
+                  props.inputdesc(`project${key + 1}`, e, "date");
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
                 id={`project${key + 1}Description`}
                 label={`Project ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : projectoneText}
+                value={index != -1 ? props.itemss[index].desc : projectoneText}
                 onChange={(e) => {
-                  ////console.log(e.target.value)
-                  projectTexts({
-                    id: `project${key + 1}`,
-                    desc: e.target.value,
-                  });
+                  props.inputdesc(`project${key + 1}`, e.target.value, "desc");
                 }}
               />
             </LocalizationProvider>

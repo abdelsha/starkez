@@ -33,7 +33,6 @@ function Examination(props) {
     dispatch(setExamData(payload));
   };*/
 
-
   const [examone, setExamone] = useState(new Date());
 
   let [examoneText, setExamoneText] = useState("");
@@ -41,12 +40,11 @@ function Examination(props) {
   const [examNumbers, setExamNumbers] = useState("");
   const [examNumbers1, setExamNumbers1] = useState([]);
 
-  const setCourseName = (name) => {
-    courseNames = name;
-  };
-  useEffect(() => {
-    setCourseName(props.courseName);
-  }, [[], props.courseName]);
+  const [courseName, setCourseNames] = useState("");
+
+  ///////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////
   const [itemss, setItemss] = useState([
     {
       courseName: courseNames,
@@ -69,96 +67,6 @@ function Examination(props) {
     setExamNumbers1(array);
   };
 
-  const examDatesHelper = (val) => {
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      //console.log("sdaas");
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseNames,
-          id: val.id,
-          date: val.date,
-          desc: "",
-          complete: false,
-        },
-      ]);
-    } else {
-      newArr[index].date = val.date;
-      newArr[index].courseName = courseNames;
-      //console.log(newArr);
-      //console.log(newArr[1]);
-
-      if (newArr.length > parseInt(examNumbers, 10) + 1) {
-        let finArr = [];
-        //console.log("heresss");
-        newArr.map((x, key) => {
-          if (key < parseInt(examNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        //console.log(newArr)
-        setItemss(newArr);
-
-        /*console.log("newArr:")
-        console.log(newArr)
-        console.log("items")
-        console.log(itemss)*/
-      }
-      //console.log(itemss[index].date)
-    }
-    //console.log(itemss)
-    props.data(itemss);
-    //setExamDataDispatch(itemss);
-    //console.log(examData12);
-  };
-
-  const examTexts = (val) => {
-    console.log(courseNames);
-    let text = val.desc;
-    let newArr = [...itemss];
-    let index = itemss.findIndex((x) => x.id == val.id);
-    if (index == -1) {
-      setItemss([
-        ...itemss,
-        {
-          courseName: courseNames,
-          id: val.id,
-          date: "",
-          desc: val.desc,
-          complete: false,
-        },
-      ]);
-    } else {
-      let value = val.desc;
-      newArr[index].desc = value;
-      newArr[index].courseName = courseNames;
-      if (newArr.length > parseInt(examNumbers, 10) + 1) {
-        //console.log(examNumbers);
-        let finArr = [];
-        //console.log("here");
-        newArr.map((x, key) => {
-          if (key < parseInt(examNumbers, 10) + 1) {
-            finArr.push(x);
-            //console.log(finArr);
-          }
-        });
-        setItemss(finArr);
-      } else {
-        //console.log(newArr)
-        setItemss(newArr);
-      }
-    }
-    //console.log(itemss)
-    props.data(itemss);
-    //setExamDataDispatch(itemss);
-    //console.log(examData12);
-  };
-
   return (
     <div className={classes.Exams}>
       <div className={classes.ExamHead}>
@@ -167,7 +75,7 @@ function Examination(props) {
 
       {examNumbers1.map((val, key) => {
         //console.log(items);
-        let index = itemss.findIndex((x) => x.id == `exam${key + 1}`);
+        let index = props.itemss.findIndex((x) => x.id == `exam${key + 1}`);
         let newIndex = 0;
         if (index != -1) {
           newIndex = index;
@@ -178,33 +86,24 @@ function Examination(props) {
         }
         //console.log(index);
         return (
-          <div className={classes.ExamDates}>
+          <div className={classes.ExamDates} key={key}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 id={`exam${key + 1}Date`}
                 label={`exam ${key + 1}`}
                 inputFormat="MM/dd/yyyy"
-                value={index != -1 ? itemss[index].date : examone}
+                value={index != -1 ? props.itemss[index].date : examone}
                 onChange={(e) => {
-                  examDatesHelper({
-                    id: `exam${key + 1}`,
-                    date: e,
-                    desc: "",
-                    complete: false,
-                  });
+                  props.inputdesc(`exam${key + 1}`, e, "date");
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <TextField
                 id={`exam${key + 1}Description`}
                 label={`Exam ${key + 1} Description`}
-                value={index != -1 ? itemss[index].desc : examoneText}
+                value={index != -1 ? props.itemss[index].desc : examoneText}
                 onChange={(e) => {
-                  //console.log(e.target.value)
-                  examTexts({
-                    id: `exam${key + 1}`,
-                    desc: e.target.value,
-                  });
+                  props.inputdesc(`exam${key + 1}`, e.target.value, "desc");
                 }}
               />
             </LocalizationProvider>

@@ -1,0 +1,35 @@
+
+.Deadline_DataDisplays{
+    
+    display: flex;
+    flex-direction: column;
+    
+}
+.Deadline_Commoncards{
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right:5px ;
+    padding: 0px 0px;
+    background-color: rgba(255, 245, 222);
+    border-radius: 5px;
+    position: relative;
+    border: none;
+    
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 15%), 0 0 0 rgb( 0 0 0/ 20%);
+}
+
+.Deadline_DeadLineText{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  
+}
+.Deadline_DeadLineText p{
+  font-size: 12px;
+  
+}
